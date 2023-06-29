@@ -2,7 +2,7 @@
 
 
 <p align="center">
-  <img src="https://github.com/Thr0ttr/Skirnir/blob/develop/data/Skirnir-transparent.png" alt="Profile Icon" width="300px">
+  <img src="https://github.com/Hyldem0er/Skirnir/blob/master/data/Skirnir-transparent.png" alt="Profile Icon" width="300px">
 </p>
 
 #
