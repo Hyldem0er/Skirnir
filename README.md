@@ -23,7 +23,7 @@ Skirnir is a program specifically developed to scan popular social networks like
 <a id="installation"></a>
 ## Setup
 
-To install the required dependencies, navigate to the project directory and run the following command in a termibal:
+To install the required dependencies, navigate to the project directory and run the following command in a terminal:
 
 ```shell
 pip install -r requirements.txt
