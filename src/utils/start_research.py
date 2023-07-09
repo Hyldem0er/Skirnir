@@ -1,6 +1,10 @@
 from src.generator.possible_pseudonyms_generation import generate_possible_pseudonyms
 from src.surface_crawl.surface_crawl import surface_crawl
 from src.scrapers.pseudo_finder_instagram import find_instagram_profile
+from loguru import logger
+import sys
+
+logger.add(sys.stdout, colorize=True, format="<green>{time}</green> <level>{message}</level>")
 
 def sort_crawl_result(crawl_results):
     """
@@ -106,7 +110,9 @@ def start_profile_research(instagram_checkbox, facebook_checkbox, twitter_checkb
     name = nickname
     if not nickname_only:
         name = firstname + " " + lastname
+    from loguru import logger
 
+    logger.info("Starting Surface Crawling")
     crawl_list = surface_crawl(instagram_checkbox, facebook_checkbox, twitter_checkbox, linkedin_checkbox, name, firstname, lastname)
 
     generated_nicknames = generate_possible_pseudonyms(firstname, lastname, date, nickname, limit, birthday_on, nickname_only)

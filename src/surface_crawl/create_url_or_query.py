@@ -2,7 +2,10 @@ from duckduckgo_search import DDGS
 from bs4 import BeautifulSoup
 from time import sleep
 from src.request_helper.request_handling import get
+import sys
+from loguru import logger
 
+logger.add(sys.stdout, colorize=True, format="<green>{time}</green> <level>{message}</level>")
 def calculate_number_activate_networks(instagram, facebook, twitter, linkedin):
         """
         Calculate the number of activated social media networks based on the provided parameters.
@@ -186,7 +189,7 @@ def search_google(research_url, sleep_interval=5):
         sleep(sleep_interval)
         return list(set(links))
     except Exception as e:
-        print(e)
+        logger.exception(e)
         return []
 
 def search_duckduckgo(query, sleep_interval=1):
@@ -212,5 +215,5 @@ def search_duckduckgo(query, sleep_interval=1):
         sleep(sleep_interval)
         return list(set(links))
     except Exception as e:
-        print(e)
+        logger.exception(e)
         return []

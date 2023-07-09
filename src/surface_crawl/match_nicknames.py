@@ -9,7 +9,6 @@ filename = 'D:\Epita\Skirnir\data\mapping_nicknames_names.csv'
 def match_nicknames(firstanme):
     matching_nicknames = []
     with open(filename, mode='r') as csv_file:
-        print("passe par la")
         csv_reader = csv.DictReader(csv_file)
         for row in csv_reader:
             if row['name'] == firstanme:
@@ -26,7 +25,4 @@ def create_query_matching_nicknames(firstname, lastname):
         or_limit -= 1
         query += "\"{}\"{}".format(nicknames, "+OR+" if or_limit != 0 else "")
     query += ")+AND+\"+{}\"".format(lastname)
-
-    print(query)
-
     return query

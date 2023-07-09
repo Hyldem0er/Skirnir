@@ -5,9 +5,12 @@ from PyQt5.QtCore import *
 from src.ui.CrawlResultWindow import CrawlResultWindow
 from src.ui.DeepResultWindow import DeepResultWindow
 from src.ui.ProgressThread import ProgressThread
-import os, time
+import os, time, sys
 from src.utils.start_research import start_profile_research, sort_crawl_result
 from src.ui.Loading import Loading
+from loguru import logger
+
+logger.add(sys.stdout, colorize=True, format="<green>{time}</green> <level>{message}</level>")
 
 # creating a class
 # that inherits the QDialog class
@@ -23,7 +26,6 @@ class MainWindow(QDialog):
         self.height = 400
         self.progressBarThread = None
         self.p = Loading()
-
         self.initUI()
 
 
@@ -260,7 +262,7 @@ class MainWindow(QDialog):
     # call nickname generation function
     def start_checking_profile(self):
         self.showLoadingBar = True
-        
+        logger.info("Start Crawling")
         
         crawl_list, advanced_profile_set, social_networks_dict = start_profile_research(self.show_instagram_checkbox.isChecked(), self.show_facebook_checkbox.isChecked(),
                                     self.show_twitter_checkbox.isChecked(), self.show_linkedin_checkbox.isChecked(),
