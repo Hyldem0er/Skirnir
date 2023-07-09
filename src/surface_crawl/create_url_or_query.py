@@ -161,7 +161,7 @@ def create_surface_crawl_query(instagram, facebook, twitter, linkedin, name):
 
         return queries
 
-def search_google(research_url, sleep_interval=1):
+def search_google(research_url, sleep_interval=5):
     """
     Performs a Google search and retrieves the links from the search results.
 
@@ -185,7 +185,8 @@ def search_google(research_url, sleep_interval=1):
                 links.append(link.get("href"))
         sleep(sleep_interval)
         return list(set(links))
-    except Exception:
+    except Exception as e:
+        print(e)
         return []
 
 def search_duckduckgo(query, sleep_interval=1):
@@ -210,5 +211,6 @@ def search_duckduckgo(query, sleep_interval=1):
                 links.append(r['href'])
         sleep(sleep_interval)
         return list(set(links))
-    except Exception:
+    except Exception as e:
+        print(e)
         return []

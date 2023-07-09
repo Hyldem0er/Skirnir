@@ -1,5 +1,7 @@
 from random import choice
 
+# The above list can be updated with latest user agent on this link : https://www.whatismybrowser.com/guides/the-latest-user-agent/
+
 def get_useragent():
     """
     Returns a randomly chosen user agent string.

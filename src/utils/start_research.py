@@ -107,7 +107,7 @@ def start_profile_research(instagram_checkbox, facebook_checkbox, twitter_checkb
     if not nickname_only:
         name = firstname + " " + lastname
 
-    crawl_list = surface_crawl(instagram_checkbox, facebook_checkbox, twitter_checkbox, linkedin_checkbox, name, lastname)
+    crawl_list = surface_crawl(instagram_checkbox, facebook_checkbox, twitter_checkbox, linkedin_checkbox, name, firstname, lastname)
 
     generated_nicknames = generate_possible_pseudonyms(firstname, lastname, date, nickname, limit, birthday_on, nickname_only)
 

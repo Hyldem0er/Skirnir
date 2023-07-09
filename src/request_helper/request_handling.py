@@ -23,6 +23,8 @@ def get(url, timeout=5, header=None):
         >>> get("https://example.com")
         <Response [200]>
     """
+
+    print(url)
     proxies_dict = {
         "https": get_proxy(),
         "http": get_proxy()
