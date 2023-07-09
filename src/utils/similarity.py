@@ -1,23 +1,4 @@
-from Levenshtein import distance as lev
-def name_check_similarity(input_string, lastname):
-    """
-    Checks the similarity between an input string and a last name.
-
-    Args:
-        input_string (str): The input string to check.
-        lastname (str): The last name to compare against.
-
-    Returns:
-        bool: True if the similarity percentage is above 85%, False otherwise.
-    """
-    match_count = 0
-    for c in lastname:
-        if c in input_string:
-            match_count += 1
-
-    similarity_percentage = match_count / len(lastname) * 100
-    return similarity_percentage > 85
-
+from Levenshtein import jaro_winkler as jar
 
 def is_similar(url,lastname):
     """
@@ -36,7 +17,7 @@ def is_similar(url,lastname):
 
     splitted_url = url.split("/")[4].split("-")
     for name in splitted_url:
-        if lev(name, lastname) <= 2:
+        if jar(name, lastname, score_cutoff=True) >= 0.85:
             return True
         if len(splitted_url) == 1:
                 return True
