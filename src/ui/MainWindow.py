@@ -113,7 +113,7 @@ class MainWindow(QDialog):
     def createSliderHorizontalLayout(self):
         self.Sliderlayout = QHBoxLayout()
         # Slider value
-        self.limitLabel = QLabel("Limit the size \n of generated nicknames :")
+        self.limitLabel = QLabel("Limit the size of generated nicknames :")
 
         self.limit = QLabel("13")
 
@@ -169,15 +169,56 @@ class MainWindow(QDialog):
         self.show_linkedin_checkbox = QCheckBox()
         self.show_linkedin_checkbox.setChecked(True)
 
-        formlayout.addRow(QLabel("Surface Crawl only"), self.show_crawl_checkbox)
-        formlayout.addRow(QLabel(""))
+        checkboxlayout = QVBoxLayout()
+        checkboxlayout.setSpacing(0)  # Adjust the spacing between elements
+        checkboxlayout.setAlignment(Qt.AlignmentFlag.AlignTop)
+        checkboxcontainer = QWidget()
 
-        formlayout.addRow(self.show_instagram_checkbox, QLabel("Instagram"))
-        formlayout.addRow(self.show_facebook_checkbox, QLabel("Facebook"))
-        formlayout.addRow(self.show_twitter_checkbox, QLabel("Twitter"))
-        formlayout.addRow(self.show_linkedin_checkbox, QLabel("LinkedIn"))
+        instaLayout = QHBoxLayout()
+        instaLayout.setSpacing(0)  # Adjust the spacing between elements
+        instaLayout.setAlignment(Qt.AlignmentFlag.AlignLeft)
+        instaLayout.addWidget(self.show_instagram_checkbox)
+        instaLayout.addWidget(QLabel("Instagram"))
+        instacontainer = QWidget()
+        instacontainer.setLayout(instaLayout)
+
+        fbLayout = QHBoxLayout()
+        fbLayout.setSpacing(0)  # Adjust the spacing between elements
+        fbLayout.setAlignment(Qt.AlignmentFlag.AlignLeft)
+        fbLayout.addWidget(self.show_facebook_checkbox)
+        fbLayout.addWidget(QLabel("Facebook"))
+        fbcontainer = QWidget()
+        fbcontainer.setLayout(fbLayout)
+
+        twitterLayout = QHBoxLayout()
+        twitterLayout.setSpacing(0)  # Adjust the spacing between elements
+        twitterLayout.setAlignment(Qt.AlignmentFlag.AlignLeft)
+        twitterLayout.addWidget(self.show_twitter_checkbox)
+        twitterLayout.addWidget(QLabel("Twitter"))
+        twittercontainer = QWidget()
+        twittercontainer.setLayout(twitterLayout)
+
+        linkedinLayout = QHBoxLayout()
+        linkedinLayout.setSpacing(0)  # Adjust the spacing between elements
+        linkedinLayout.setAlignment(Qt.AlignmentFlag.AlignLeft)
+        linkedinLayout.addWidget(self.show_linkedin_checkbox)
+        linkedinLayout.addWidget(QLabel("LinkedIn"))
+        linkedincontainer = QWidget()
+        linkedincontainer.setLayout(linkedinLayout)
+
+        checkboxlayout.addWidget(instacontainer)
+        checkboxlayout.addWidget(fbcontainer)
+        checkboxlayout.addWidget(twittercontainer)
+        checkboxlayout.addWidget(linkedincontainer)
+        checkboxcontainer.setLayout(checkboxlayout)
+
+        formlayout.setVerticalSpacing(0)
+
+        formlayout.addRow(QLabel("Surface Crawl only"), self.show_crawl_checkbox)
+        formlayout.addRow(checkboxcontainer)
 
         self.AdvancedSettingsLayout.addLayout(formlayout)
+
 
 
     # create form method
