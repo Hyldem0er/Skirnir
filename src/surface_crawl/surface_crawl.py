@@ -46,8 +46,8 @@ def surface_crawl(instagram, facebook, twitter, linkedin, name, firstname, lastn
         list: A list of profile URLs found during surface crawling
     """
     urls = []
-    # browsers = [Browser("google", "https://www.google.com/search?client=firefox-b-d&q="), Browser("duckduckgo")] #  Browser("bing", "https://www.bing.com/search?q=")
-    browsers = [Browser("duckduckgo")] #  Browser("bing", "https://www.bing.com/search?q=")
+    browsers = [Browser("google", "https://www.google.com/search?client=firefox-b-d&q="), Browser("duckduckgo")] #  Browser("bing", "https://www.bing.com/search?q=")
+    # browsers = [Browser("duckduckgo")] #  Browser("bing", "https://www.bing.com/search?q=")
     
     # Name
     for browser in browsers:
@@ -61,6 +61,7 @@ def surface_crawl(instagram, facebook, twitter, linkedin, name, firstname, lastn
             if tmp[len(tmp) - 1] != '/':
                 tmp += '/'
             if "linkedin.com/in/" in tmp and not is_similar(tmp, lastname): # Eliminate wrong linkedIn profile
+                print(tmp)
                 continue
             profile_urls.append(format_url(tmp))
     

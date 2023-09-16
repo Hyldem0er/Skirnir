@@ -150,7 +150,7 @@ class MainWindow(QDialog):
 
         # Surface Crawl Checkbox
         self.show_crawl_checkbox = QCheckBox()
-        self.show_crawl_checkbox.setChecked(False)
+        self.show_crawl_checkbox.setChecked(True)
         self.show_crawl_checkbox.stateChanged.connect(self.gray)
 
         # Instagram Checkbox
