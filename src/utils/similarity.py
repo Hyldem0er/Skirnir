@@ -19,8 +19,8 @@ def is_similar(url,lastname):
 
     splitted_url = url.split("/")[4].split("-")
     for splitted_word in splitted_url:
-        print("jar =>", jar(unidecode(splitted_word), lastname), unidecode(splitted_word), lastname)
-        print("lev =>", lev(unidecode(splitted_word),lastname), unidecode(splitted_word), lastname)
+        # print("jar =>", jar(unidecode(splitted_word), lastname), unidecode(splitted_word), lastname)
+        # print("lev =>", lev(unidecode(splitted_word),lastname), unidecode(splitted_word), lastname)
         if jar(unidecode(splitted_word), lastname) >= 0.85:
             return True
         if len(splitted_url) == 1:

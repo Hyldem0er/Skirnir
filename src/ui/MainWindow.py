@@ -140,6 +140,12 @@ class MainWindow(QDialog):
         self.slider_container = QWidget()
         self.slider_container.setLayout(self.Sliderlayout)
         self.AdvancedSettingsLayout.addWidget(self.slider_container)
+        self.slider_container.setStyleSheet("color:grey;")
+        self.slider.setStyleSheet(
+                            "QSlider::handle:horizontal {"
+                            "background-color: grey;"
+                            "}")
+        self.slider.setDisabled(True)
     
     def createCheckBoxForm(self):
         # creating a form layout
@@ -149,9 +155,10 @@ class MainWindow(QDialog):
         self.formGroupBox.setLayout(formlayout)
 
         # Surface Crawl Checkbox
-        self.show_crawl_checkbox = QCheckBox()
-        self.show_crawl_checkbox.setChecked(True)
-        self.show_crawl_checkbox.stateChanged.connect(self.gray)
+        self.show_deepcrawl_checkbox = QCheckBox()
+        self.show_deepcrawl_checkbox.setChecked(False)
+        self.show_deepcrawl_checkbox.stateChanged.connect(self.gray)
+        
 
         # Instagram Checkbox
         self.show_instagram_checkbox = QCheckBox()
@@ -214,7 +221,7 @@ class MainWindow(QDialog):
 
         formlayout.setVerticalSpacing(0)
 
-        formlayout.addRow(QLabel("Surface Crawl only"), self.show_crawl_checkbox)
+        formlayout.addRow(QLabel("Deep Crawl"), self.show_deepcrawl_checkbox)
         formlayout.addRow(checkboxcontainer)
 
         self.AdvancedSettingsLayout.addLayout(formlayout)
@@ -282,7 +289,7 @@ class MainWindow(QDialog):
         self.progressBarThread.start()
 
     def gray(self):
-        if self.show_crawl_checkbox.isChecked():
+        if not self.show_deepcrawl_checkbox.isChecked():
             self.slider_container.setStyleSheet("color:grey;")
             self.slider.setStyleSheet(
                              "QSlider::handle:horizontal {"
@@ -308,9 +315,9 @@ class MainWindow(QDialog):
         crawl_list, advanced_profile_set, social_networks_dict = start_profile_research(self.show_instagram_checkbox.isChecked(), self.show_facebook_checkbox.isChecked(),
                                     self.show_twitter_checkbox.isChecked(), self.show_linkedin_checkbox.isChecked(),
                                     self.Firstname.text(), self.Lastname.text(), self.date.text(), self.nickname.text(),
-                                    self.show_date_checkbox.isChecked(), self.nickname_only.isChecked(), int(self.limit.text()), self.show_crawl_checkbox.isChecked())
+                                    self.show_date_checkbox.isChecked(), self.nickname_only.isChecked(), int(self.limit.text()), self.show_deepcrawl_checkbox.isChecked())
 
-        if self.show_crawl_checkbox.isChecked():
+        if self.show_deepcrawl_checkbox.isChecked():
             self.w = CrawlResultWindow(crawl_list, social_networks_dict)
         else:
             crawl_set = sort_crawl_result(crawl_list)
