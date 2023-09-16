@@ -46,8 +46,8 @@ def surface_crawl(instagram, facebook, twitter, linkedin, name, firstname, lastn
         list: A list of profile URLs found during surface crawling
     """
     urls = []
-    browsers = [Browser("google", "https://www.google.com/search?client=firefox-b-d&q="), Browser("duckduckgo")] #  Browser("bing", "https://www.bing.com/search?q=")
-    #browsers = [Browser("duckduckgo")] #  Browser("bing", "https://www.bing.com/search?q=")
+    # browsers = [Browser("google", "https://www.google.com/search?client=firefox-b-d&q="), Browser("duckduckgo")] #  Browser("bing", "https://www.bing.com/search?q=")
+    browsers = [Browser("duckduckgo")] #  Browser("bing", "https://www.bing.com/search?q=")
     
     # Name
     for browser in browsers:

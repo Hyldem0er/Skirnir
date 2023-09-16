@@ -210,8 +210,9 @@ def search_duckduckgo(query, sleep_interval=1):
     links = []
     try:
         with DDGS() as ddgs:
-            for r in ddgs.text(query, region='us-en', safesearch='Off'):
+            for r in ddgs.text(query, region='us-en', safesearch='off'):
                 links.append(r['href'])
+
         sleep(sleep_interval)
         return list(set(links))
     except Exception as e:
