@@ -27,10 +27,11 @@ def get(url, timeout=5, header=None):
     """
 
     logger.info(url)
-    proxies_dict = {
-        "https": get_proxy(),
-        "http": get_proxy()
-    }
+
+    # proxies_dict = {
+    #     "https": get_proxy(),
+    #     "http": get_proxy()
+    # }
     
     # url += "&start=" + str(start)
     # url += "&hl=" + lang 
@@ -44,7 +45,7 @@ def get(url, timeout=5, header=None):
         url=url,
         headers=headers,
         timeout=timeout,
-        proxies=proxies_dict
+        # proxies=proxies_dict
     )
     resp.raise_for_status()
     return resp

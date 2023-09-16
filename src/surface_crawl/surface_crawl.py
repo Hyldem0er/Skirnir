@@ -47,14 +47,12 @@ def surface_crawl(instagram, facebook, twitter, linkedin, name, firstname, lastn
     """
     urls = []
     browsers = [Browser("google", "https://www.google.com/search?client=firefox-b-d&q="), Browser("duckduckgo")] #  Browser("bing", "https://www.bing.com/search?q=")
+    #browsers = [Browser("duckduckgo")] #  Browser("bing", "https://www.bing.com/search?q=")
     
     # Name
     for browser in browsers:
         temp = browser.perform_surface_crawl(instagram, facebook, twitter, linkedin, name)
         urls.extend(temp)
-
-    # Mathing Nicknames
-    urls.extend(browsers[0].perform_surface_crawl(instagram, facebook, twitter, linkedin, create_query_matching_nicknames(firstname, lastname)))
 
     profile_urls = []
     for url in urls:
