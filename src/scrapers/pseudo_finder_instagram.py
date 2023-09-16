@@ -1,7 +1,10 @@
 from src.request_helper.request_handling import get
 import requests
 from random import shuffle
-import os
+import os, sys
+from loguru import logger
+
+logger.add(sys.stdout, colorize=True, format="<green>{time}</green> <level>{message}</level>")
 
 def create_instagram_link(rebound_site, nickname):
     """
@@ -72,7 +75,7 @@ def find_instagram_profile(nicknameList):
         >>> find_instagram_profile(["nickname1", "nickname2", "nickname3"])
         ['https://www.instagram.com/nickname1/', 'https://www.instagram.com/nickname2/']
     """
-    print("Searching for IG profile")
+    logger.info("Searching for IG profile")
 
     rebound_sites = [
         "https://www.picnob.com/fr/profile/",
@@ -89,19 +92,19 @@ def find_instagram_profile(nicknameList):
         shuffle(rebound_sites)
 
         for rebound_site in rebound_sites:
-            os.system('cls' if os.name == 'nt' else 'clear')
+            # os.system('cls' if os.name == 'nt' else 'clear')
             try:
-                print("Searching " + nickname)
+                logger.info("Searching {}", nickname)
                 igLink = create_instagram_link(rebound_site, nickname)
-                print(igLink)
+                logger.info(igLink)
 
                 if is_instagram_profile(igLink):
                     var = "https://www.instagram.com/" + nickname + "/"
                     existing_profile_list.append(var)
-                    print(f"Found! {var}")
+                    logger.info("Found! {}", var)
                 break
 
             except Exception as e:
-                print(e)
+                logger.exception(e)
 
     return existing_profile_list

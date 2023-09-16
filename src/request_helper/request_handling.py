@@ -1,6 +1,8 @@
-import requests
+import requests, sys
 from .user_agents import get_useragent
 from .proxies import get_proxy
+from loguru import logger
+logger.add(sys.stdout, colorize=True, format="<green>{time}</green> <level>{message}</level>")
 
 import requests
 
@@ -23,10 +25,13 @@ def get(url, timeout=5, header=None):
         >>> get("https://example.com")
         <Response [200]>
     """
-    proxies_dict = {
-        "https": get_proxy(),
-        "http": get_proxy()
-    }
+
+    logger.info(url)
+
+    # proxies_dict = {
+    #     "https": get_proxy(),
+    #     "http": get_proxy()
+    # }
     
     # url += "&start=" + str(start)
     # url += "&hl=" + lang 
@@ -40,7 +45,7 @@ def get(url, timeout=5, header=None):
         url=url,
         headers=headers,
         timeout=timeout,
-        proxies=proxies_dict
+        # proxies=proxies_dict
     )
     resp.raise_for_status()
     return resp

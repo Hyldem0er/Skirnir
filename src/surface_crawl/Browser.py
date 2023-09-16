@@ -1,4 +1,8 @@
 from src.surface_crawl.create_url_or_query import *
+import sys
+from loguru import logger
+
+logger.add(sys.stdout, colorize=True, format="<green>{time}</green> <level>{message}</level>")
 
 class Browser:
     """
@@ -73,6 +77,7 @@ class Browser:
         """
         if self.name == "google":
             research_url = create_surface_crawl_url(self, instagram, facebook, twitter, linkedin, name)
+            logger.debug("Google crawling result : {}", research_url)
             result_list = search_google(research_url)
             return result_list
 
@@ -81,6 +86,7 @@ class Browser:
             result_list = []
             for query in research_queries:
                 result_list.extend(search_duckduckgo(query))
+            logger.debug("Duckduckgo crawling result : {}", result_list)
             return result_list
 
         if self.name == "bing":
@@ -88,6 +94,7 @@ class Browser:
             research_urls = create_surface_crawl_multiple_url(self, instagram, facebook, twitter, linkedin, name)
             for research_url in research_urls:
                 result_list.extend(search_google(research_url))
+            logger.debug("Bing crawling result : {}",result_list)
             return result_list
 
         return None

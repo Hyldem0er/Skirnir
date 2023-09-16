@@ -2,8 +2,9 @@ import requests
 from random import choice
 import json
 
+# [Warning] : This code is WIP and not used in the code for now
 def retrieve_proxies_list():
-
+    
     # Use requests to send a GET request to the proxy list
     r = requests.get('https://raw.githubusercontent.com/mertguvencli/http-proxy-list/main/proxy-list/data.json', headers={"Content-Type":"application/json"})
 

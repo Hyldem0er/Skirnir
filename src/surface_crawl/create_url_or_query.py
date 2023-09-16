@@ -2,7 +2,10 @@ from duckduckgo_search import DDGS
 from bs4 import BeautifulSoup
 from time import sleep
 from src.request_helper.request_handling import get
+import sys
+from loguru import logger
 
+logger.add(sys.stdout, colorize=True, format="<green>{time}</green> <level>{message}</level>")
 def calculate_number_activate_networks(instagram, facebook, twitter, linkedin):
         """
         Calculate the number of activated social media networks based on the provided parameters.
@@ -161,7 +164,7 @@ def create_surface_crawl_query(instagram, facebook, twitter, linkedin, name):
 
         return queries
 
-def search_google(research_url, sleep_interval=1):
+def search_google(research_url, sleep_interval=5):
     """
     Performs a Google search and retrieves the links from the search results.
 
@@ -185,7 +188,8 @@ def search_google(research_url, sleep_interval=1):
                 links.append(link.get("href"))
         sleep(sleep_interval)
         return list(set(links))
-    except Exception:
+    except Exception as e:
+        logger.exception(e)
         return []
 
 def search_duckduckgo(query, sleep_interval=1):
@@ -206,9 +210,11 @@ def search_duckduckgo(query, sleep_interval=1):
     links = []
     try:
         with DDGS() as ddgs:
-            for r in ddgs.text(query, region='us-en', safesearch='Off'):
+            for r in ddgs.text(query, region='wt-wt', safesearch='off'):
                 links.append(r['href'])
+
         sleep(sleep_interval)
         return list(set(links))
-    except Exception:
-        return []
+    except Exception as e:
+        logger.exception(e)
+        return links
