@@ -115,16 +115,17 @@ class MainWindow(QDialog):
         # Slider value
         self.limitLabel = QLabel("Limit the size of generated nicknames :")
 
-        self.limit = QLabel("13")
 
         # Slide Bar
+        limit = 9
+
         self.slider = QSlider(Qt.Horizontal, self)
         self.slider.setFocusPolicy(Qt.NoFocus)
         self.slider.setTickPosition(QSlider.TicksBothSides)
         self.slider.setTickInterval(1)
         self.slider.setSingleStep(1)
-        self.slider.setRange(11, 15)
-        self.slider.setValue(13)
+        self.slider.setRange(3, 15)
+        self.slider.setValue(limit)
         self.slider.valueChanged[int].connect(self.setLimit)
         self.slider.setStyleSheet(
                              "QSlider::handle:horizontal {"
@@ -132,6 +133,7 @@ class MainWindow(QDialog):
                              "}")
         
         self.Sliderlayout.addWidget(self.limitLabel)
+        self.limit = QLabel(str(limit))
         self.Sliderlayout.addWidget(self.limit)
         self.Sliderlayout.addWidget(self.slider)
        
