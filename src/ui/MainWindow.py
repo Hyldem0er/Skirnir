@@ -317,6 +317,8 @@ class MainWindow(QDialog):
 
     # call nickname generation function
     def start_checking_profile(self):
+        open_social_network_login_page(self.show_instagram_checkbox.isChecked(), self.show_facebook_checkbox.isChecked(),
+                                    self.show_twitter_checkbox.isChecked(), self.show_linkedin_checkbox.isChecked())
         self.showLoadingBar = True
         logger.info("Start Crawling")
         
@@ -331,6 +333,5 @@ class MainWindow(QDialog):
         else:
             self.w = CrawlResultWindow(crawl_list, social_networks_dict)
 
-        open_social_network_login_page(self.show_instagram_checkbox.isChecked(), self.show_facebook_checkbox.isChecked(),
-                                    self.show_twitter_checkbox.isChecked(), self.show_linkedin_checkbox.isChecked())
+      
         self.w.show()
