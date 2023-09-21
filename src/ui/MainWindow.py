@@ -178,11 +178,13 @@ class MainWindow(QDialog):
 
         checkboxlayout = QVBoxLayout()
         checkboxlayout.setSpacing(0)  # Adjust the spacing between elements
+        checkboxlayout.setContentsMargins(0, 5, 0, 0)  # Set margins to zero
         checkboxlayout.setAlignment(Qt.AlignmentFlag.AlignTop)
         checkboxcontainer = QWidget()
 
         instaLayout = QHBoxLayout()
         instaLayout.setSpacing(0)  # Adjust the spacing between elements
+        instaLayout.setContentsMargins(0, 10, 0, 0)  # Set margins to zero
         instaLayout.setAlignment(Qt.AlignmentFlag.AlignLeft)
         instaLayout.addWidget(self.show_instagram_checkbox)
         instaLayout.addWidget(QLabel("Instagram"))
@@ -191,6 +193,7 @@ class MainWindow(QDialog):
 
         fbLayout = QHBoxLayout()
         fbLayout.setSpacing(0)  # Adjust the spacing between elements
+        fbLayout.setContentsMargins(0, 10, 0, 0)  # Set margins to zero
         fbLayout.setAlignment(Qt.AlignmentFlag.AlignLeft)
         fbLayout.addWidget(self.show_facebook_checkbox)
         fbLayout.addWidget(QLabel("Facebook"))
@@ -199,6 +202,7 @@ class MainWindow(QDialog):
 
         twitterLayout = QHBoxLayout()
         twitterLayout.setSpacing(0)  # Adjust the spacing between elements
+        twitterLayout.setContentsMargins(0, 10, 0, 0)  # Set margins to zero
         twitterLayout.setAlignment(Qt.AlignmentFlag.AlignLeft)
         twitterLayout.addWidget(self.show_twitter_checkbox)
         twitterLayout.addWidget(QLabel("Twitter"))
@@ -207,6 +211,7 @@ class MainWindow(QDialog):
 
         linkedinLayout = QHBoxLayout()
         linkedinLayout.setSpacing(0)  # Adjust the spacing between elements
+        linkedinLayout.setContentsMargins(0, 10, 0, 0)  # Set margins to zero
         linkedinLayout.setAlignment(Qt.AlignmentFlag.AlignLeft)
         linkedinLayout.addWidget(self.show_linkedin_checkbox)
         linkedinLayout.addWidget(QLabel("LinkedIn"))
