@@ -8,6 +8,7 @@ from src.ui.ProgressThread import ProgressThread
 import os, time, sys
 from src.utils.start_research import start_profile_research, sort_crawl_result
 from src.ui.Loading import Loading
+from src.utils.login import open_social_network_login_page
 from loguru import logger
 
 logger.add(sys.stdout, colorize=True, format="<green>{time}</green> <level>{message}</level>")
@@ -329,4 +330,7 @@ class MainWindow(QDialog):
             self.w = DeepResultWindow(crawl_set, advanced_profile_set, social_networks_dict)
         else:
             self.w = CrawlResultWindow(crawl_list, social_networks_dict)
+
+        open_social_network_login_page(self.show_instagram_checkbox.isChecked(), self.show_facebook_checkbox.isChecked(),
+                                    self.show_twitter_checkbox.isChecked(), self.show_linkedin_checkbox.isChecked())
         self.w.show()
