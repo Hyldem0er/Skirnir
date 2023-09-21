@@ -318,8 +318,8 @@ class MainWindow(QDialog):
                                     self.show_date_checkbox.isChecked(), self.nickname_only.isChecked(), int(self.limit.text()), self.show_deepcrawl_checkbox.isChecked())
 
         if self.show_deepcrawl_checkbox.isChecked():
-            self.w = CrawlResultWindow(crawl_list, social_networks_dict)
-        else:
             crawl_set = sort_crawl_result(crawl_list)
             self.w = DeepResultWindow(crawl_set, advanced_profile_set, social_networks_dict)
+        else:
+            self.w = CrawlResultWindow(crawl_list, social_networks_dict)
         self.w.show()

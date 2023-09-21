@@ -2,6 +2,7 @@ import requests, sys
 from .user_agents import get_useragent
 from .proxies import get_proxy
 from loguru import logger
+
 logger.add(sys.stdout, colorize=True, format="<green>{time}</green> <level>{message}</level>")
 
 import requests
@@ -48,4 +49,5 @@ def get(url, timeout=5, header=None):
         # proxies=proxies_dict
     )
     resp.raise_for_status()
+    logger.info(resp.status_code)
     return resp

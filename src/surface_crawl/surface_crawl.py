@@ -7,7 +7,12 @@ import requests
 from src.surface_crawl.match_nicknames import create_query_matching_nicknames
 
 def is_not_noise_url(url):
-    return ("/directory/" not in url and "/posts/" not in url and "/photos/" not in url and "/videos/" not in url and "/story/" not in url and "/media/" not in url and "/groups/" not in url and "/status/" not in url and "/dir/" not in url and "/pulse/" not in url and "/company/" not in url and "/events/" not in url and "/hashtag/" not in url and "/p/" not in url and "/public/" not in url and "/search/" not in url and "/filter/" not in url  and "/jobs/" not in url and "/explore/" not in url and "/pages/" not in url)
+    return ("/directory/" not in url and "/posts/" not in url and "/photos/" not in url and "/videos/" not in url
+            and "/story/" not in url and "/media/" not in url and "/groups/" not in url and "/status/" not in url
+            and "/dir/" not in url and "/pulse/" not in url and "/company/" not in url and "/events/" not in url
+            and "/hashtag/" not in url and "/p/" not in url and "/public/" not in url and "/search/" not in url
+            and "/filter/" not in url  and "/jobs/" not in url and "/explore/" not in url and "/pages/" not in url
+            and "/reel/" not in url  and "/review/" not in url and "/legacy/" not in url and "/notes/" not in url)
 
 def extract_profile_url(url):
     """
@@ -61,7 +66,7 @@ def surface_crawl(instagram, facebook, twitter, linkedin, name, firstname, lastn
             if tmp[len(tmp) - 1] != '/':
                 tmp += '/'
             if "linkedin.com/in/" in tmp and not is_similar(tmp, lastname): # Eliminate wrong linkedIn profile
-                print(tmp)
+                # print(tmp)
                 continue
             profile_urls.append(format_url(tmp))
     

@@ -80,7 +80,7 @@ def create_social_networks_dict(instagram_checkbox, facebook_checkbox, twitter_c
 
 
 def start_profile_research(instagram_checkbox, facebook_checkbox, twitter_checkbox, linkedin_checkbox,
-                           firstname, lastname, date, nickname, birthday_on, nickname_only, limit, crawl_is_checked):
+                           firstname, lastname, date, nickname, birthday_on, nickname_only, limit, deepcrawl_is_checked):
     """
     Starts the profile research process based on the provided parameters.
 
@@ -96,7 +96,7 @@ def start_profile_research(instagram_checkbox, facebook_checkbox, twitter_checkb
         birthday_on (str): The birthday option.
         nickname_only (bool): The state of the "Nickname Only" checkbox.
         limit (int): The limit for generating possible pseudonyms.
-        crawl_is_checked (bool): The state of the "Crawl" checkbox.
+        deepcrawl_is_checked (bool): The state of the "Crawl" checkbox.
 
     Returns:
         tuple: A tuple containing the crawl list, advanced profile set, and social networks dictionary.
@@ -119,7 +119,7 @@ def start_profile_research(instagram_checkbox, facebook_checkbox, twitter_checkb
 
     advanced_profile_set = {}
 
-    if not crawl_is_checked:
+    if deepcrawl_is_checked:
         instagram_profiles = find_instagram_profile(generated_nicknames)
         if instagram_checkbox:
             advanced_profile_set["instagram"] = instagram_profiles
