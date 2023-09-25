@@ -2,7 +2,7 @@
 
 
 <p align="center">
-  <img src="https://github.com/Thr0ttr/Skirnir/blob/develop/data/Skirnir-transparent.png" alt="Profile Icon" width="300px">
+  <img src="https://github.com/Hyldem0er/Skirnir/blob/master/data/Skirnir-logo-semi-transparent.png" alt="Profile Icon" width="300px">
 </p>
 
 #
@@ -23,7 +23,7 @@ Skirnir is a program specifically developed to scan popular social networks like
 <a id="installation"></a>
 ## Setup
 
-To install the required dependencies, run the following command:
+To install the required dependencies, navigate to the project directory and run the following command in a terminal:
 
 ```shell
 pip install -r requirements.txt
@@ -31,7 +31,7 @@ pip install -r requirements.txt
 <a id="running-the-Program"></a>
 ## Running the Program
 
-To launch the program, navigate to the project directory and run the following command: 
+To launch the program, navigate to the project directory and run the following command in a terminal: 
 ```shell
 python main.py
 ```
