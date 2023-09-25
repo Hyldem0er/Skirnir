@@ -25,7 +25,7 @@ class CrawlResultWindow(QWidget):
         self.show_facebook_filter = social_networks_dict["facebook"]
         self.show_twitter_filter = social_networks_dict["twitter"]
         self.show_linkedin_filter = social_networks_dict["linkedin"]
-
+        self.setWindowFlags(Qt.WindowStaysOnTopHint)
         self.initUI()
        
     
