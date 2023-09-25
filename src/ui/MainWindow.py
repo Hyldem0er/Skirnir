@@ -8,6 +8,7 @@ from src.ui.ProgressThread import ProgressThread
 import os, time, sys
 from src.utils.start_research import start_profile_research, sort_crawl_result
 from src.ui.Loading import Loading
+from src.utils.login import open_social_network_login_page
 from loguru import logger
 
 logger.add(sys.stdout, colorize=True, format="<green>{time}</green> <level>{message}</level>")
@@ -26,6 +27,7 @@ class MainWindow(QDialog):
         self.height = 400
         self.progressBarThread = None
         self.p = Loading()
+        self.number_of_start = 0
         self.initUI()
 
 
@@ -115,16 +117,17 @@ class MainWindow(QDialog):
         # Slider value
         self.limitLabel = QLabel("Limit the size of generated nicknames :")
 
-        self.limit = QLabel("13")
 
         # Slide Bar
+        limit = 9
+
         self.slider = QSlider(Qt.Horizontal, self)
         self.slider.setFocusPolicy(Qt.NoFocus)
         self.slider.setTickPosition(QSlider.TicksBothSides)
         self.slider.setTickInterval(1)
         self.slider.setSingleStep(1)
-        self.slider.setRange(11, 15)
-        self.slider.setValue(13)
+        self.slider.setRange(3, 15)
+        self.slider.setValue(limit)
         self.slider.valueChanged[int].connect(self.setLimit)
         self.slider.setStyleSheet(
                              "QSlider::handle:horizontal {"
@@ -132,6 +135,7 @@ class MainWindow(QDialog):
                              "}")
         
         self.Sliderlayout.addWidget(self.limitLabel)
+        self.limit = QLabel(str(limit))
         self.Sliderlayout.addWidget(self.limit)
         self.Sliderlayout.addWidget(self.slider)
        
@@ -314,6 +318,10 @@ class MainWindow(QDialog):
 
     # call nickname generation function
     def start_checking_profile(self):
+        self.number_of_start += 1
+        if self.number_of_start == 1: # Open social network login page only on first launch
+            open_social_network_login_page(self.show_instagram_checkbox.isChecked(), self.show_facebook_checkbox.isChecked(),
+                self.show_twitter_checkbox.isChecked(), self.show_linkedin_checkbox.isChecked())
         self.showLoadingBar = True
         logger.info("Start Crawling")
         
@@ -327,4 +335,6 @@ class MainWindow(QDialog):
             self.w = DeepResultWindow(crawl_set, advanced_profile_set, social_networks_dict)
         else:
             self.w = CrawlResultWindow(crawl_list, social_networks_dict)
+
+      
         self.w.show()

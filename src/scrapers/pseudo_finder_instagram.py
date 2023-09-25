@@ -77,13 +77,15 @@ def find_instagram_profile(nicknameList):
     """
     logger.info("Searching for IG profile")
 
+    # Keep this list update
     rebound_sites = [
         "https://www.picnob.com/fr/profile/",
         "https://imginn.com/",
-        "https://apkun.com/v/",
         "https://storiesig.me/info?username=",
         "https://instastories.watch/info?username=",
-        "https://dumpoir.com/v/"
+        "https://dumpoir.com/v/",
+        "https://picuki.com/profile/",
+        "https://greatfon.com/v/"
     ]
 
     existing_profile_list = []

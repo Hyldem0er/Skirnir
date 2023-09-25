@@ -3,6 +3,7 @@ from PyQt5.QtGui import *
 from PyQt5.QtCore import *
 import os
 import webbrowser
+import pyperclip
 
 def check_social_networks(item, social_networks):
     return any(sn in item for sn in social_networks)
@@ -139,3 +140,25 @@ class CrawlResultWindow(QWidget):
         selected_items = self.crawl_list_widget.selectedItems()
         for url in selected_items:
             webbrowser.open(url.text())
+
+    def keyPressEvent(self, event):
+        super().keyPressEvent(event)
+        if event.key() == Qt.Key_C and (event.modifiers() & Qt.ControlModifier):
+            print("Crl C")
+            selected_items = self.crawl_list_widget.selectedItems()
+
+            urls = ""
+            for url in selected_items:
+                urls += url.text() + "\n"
+            pyperclip.copy(urls)
+
+            # # Create the mime data with the selected urls
+            # mime_data = QMimeData()
+            # mime_data.setUrls(urls)
+
+            # # Copy the mime data to the clipboard.
+            # clipboard = QApplication.clipboard()
+            # clipboard.setMimeData(mime_data)
+
+            # event = QEvent(QEvent.Clipboard)
+            # QApplication.sendEvent(clipboard, event)
