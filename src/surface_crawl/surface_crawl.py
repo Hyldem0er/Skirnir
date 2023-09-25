@@ -12,7 +12,8 @@ def is_not_noise_url(url):
             and "/dir/" not in url and "/pulse/" not in url and "/company/" not in url and "/events/" not in url
             and "/hashtag/" not in url and "/p/" not in url and "/public/" not in url and "/search/" not in url
             and "/filter/" not in url  and "/jobs/" not in url and "/explore/" not in url and "/pages/" not in url
-            and "/reel/" not in url  and "/review/" not in url and "/legacy/" not in url and "/notes/" not in url)
+            and "/reel/" not in url  and "/review/" not in url and "/legacy/" not in url and "/notes/" not in url
+            and "/tv/" not in url)
 
 def extract_profile_url(url):
     """
