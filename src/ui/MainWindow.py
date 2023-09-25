@@ -27,6 +27,7 @@ class MainWindow(QDialog):
         self.height = 400
         self.progressBarThread = None
         self.p = Loading()
+        self.number_of_start = 0
         self.initUI()
 
 
@@ -317,8 +318,10 @@ class MainWindow(QDialog):
 
     # call nickname generation function
     def start_checking_profile(self):
-        open_social_network_login_page(self.show_instagram_checkbox.isChecked(), self.show_facebook_checkbox.isChecked(),
-                                    self.show_twitter_checkbox.isChecked(), self.show_linkedin_checkbox.isChecked())
+        self.number_of_start += 1
+        if self.number_of_start == 1: # Open social network login page only on first launch
+            open_social_network_login_page(self.show_instagram_checkbox.isChecked(), self.show_facebook_checkbox.isChecked(),
+                self.show_twitter_checkbox.isChecked(), self.show_linkedin_checkbox.isChecked())
         self.showLoadingBar = True
         logger.info("Start Crawling")
         

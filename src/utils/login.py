@@ -1,6 +1,7 @@
 import webbrowser
 
 def open_social_network_login_page(instagram, facebook, twitter, linkedin):
+    
     if instagram:
         webbrowser.open("https://www.instagram.com/accounts/login/")
     if facebook:
