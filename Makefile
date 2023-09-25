@@ -24,7 +24,7 @@ activate:
 
 # Install required modules
 install:
-	pip install -r requirement.txt
+	pip install -r requirements.txt
 
 # Run the main.py script
 run:
