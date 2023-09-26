@@ -3,6 +3,7 @@ from src.surface_crawl.surface_crawl import surface_crawl
 from src.scrapers.pseudo_finder_instagram import find_instagram_profile
 from loguru import logger
 import sys
+from src.utils.export_nickname import export_nicknames_csv
 
 logger.add(sys.stdout, colorize=True, format="<green>{time}</green> <level>{message}</level>")
 
@@ -80,7 +81,8 @@ def create_social_networks_dict(instagram_checkbox, facebook_checkbox, twitter_c
 
 
 def start_profile_research(instagram_checkbox, facebook_checkbox, twitter_checkbox, linkedin_checkbox,
-                           firstname, lastname, date, nickname, birthday_on, nickname_only, limit, deepcrawl_is_checked):
+                           firstname, lastname, date, nickname, birthday_on, nickname_only, limit, 
+                           deepcrawl_is_checked, nickname_export):
     """
     Starts the profile research process based on the provided parameters.
 
@@ -116,6 +118,9 @@ def start_profile_research(instagram_checkbox, facebook_checkbox, twitter_checkb
     crawl_list = surface_crawl(instagram_checkbox, facebook_checkbox, twitter_checkbox, linkedin_checkbox, name, firstname, lastname)
 
     generated_nicknames = generate_possible_pseudonyms(firstname, lastname, date, nickname, limit, birthday_on, nickname_only)
+
+    if nickname_export:
+        export_nicknames_csv(generated_nicknames)
 
     advanced_profile_set = {}
 

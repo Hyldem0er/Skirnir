@@ -109,6 +109,7 @@ class MainWindow(QDialog):
         
         self.createCheckBoxForm()
         self.createSliderHorizontalLayout()
+        self.createExportButton()
 
         self.AdvancedSettings.setLayout(self.AdvancedSettingsLayout)
 
@@ -158,7 +159,7 @@ class MainWindow(QDialog):
         # setting layout
         self.formGroupBox.setLayout(formlayout)
 
-        # Surface Crawl Checkbox
+        # DeepCrawl Checkbox
         self.show_deepcrawl_checkbox = QCheckBox()
         self.show_deepcrawl_checkbox.setChecked(False)
         self.show_deepcrawl_checkbox.stateChanged.connect(self.gray)
@@ -182,7 +183,7 @@ class MainWindow(QDialog):
 
         checkboxlayout = QVBoxLayout()
         checkboxlayout.setSpacing(0)  # Adjust the spacing between elements
-        checkboxlayout.setContentsMargins(0, 5, 0, 0)  # Set margins to zero
+        checkboxlayout.setContentsMargins(0, 0, 0, 0)  # Set margins to zero
         checkboxlayout.setAlignment(Qt.AlignmentFlag.AlignTop)
         checkboxcontainer = QWidget()
 
@@ -228,14 +229,32 @@ class MainWindow(QDialog):
         checkboxlayout.addWidget(linkedincontainer)
         checkboxcontainer.setLayout(checkboxlayout)
 
-        formlayout.setVerticalSpacing(0)
-
-        formlayout.addRow(QLabel("Deep Crawl"), self.show_deepcrawl_checkbox)
+        formlayout.setVerticalSpacing(15)
+        
         formlayout.addRow(checkboxcontainer)
+        formlayout.addRow(QLabel("Deep Crawl"), self.show_deepcrawl_checkbox)
 
         self.AdvancedSettingsLayout.addLayout(formlayout)
+        
+    def createExportButton(self):
+
+        export_layout = QHBoxLayout()
+        export_layout.addWidget(QLabel("Export generated nickanmes in CSV"))
+
+        # DeepCrawl Checkbox
+        self.show_exportCSV_checkbox = QCheckBox()
+        self.show_exportCSV_checkbox.setChecked(False)
+        self.show_exportCSV_checkbox.stateChanged.connect(self.gray)
+        self.show_exportCSV_checkbox.setDisabled(True)
+
+        
+        export_layout.addWidget(self.show_exportCSV_checkbox)
+        self.exportCSV = QWidget()
+        self.exportCSV.setLayout(export_layout)
+        self.exportCSV.setStyleSheet("color:grey;")
 
 
+        self.AdvancedSettingsLayout.addWidget(self.exportCSV)
 
     # create form method
     def createForm(self):
@@ -305,6 +324,10 @@ class MainWindow(QDialog):
                              "background-color: grey;"
                              "}")
             self.slider.setDisabled(True)
+            self.exportCSV.setStyleSheet("color:grey;")
+            self.show_exportCSV_checkbox.setDisabled(True)
+            self.show_exportCSV_checkbox.setCheckState(False)
+
         else:
             self.slider_container.setStyleSheet("color:white")
             self.slider.setStyleSheet(
@@ -312,6 +335,10 @@ class MainWindow(QDialog):
                              "background-color: #e03d3d;"
                              "}")
             self.slider.setDisabled(False)
+            self.exportCSV.setStyleSheet("color:white;")
+            self.show_exportCSV_checkbox.setDisabled(False)
+
+
 
     def setLimit(self, value):
         self.limit.setText(str(value))
@@ -328,7 +355,8 @@ class MainWindow(QDialog):
         crawl_list, advanced_profile_set, social_networks_dict = start_profile_research(self.show_instagram_checkbox.isChecked(), self.show_facebook_checkbox.isChecked(),
                                     self.show_twitter_checkbox.isChecked(), self.show_linkedin_checkbox.isChecked(),
                                     self.Firstname.text(), self.Lastname.text(), self.date.text(), self.nickname.text(),
-                                    self.show_date_checkbox.isChecked(), self.nickname_only.isChecked(), int(self.limit.text()), self.show_deepcrawl_checkbox.isChecked())
+                                    self.show_date_checkbox.isChecked(), self.nickname_only.isChecked(), int(self.limit.text()), self.show_deepcrawl_checkbox.isChecked(),
+                                    self.show_exportCSV_checkbox.isChecked())
 
         if self.show_deepcrawl_checkbox.isChecked():
             crawl_set = sort_crawl_result(crawl_list)
