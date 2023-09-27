@@ -23,18 +23,32 @@ Skirnir is a program specifically developed to scan popular social networks like
 <a id="installation"></a>
 ## Setup
 
-To install the required dependencies, navigate to the project directory and run the following command in a terminal:
+To install the required dependencies, navigate to the project directory and : 
 
+Linux : 
+
+run the following command in a terminal:
 ```shell
-pip install -r requirements.txt
+sh launcher-linux.sh
 ```
+
+Windows : 
+
+Double click on launcher-win.bat
+
+
 <a id="running-the-Program"></a>
 ## Running the Program
 
-To launch the program, navigate to the project directory and run the following command in a terminal: 
+To launch the program, navigate to the project directory and : 
+
+Linux : 
+
+run the following command in a terminal:
 ```shell
-python main.py
+sh launcher-linux.sh
 ```
+
 <a id="interface"></a>
 ## Interface
 
@@ -48,7 +62,7 @@ python main.py
 
 - **Advanced settings**
 
-    - **Surface Crawl Only** : If selected, the program will perform a surface crawl by searching Google and DuckDuckGo results with certain criteria to find the most relevant profiles. This method may sometimes uncover private accounts or deleted profiles. If this option is not selected, the program will perform a "deep crawl" search.
+    - **Deep crawl** : If not selected, the program will perform a surface crawl by searching Google and DuckDuckGo results with certain criteria to find the most relevant profiles. This method may sometimes uncover private accounts or deleted profiles. If this option is not selected, the program will perform a "deep crawl" search.
     
 - **Social Networks**
 
@@ -56,7 +70,8 @@ python main.py
 
 - **Deepcrawl**
 
-    Deepcrawl is the default search method. It generates multiple nicknames based on the information provided in the search form fields and the size limit set using the horizontal scroll bar. Currently, only Instagram is deepcrawled. Given that Facebook is owned by Meta, it is possible that the pseudonyms validated during the Instagram deepcrawl also exist on Facebook. These URLs will appear in red, which means that the link will not necessarily work. For Twitter and LinkedIn, only the surface exploration results will be displayed. However, Skirnir crawl duckduckgo, some accounts that have existed or passed private can be found. To obtain more results, you can try running the program again with the "surface crawl only" option, which will complete in just a few seconds.
+    Deepcrawl is the advanced search method. It generates multiple nicknames based on the information provided in the search form fields and the size limit set using the horizontal scroll bar. Currently, only Instagram is deepcrawled. Given that Facebook is owned by Meta, it is possible that the pseudonyms validated during the Instagram deepcrawl also exist on Facebook. These URLs will appear in red, which means that the link will not necessarily work. For Twitter and LinkedIn, only the surface exploration results will be displayed. However, Skirnir crawl duckduckgo, some accounts that have existed or passed private can be found. To obtain more results, you can try running the program again with the "surface crawl only" option, which will complete in just a few seconds.
+  The generated nicknames can be extract in a CSV file by activating "export nicknames in CSV".
 
 - **Filter search bar**
 
