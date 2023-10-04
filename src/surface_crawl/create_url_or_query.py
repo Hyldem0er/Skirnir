@@ -6,6 +6,7 @@ import sys
 from loguru import logger
 
 logger.add(sys.stdout, colorize=True, format="<green>{time}</green> <level>{message}</level>")
+
 def calculate_number_activate_networks(instagram, facebook, twitter, linkedin):
         """
         Calculate the number of activated social media networks based on the provided parameters.
@@ -22,7 +23,7 @@ def calculate_number_activate_networks(instagram, facebook, twitter, linkedin):
         activated_networks = sum([instagram, facebook, twitter, linkedin])
         return activated_networks
     
-def create_surface_crawl_url(browser, instagram, facebook, twitter, linkedin, name):
+def create_surface_crawl_url(browser, instagram, facebook, twitter, linkedin, name, nickname_mode = False):
     """
     Generate a Browser search URL for surface crawling based on provided parameters.
     
@@ -36,9 +37,11 @@ def create_surface_crawl_url(browser, instagram, facebook, twitter, linkedin, na
     Returns:
         list : A list of the generated Google search URL for Google and Duckduckgo.
     """
-
-    # Base URL with the provided first and last name
-    url = browser.research_urls + "%22" + name + "%22"
+    if nickname_mode:
+        url = browser.research_urls + name
+    else:
+        # Base URL with the provided first and last name
+        url = browser.research_urls + "%22" + name + "%22"
     
     # Calculate the limit of activated networks
     limit = calculate_number_activate_networks(instagram, facebook, twitter, linkedin)
@@ -64,11 +67,11 @@ def create_surface_crawl_url(browser, instagram, facebook, twitter, linkedin, na
             or_limit -= 1
             url += "+{}{}".format(search_parameter, "+OR" if or_limit != 0 else "")
 
-    # Remove noise posts, photos, and videos
+    if not nickname_mode:
+        # Remove noise posts, photos, and videos
+        url += "+-inurl%3A%2Fposts%2F+-inurl%3A%2Fphotos%2F+-inurl%3A%2Fvideos%2F+-inurl%3A%2Fstory%2F+-inurl%3A%2Fmedia%2F+-inurl%3A%2Fgroups%2F+-inurl%3A%2Fstatus%2F+-inurl%3A%2Fdir%2F+-inurl%3A%2Fpulse%2F+-inurl%3A%2Fcompany%2F+-inurl%3A%2Fevents%2F+-inurl%3A%2Fhashtag%2F+-inurl%3A%2Fp%2F+-inurl%3A%2Fpublic%2F+-inurl%3A%2Fsearch%2F+-inurl%3A%2Fjobs%2F+-inurl%3A%2Fpages%2F+-inurl%3A%2Fexplore%2F+-inurl%3A.php&filter=0"
 
-    url += "+-inurl%3A%2Fposts%2F+-inurl%3A%2Fphotos%2F+-inurl%3A%2Fvideos%2F+-inurl%3A%2Fstory%2F+-inurl%3A%2Fmedia%2F+-inurl%3A%2Fgroups%2F+-inurl%3A%2Fstatus%2F+-inurl%3A%2Fdir%2F+-inurl%3A%2Fpulse%2F+-inurl%3A%2Fcompany%2F+-inurl%3A%2Fevents%2F+-inurl%3A%2Fhashtag%2F+-inurl%3A%2Fp%2F+-inurl%3A%2Fpublic%2F+-inurl%3A%2Fsearch%2F+-inurl%3A%2Fjobs%2F+-inurl%3A%2Fpages%2F+-inurl%3A%2Fexplore%2F+-inurl%3A.php&filter=0"
-
-    if browser.name == "google":
+    if browser.name == "google" and not nickname_mode:
         # Add the 'num' parameter based on the limit of activated networks
         url += "&num=" + str(limit * 25)
     

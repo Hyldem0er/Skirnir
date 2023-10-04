@@ -4,7 +4,6 @@ from src.utils.format_url import format_url
 from src.surface_crawl.Browser import Browser
 import re
 import requests
-from src.surface_crawl.match_nicknames import create_query_matching_nicknames
 
 def is_not_noise_url(url):
     return ("/directory/" not in url and "/posts/" not in url and "/photos/" not in url and "/videos/" not in url
@@ -52,12 +51,12 @@ def surface_crawl(instagram, facebook, twitter, linkedin, name, firstname, lastn
         list: A list of profile URLs found during surface crawling
     """
     urls = []
-    browsers = [Browser("google", "https://www.google.com/search?client=firefox-b-d&q="), Browser("duckduckgo")] #  Browser("bing", "https://www.bing.com/search?q=")
+    browsers = [Browser("google", "https://www.google.com/search?client=firefox-b-d&q="), Browser("nicknames", "https://www.google.com/search?client=firefox-b-d&q="), Browser("duckduckgo")] #  Browser("bing", "https://www.bing.com/search?q=")
     # browsers = [Browser("duckduckgo")] #  Browser("bing", "https://www.bing.com/search?q=")
     
     # Name
     for browser in browsers:
-        temp = browser.perform_surface_crawl(instagram, facebook, twitter, linkedin, name)
+        temp = browser.perform_surface_crawl(instagram, facebook, twitter, linkedin, name, firstname, lastname)
         urls.extend(temp)
 
     profile_urls = []

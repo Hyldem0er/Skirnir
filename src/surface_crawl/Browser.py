@@ -1,6 +1,7 @@
 from src.surface_crawl.create_url_or_query import *
 import sys
 from loguru import logger
+from src.surface_crawl.match_nicknames import match_nicknames, create_query_matching_nicknames
 
 logger.add(sys.stdout, colorize=True, format="<green>{time}</green> <level>{message}</level>")
 
@@ -53,7 +54,7 @@ class Browser:
         """
         return self.research_urls
 
-    def perform_surface_crawl(self, instagram, facebook, twitter, linkedin, name):
+    def perform_surface_crawl(self, instagram, facebook, twitter, linkedin, name, firstname, lastname):
         """
         Performs a surface crawl on specified platforms using the browser.
 
@@ -75,9 +76,20 @@ class Browser:
             >>> browser.perform_surface_crawl(instagram=True, facebook=True, twitter=True, linkedin=True, name="JohnDoe")
             ['result1', 'result2', 'result3']
         """
+        
         if self.name == "google":
             research_url = create_surface_crawl_url(self, instagram, facebook, twitter, linkedin, name)
             logger.debug("Google crawling result : {}", research_url)
+            result_list = search_google(research_url)
+            return result_list
+        
+        if self.name == "nicknames":
+            # Nicknames
+            matching_nicknames_list = match_nicknames(firstname)
+            nickname_query = create_query_matching_nicknames(lastname, matching_nicknames_list)
+            research_url = create_surface_crawl_url(self, instagram, facebook, twitter, linkedin, nickname_query, nickname_mode=True)
+            
+            logger.debug("Google crawling result for nicknames that match to {} : {}", firstname, research_url)
             result_list = search_google(research_url)
             return result_list
 

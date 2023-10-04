@@ -59,8 +59,6 @@ def is_instagram_profile(link):
         raise Exception(e)
 
 
-import os
-
 def find_instagram_profile(nicknameList):
     """
     Searches for Instagram profiles corresponding to the provided nicknames.
