@@ -41,3 +41,24 @@ def create_query_matching_nicknames(lastname, matching_nicknames_list):
         query += "\"{}\"{}".format(nicknames, "+OR+" if or_limit != 0 else "")
     query += ")+AND+\"{}\"".format(lastname)
     return query
+
+
+def list_nicknames():
+    """
+    Matches nicknames based on a given first name in a CSV file.
+    
+    Args:
+        firstname (str): The first name to search for in the CSV file.
+        
+    Returns:
+        list: A list of matching nicknames found in the CSV file.
+    """
+    data = []  # Initialize an empty list to store the data
+
+    with open(csv_file_path, mode='r') as csv_file:
+        csv_reader = csv.DictReader(csv_file)
+        
+        for row in csv_reader:
+            data.append(row)  # Append each row as a dictionary to the 'data' list
+
+    return data

@@ -14,14 +14,13 @@ class DeepResultWindow(QWidget):
     This "window" is a QWidget. If it has no parent, it
     will appear as a free-floating window as we want.
     """
-    def __init__(self, crawl_set, advanced_profile_set, social_networks_dict):
+    def __init__(self, crawl_set, social_networks_dict):
         super().__init__()
         self.left = 1000
         self.top = 200
         self.width = 500
         self.height = 400
         self.crawl_set = crawl_set
-        self.advanced_profile_set = advanced_profile_set
         self.show_instagram_tab = social_networks_dict["instagram"]
         self.show_facebook_tab = social_networks_dict["facebook"]
         self.show_twitter_tab = social_networks_dict["twitter"]
@@ -80,9 +79,6 @@ class DeepResultWindow(QWidget):
         tab.list_widget.addItems(self.crawl_set[social_network])
         
         start_deep_crawl = tab.list_widget.count()
-        
-        #  tab.list_widget.item(tab.list_widget.count() - 1).setBackground(QColor("red"))
-        tab.list_widget.addItems(self.advanced_profile_set[social_network]) # .setBackground(QColor("red"))
         
         self.color_deduced_results(tab, start_deep_crawl, social_network)
 

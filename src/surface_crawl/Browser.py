@@ -79,8 +79,8 @@ class Browser:
         
         if self.name == "google":
             research_url = create_surface_crawl_url(self, instagram, facebook, twitter, linkedin, name)
-            logger.debug("Google crawling result : {}", research_url)
             result_list = search_google(research_url)
+            logger.debug("Google crawling result : {}", result_list)
             return result_list
         
         if self.name == "nicknames":

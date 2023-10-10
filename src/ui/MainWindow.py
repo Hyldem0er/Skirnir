@@ -10,8 +10,12 @@ from src.utils.start_research import start_profile_research, sort_crawl_result
 from src.ui.Loading import Loading
 from src.utils.login import open_social_network_login_page
 from loguru import logger
+from src.surface_crawl.match_nicknames import list_nicknames
+from src.relevance.sort_by_relevance import sort_by_relevance
 
 logger.add(sys.stdout, colorize=True, format="<green>{time}</green> <level>{message}</level>")
+
+list_of_nickname = list_nicknames()
 
 # creating a class
 # that inherits the QDialog class
@@ -358,10 +362,16 @@ class MainWindow(QDialog):
                                     self.show_date_checkbox.isChecked(), self.nickname_only.isChecked(), int(self.limit.text()), self.show_deepcrawl_checkbox.isChecked(),
                                     self.show_exportCSV_checkbox.isChecked())
 
+
+        # TODO sort by relevance
+
         if self.show_deepcrawl_checkbox.isChecked():
             crawl_set = sort_crawl_result(crawl_list)
-            self.w = DeepResultWindow(crawl_set, advanced_profile_set, social_networks_dict)
+            crawl_set = crawl_set | advanced_profile_set
+            crawl_list = sort_by_relevance(crawl_set, self.Firstname.text(), self.Lastname.text(), list_of_nickname)
+            self.w = DeepResultWindow(crawl_list, social_networks_dict)
         else:
+            crawl_list = sort_by_relevance(set(crawl_list), self.Firstname.text(), self.Lastname.text(), list_of_nickname)
             self.w = CrawlResultWindow(crawl_list, social_networks_dict)
 
       
