@@ -5,6 +5,17 @@
   <img src="https://github.com/Hyldem0er/Skirnir/blob/master/data/Skirnir-logo-semi-transparent.png" alt="Profile Icon" width="300px">
 </p>
 
+## Introduction
+
+Welcome to Skirnir, a sophisticated Open Source Intelligence (OSINT) tool designed to empower your online presence discovery. In the digital era, maintaining awareness of your footprint across popular social networks is crucial. Skirnir is specialized in scraping platforms like Instagram, Facebook, Twitter, and LinkedIn to uncover any trace of your online identity or lost accounts.
+
+### Key Features
+
+- **Surface crawl:** Utilize various combinations of your name, last name, birthdate, and pseudonym for a thorough exploration.
+- **Deepcrawl:** Perform in-depth searches to reveal private or deleted profiles using thousands of generated nicknames.
+- **Customizable Settings:** Customize your search with advanced options, including deepcrawl preferences, network selection and length of nicknames generated.
+- **Intuitive Interface:** Skirnir's user-friendly interface simplifies the process of refining and filtering search results.
+
 #
 ## Table of contents
 
@@ -13,8 +24,6 @@
 - [Interface](#interface)
 - [License](#licence)
 
-
-Skirnir is a program specifically developed to scan popular social networks like Instagram, Facebook, Twitter, and LinkedIn in order to identify any remnants of your online presence or any lost accounts. It conducts searches using various combinations of your name, last name, birthdate, and pseudo. 
 
 #
 
@@ -25,16 +34,15 @@ Skirnir is a program specifically developed to scan popular social networks like
 
 To install the required dependencies, navigate to the project directory and : 
 
-Linux : 
-
+**Linux** : 
 run the following command in a terminal:
 ```shell
 sh launcher-linux.sh
 ```
 
-Windows : 
+**Windows** : 
 
-Double click on launcher-win.bat
+Right click on launcher-win.bat and open it with administrator rights.
 
 
 <a id="running-the-Program"></a>
@@ -42,12 +50,15 @@ Double click on launcher-win.bat
 
 To launch the program, navigate to the project directory and : 
 
-Linux : 
-
+**Linux** : 
 run the following command in a terminal:
 ```shell
 sh launcher-linux.sh
 ```
+
+**Windows** : 
+
+Double click on launcher-win.bat.
 
 <a id="interface"></a>
 ## Interface
