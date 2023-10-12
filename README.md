@@ -72,8 +72,6 @@ Double click on launcher-win.bat.
     - **Pseudo** : Enter your desired pseudo. If you want to try different combinations with delimiters such as "-", "_", or ".", you can include spaces between parts of the pseudo.
 
 - **Advanced settings**
-
-    - **Deep crawl** : If not selected, the program will perform a surface crawl by searching Google and DuckDuckGo results with certain criteria to find the most relevant profiles. This method may sometimes uncover private accounts or deleted profiles. If this option is not selected, the program will perform a "deep crawl" search.
     
 - **Social Networks**
 
@@ -82,7 +80,8 @@ Double click on launcher-win.bat.
 - **Deepcrawl**
 
     Deepcrawl is the advanced search method. It generates multiple nicknames based on the information provided in the search form fields and the size limit set using the horizontal scroll bar. Currently, only Instagram is deepcrawled. Given that Facebook is owned by Meta, it is possible that the pseudonyms validated during the Instagram deepcrawl also exist on Facebook. These URLs will appear in red, which means that the link will not necessarily work. For Twitter and LinkedIn, only the surface exploration results will be displayed. However, Skirnir crawl duckduckgo, some accounts that have existed or passed private can be found. To obtain more results, you can try running the program again with the "surface crawl only" option, which will complete in just a few seconds.
-  The generated nicknames can be extract in a CSV file by activating "export nicknames in CSV".
+  - The generated nicknames can be extract in a CSV file by activating "export nicknames in CSV".
+  - If deepcrawl is not selected it will perform a surface crawl, the defaut search method. It crawls Google and DuckDuckGo results with certain booleans to find the most relevant profiles. This method may sometimes uncover private accounts or deleted profiles. This crawl will always be done, with or without deepcrawl enabled.
 
 - **Filter search bar**
 
