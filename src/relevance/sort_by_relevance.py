@@ -19,7 +19,7 @@ from unidecode import unidecode
 
 
 
-def similarity_score(url, firstname, lastname, list_nickname):
+def similarity_score(url, firstname, lastname, nickname, list_nickname):
     if url == "":
         return 0
 
@@ -41,6 +41,8 @@ def similarity_score(url, firstname, lastname, list_nickname):
         return 70
     if firstname_in_url and rem_vowel_lastname_in_url:
         return 60
+    if nickname in url:
+        return 55
     if firstname_in_url and first_char_lastname_in_url:
         return 50
     if nickname_in_url and rem_vowel_lastname_in_url:
@@ -59,8 +61,8 @@ def print_score(set, firstname, lastname, list_nickname):
     for url in set:
         print(url," :" , similarity_score(url, firstname, lastname, list_nickname))
 
-def sort_by_relevance(iterable, firstname, lastname, list_nickname):
-    return sorted(iterable, key=lambda url: similarity_score(unidecode(url.lower()), firstname.lower(), lastname.lower(), list_nickname), reverse=True)
+def sort_by_relevance(iterable, firstname, lastname, nickname, list_nickname):
+    return sorted(iterable, key=lambda url: similarity_score(unidecode(url.lower()), firstname.lower(), lastname.lower(), nickname.lower(), list_nickname), reverse=True)
 
 
 # list_nickname = list_nicknames()

@@ -370,14 +370,14 @@ class MainWindow(QDialog):
             for platform in crawl_set:
                 advanced_profile_set[platform].extend(crawl_set[platform])
 
-            advanced_profile_set['instagram'] = sort_by_relevance(advanced_profile_set['instagram'], self.Firstname.text(), self.Lastname.text(), list_of_nickname)
-            advanced_profile_set['facebook'] = sort_by_relevance(advanced_profile_set['facebook'], self.Firstname.text(), self.Lastname.text(), list_of_nickname)
-            advanced_profile_set['twitter'] = sort_by_relevance(advanced_profile_set['twitter'], self.Firstname.text(), self.Lastname.text(), list_of_nickname)
-            advanced_profile_set['linkedin'] = sort_by_relevance(advanced_profile_set['linkedin'], self.Firstname.text(), self.Lastname.text(), list_of_nickname)
+            advanced_profile_set['instagram'] = sort_by_relevance(advanced_profile_set['instagram'], self.Firstname.text(), self.Lastname.text(),  self.nickname.text(), list_of_nickname)
+            advanced_profile_set['facebook'] = sort_by_relevance(advanced_profile_set['facebook'], self.Firstname.text(), self.Lastname.text(),  self.nickname.text(), list_of_nickname)
+            advanced_profile_set['twitter'] = sort_by_relevance(advanced_profile_set['twitter'], self.Firstname.text(), self.Lastname.text(),  self.nickname.text(), list_of_nickname)
+            advanced_profile_set['linkedin'] = sort_by_relevance(advanced_profile_set['linkedin'], self.Firstname.text(), self.Lastname.text(),  self.nickname.text(), list_of_nickname)
             
             self.w = DeepResultWindow(advanced_profile_set, social_networks_dict, backup_facebook)
         else:
-            crawl_list = sort_by_relevance(set(crawl_list), self.Firstname.text(), self.Lastname.text(), list_of_nickname)
+            crawl_list = sort_by_relevance(set(crawl_list), self.Firstname.text(), self.Lastname.text(),  self.nickname.text(), list_of_nickname)
             self.w = CrawlResultWindow(crawl_list, social_networks_dict)
 
       

@@ -54,7 +54,7 @@ class Browser:
         """
         return self.research_urls
 
-    def perform_surface_crawl(self, instagram, facebook, twitter, linkedin, name, firstname, lastname):
+    def perform_surface_crawl(self, instagram, facebook, twitter, linkedin, name, firstname, lastname, nickname):
         """
         Performs a surface crawl on specified platforms using the browser.
 
@@ -64,6 +64,7 @@ class Browser:
             twitter (bool): Flag indicating whether to perform a surface crawl on Twitter.
             linkedin (bool): Flag indicating whether to perform a surface crawl on LinkedIn.
             name (str): The name to use for the surface crawl.
+            nickname (str): The nickname use for the surface crawl
 
         Returns:
             list or None: A list of results from the surface crawl, or None if the browser is not supported.
@@ -81,6 +82,12 @@ class Browser:
             research_url = create_surface_crawl_url(self, instagram, facebook, twitter, linkedin, name)
             result_list = search_google(research_url)
             logger.debug("Google crawling result : {}", result_list)
+            return result_list
+        
+        if self.name == "nickname":
+            research_url = create_surface_crawl_url(self, instagram, facebook, twitter, linkedin, nickname)
+            result_list = search_google(research_url)
+            logger.debug("Nickname crawling result : {}", result_list)
             return result_list
         
         if self.name == "nicknames":

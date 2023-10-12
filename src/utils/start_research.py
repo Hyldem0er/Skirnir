@@ -109,13 +109,10 @@ def start_profile_research(instagram_checkbox, facebook_checkbox, twitter_checkb
     """
     social_networks_dict = create_social_networks_dict(instagram_checkbox, facebook_checkbox, twitter_checkbox, linkedin_checkbox)
 
-    name = nickname
-    if not nickname_only:
-        name = firstname + " " + lastname
-    from loguru import logger
+    name = firstname + " " + lastname
 
     logger.info("Starting Surface Crawling")
-    crawl_list = surface_crawl(instagram_checkbox, facebook_checkbox, twitter_checkbox, linkedin_checkbox, name, firstname, lastname)
+    crawl_list = surface_crawl(instagram_checkbox, facebook_checkbox, twitter_checkbox, linkedin_checkbox, name, firstname, lastname, nickname)
 
     generated_nicknames = generate_possible_pseudonyms(firstname, lastname, date, nickname, limit, birthday_on, nickname_only)
 
