@@ -14,18 +14,18 @@ class DeepResultWindow(QWidget):
     This "window" is a QWidget. If it has no parent, it
     will appear as a free-floating window as we want.
     """
-    def __init__(self, crawl_set, advanced_profile_set, social_networks_dict):
+    def __init__(self, crawl_set, social_networks_dict, backup_facebook):
         super().__init__()
         self.left = 1000
         self.top = 200
         self.width = 500
         self.height = 400
         self.crawl_set = crawl_set
-        self.advanced_profile_set = advanced_profile_set
         self.show_instagram_tab = social_networks_dict["instagram"]
         self.show_facebook_tab = social_networks_dict["facebook"]
         self.show_twitter_tab = social_networks_dict["twitter"]
         self.show_linkedin_tab = social_networks_dict["linkedin"]
+        self.backup_facebook = backup_facebook
 
         self.initUI()
        
@@ -78,13 +78,8 @@ class DeepResultWindow(QWidget):
         tab.list_widget = QListWidget()
         tab.list_widget.setSelectionMode(3)
         tab.list_widget.addItems(self.crawl_set[social_network])
-        
-        start_deep_crawl = tab.list_widget.count()
-        
-        #  tab.list_widget.item(tab.list_widget.count() - 1).setBackground(QColor("red"))
-        tab.list_widget.addItems(self.advanced_profile_set[social_network]) # .setBackground(QColor("red"))
-        
-        self.color_deduced_results(tab, start_deep_crawl, social_network)
+
+        self.color_deduced_results(tab, social_network)
 
         tab.search_bar = QLineEdit()
         tab.open_in_web_browser_button = QPushButton("Open on Web Browser ")
@@ -101,11 +96,13 @@ class DeepResultWindow(QWidget):
         tab.setLayout(tab.layout)
 
 
-    def color_deduced_results(self, tab, start_deep_crawl, social_network):
+    def color_deduced_results(self, tab, social_network):
         if social_network != "facebook":
             return
-        for index in range(start_deep_crawl, tab.list_widget.count()):
-            tab.list_widget.item(index).setBackground(QColor("#7c2929"))
+        for index in range(0, tab.list_widget.count()):
+            item = tab.list_widget.item(index)
+            if item.text() in self.backup_facebook:
+                tab.list_widget.item(index).setBackground(QColor("#7c2929"))
 
     def search(self, tab):
 
