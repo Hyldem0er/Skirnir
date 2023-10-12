@@ -59,8 +59,8 @@ def print_score(set, firstname, lastname, list_nickname):
     for url in set:
         print(url," :" , similarity_score(url, firstname, lastname, list_nickname))
 
-def sort_by_relevance(set, firstname, lastname, list_nickname):
-    return sorted(set, key=lambda url: similarity_score(unidecode(url.lower()), firstname.lower(), lastname.lower(), list_nickname), reverse=True)
+def sort_by_relevance(iterable, firstname, lastname, list_nickname):
+    return sorted(iterable, key=lambda url: similarity_score(unidecode(url.lower()), firstname.lower(), lastname.lower(), list_nickname), reverse=True)
 
 
 # list_nickname = list_nicknames()
