@@ -11,7 +11,7 @@ Welcome to Skirnir, a sophisticated Open Source Intelligence (OSINT) tool design
 
 ### Key Features
 
-- **Surface crawl:** Utilize various combinations of your name, last name, birthdate, and pseudonym for a thorough exploration.
+- **Surface crawl:** Utilize various combinations of firstname, diminutives, nicknames and last names to crawl Duckduckgo and Google.
 - **Deepcrawl:** Perform in-depth searches to reveal private or deleted profiles using thousands of generated nicknames.
 - **Customizable Settings:** Customize your search with advanced options, including deepcrawl preferences, network selection and length of nicknames generated.
 - **Intuitive Interface:** Skirnir's user-friendly interface simplifies the process of refining and filtering search results.
