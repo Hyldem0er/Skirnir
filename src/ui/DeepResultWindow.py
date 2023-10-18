@@ -4,6 +4,7 @@ from PyQt5.QtCore import *
 from PyQt5.QtGui import QClipboard
 import os
 import webbrowser
+import pyperclip
 
 def check_social_networks(item, social_networks):
     return any(sn in item for sn in social_networks)
@@ -126,3 +127,14 @@ class DeepResultWindow(QWidget):
         selected_items = tab.list_widget.selectedItems()
         for url in selected_items:
             webbrowser.open(url.text())
+
+    def keyPressEvent(self, event):
+        super().keyPressEvent(event)
+        if event.key() == Qt.Key_C and (event.modifiers() & Qt.ControlModifier):
+            selected_tab = self.tabs.currentWidget()
+            if selected_tab:
+                selected_items = selected_tab.list_widget.selectedItems()
+                urls = ""
+                for url in selected_items:
+                    urls += url.text() + "\n"
+                pyperclip.copy(urls)
