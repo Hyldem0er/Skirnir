@@ -161,8 +161,8 @@ class MainWindow(QDialog):
         # creating a form layout
         formlayout = QFormLayout()
 
-        # setting layout
-        self.formGroupBox.setLayout(formlayout)
+        # # setting layout
+        # self.formGroupBox.setLayout(formlayout)
 
         # DeepCrawl Checkbox
         self.show_deepcrawl_checkbox = QCheckBox()
