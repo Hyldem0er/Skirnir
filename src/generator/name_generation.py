@@ -49,8 +49,8 @@ def get_possible_composed_name_variations(composed_name, delimiters):
     name_variations = generate_string_combinations(first, second)
 
     if first_char(composed_name[0]) not in vowels and first_char(composed_name[1]) not in vowels:
-        first = generate_string_combinations(rem_vowel(composed_name[0]), delimiters)
-        name_variations.extend(generate_string_combinations(first, rem_vowel(composed_name[1])))
+        first = generate_string_combinations([rem_vowel(composed_name[0])], delimiters)
+        name_variations.extend(generate_string_combinations(first, [rem_vowel(composed_name[1])]))
     return list(set(name_variations))
 
 def get_possible_name_variations(name, delimiters):
