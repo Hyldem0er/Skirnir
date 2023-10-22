@@ -11,7 +11,7 @@ from src.ui.Loading import Loading
 from src.utils.login import open_social_network_login_page
 from loguru import logger
 from src.surface_crawl.match_nicknames import list_nicknames
-from src.relevance.sort_by_relevance import sort_by_relevance
+from src.relevance.sort_by_relevance import sort_by_relevance, print_score
 import copy
 
 logger.add(sys.stdout, colorize=True, format="<green>{time}</green> <level>{message}</level>")
@@ -161,8 +161,8 @@ class MainWindow(QDialog):
         # creating a form layout
         formlayout = QFormLayout()
 
-        # setting layout
-        self.formGroupBox.setLayout(formlayout)
+        # # setting layout
+        # self.formGroupBox.setLayout(formlayout)
 
         # DeepCrawl Checkbox
         self.show_deepcrawl_checkbox = QCheckBox()

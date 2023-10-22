@@ -14,7 +14,16 @@ def first_char(string):
         >>> first_char("Pierre")
         'P'
     """
-    return string[0]
+    delimiters = ['-', '_', '.']
+
+    for d in delimiters:
+        if d in string:
+            string = string.replace(d, ' ')
+    x = string.split()
+    try:
+        return x[0][0] + x[1][0]
+    except:
+        return string[0]
 
 
 def rem_vowel(string):

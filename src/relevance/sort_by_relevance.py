@@ -1,35 +1,39 @@
 from src.utils.name import *
 from unidecode import unidecode
-# database_path = os.path.abspath(os.path.join(os.path.dirname(__file__), './', 'database.txt'))
+from src.generator.nickname_generation import get_nicknames_variations_with_delimiters
 
 
-# # Using readlines()
-# file1 = open(database_path, 'r')
-# Lines = file1.readlines()
-
-
-# myset = set()
-# count = 0
-# # Strips the newline character
-# for line in Lines:
-#     count += 1
-#     myset.add(line.strip())
-
-
-
-
+def composed_name_test_in_url(name, url):
+    delimiters = ['-', '_', '.', '']
+    names = get_nicknames_variations_with_delimiters(name, delimiters)
+    for n in names:
+        if n in url:
+            return True
+    return False
 
 def similarity_score(url, firstname, lastname, nickname, list_nickname):
     if url == "":
         return 0
-
+    
     firstname_in_url = True if firstname in url else False
-    lastname_in_url = True if lastname in url else False
     first_char_firstname_in_url = True if first_char(firstname) in url else False
+    lastname_in_url = True if lastname in url else False
     first_char_lastname_in_url = True if first_char(lastname) in url else False
     rem_vowel_firstname_in_url = True if rem_vowel(firstname) in url else False
     rem_vowel_lastname_in_url = True if rem_vowel(lastname) in url else False
     nickname_in_url = True if (firstname[0].upper() + firstname[1:]) in list_nickname else False
+
+    # Composed Firstname
+    if '-' in firstname or '_' in firstname or '.' in firstname or ' ' in firstname:
+        firstname_in_url = composed_name_test_in_url(firstname, url)
+        first_char_firstname_in_url = composed_name_test_in_url(first_char(firstname), url)
+        rem_vowel_firstname_in_url = composed_name_test_in_url(rem_vowel(firstname), url)
+
+    # Composed Lastname
+    if '-' in lastname or '_' in lastname or '.' in lastname or ' ' in lastname:
+        lastname_in_url = composed_name_test_in_url(lastname, url)
+        first_char_lastname_in_url = composed_name_test_in_url(lastname, url)
+        rem_vowel_lastname_in_url = composed_name_test_in_url(rem_vowel(lastname), url)
 
     if firstname_in_url and lastname_in_url:
         return 100
@@ -41,7 +45,7 @@ def similarity_score(url, firstname, lastname, nickname, list_nickname):
         return 70
     if firstname_in_url and rem_vowel_lastname_in_url:
         return 60
-    if nickname in url:
+    if nickname in url and nickname != '':
         return 55
     if firstname_in_url and first_char_lastname_in_url:
         return 50
@@ -57,15 +61,9 @@ def similarity_score(url, firstname, lastname, nickname, list_nickname):
         return 5
     return 0
 
-def print_score(set, firstname, lastname, list_nickname):
+def print_score(set, firstname, lastname, nickname, list_nickname):
     for url in set:
-        print(url," :" , similarity_score(url, firstname, lastname, list_nickname))
+        print(url," :" , similarity_score(unidecode(url.lower()), firstname.lower(), lastname.lower(), nickname.lower(), list_nickname))
 
 def sort_by_relevance(iterable, firstname, lastname, nickname, list_nickname):
     return sorted(iterable, key=lambda url: similarity_score(unidecode(url.lower()), firstname.lower(), lastname.lower(), nickname.lower(), list_nickname), reverse=True)
-
-
-# list_nickname = list_nicknames()
-# print_score(myset, "jean", "deriaux", list_nickname)
-
-# print(sort_by_relevance(myset, "jean", "deriaux", list_nickname))

@@ -54,7 +54,7 @@ class CrawlResultWindow(QWidget):
 
 
     def add_crawl_list_widget(self):
-        self.crawl_list_group = QGroupBox("Crawl Result :")
+        self.crawl_list_group = QGroupBox("Search bar :")
         crawl_list_group_layout = QVBoxLayout()
 
         checkbox_layout = QHBoxLayout()
