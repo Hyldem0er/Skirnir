@@ -85,6 +85,8 @@ class Browser:
             return result_list
         
         if self.name == "nickname":
+            if nickname == "":
+                return []
             research_url = create_surface_crawl_url(self, instagram, facebook, twitter, linkedin, nickname)
             result_list = search_google(research_url)
             logger.debug("Nickname crawling result : {}", result_list)
@@ -93,6 +95,8 @@ class Browser:
         if self.name == "nicknames":
             # Nicknames
             matching_nicknames_list = match_nicknames(firstname)
+            if matching_nicknames_list == []:
+                return []
             nickname_query = create_query_matching_nicknames(lastname, matching_nicknames_list)
             research_url = create_surface_crawl_url(self, instagram, facebook, twitter, linkedin, nickname_query, nickname_mode=True)
             

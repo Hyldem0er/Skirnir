@@ -6,18 +6,18 @@ from loguru import logger
 
 logger.add(sys.stdout, colorize=True, format="<green>{time}</green> <level>{message}</level>")
 
-def create_instagram_link(rebound_site, nickname):
+def create_twitter_link(rebound_site, nickname):
     """
-    Create an Instagram profile link based on the given nickname.
+    Create an twitter profile link based on the given nickname.
 
     Args:
-        nickname (str): The Instagram nickname.
+        nickname (str): The twitter nickname.
 
     Returns:
-        str: The Instagram profile link.
+        str: The twitter profile link.
 
     Example:
-        >>> create_instagram_link("jean_pierre")
+        >>> create_twitter_link("jean_pierre")
         'https://www.picnob.com/fr/profile/jean_pierre/'
     """
     return rebound_site + nickname + '/'
@@ -25,21 +25,21 @@ def create_instagram_link(rebound_site, nickname):
 # Setting user-agent to emulate human connection, request to picnob, return True if status code = 200
 import requests
 
-def is_instagram_profile(link):
+def is_twitter_profile(link):
     """
-    Checks if the provided link corresponds to an existing Instagram profile.
+    Checks if the provided link corresponds to an existing twitter profile.
 
     Args:
         link (str): The link to check.
 
     Returns:
-        bool: True if the link corresponds to an existing Instagram profile, False otherwise.
+        bool: True if the link corresponds to an existing twitter profile, False otherwise.
 
     Raises:
         Exception: If an unexpected error occurs during the request.
 
     Example:
-        >>> is_instagram_profile("https://www.instagram.com/example_profile/")
+        >>> is_twitter_profile("https://www.twitter.com/example_profile/")
         True
     """
     header = {
@@ -59,31 +59,25 @@ def is_instagram_profile(link):
         raise Exception(e)
 
 
-def find_instagram_profile(nicknameList):
+def find_twitter_profile(nicknameList):
     """
-    Searches for Instagram profiles corresponding to the provided nicknames.
+    Searches for twitter profiles corresponding to the provided nicknames.
 
     Args:
         nicknameList (list): A list of nicknames to search for.
 
     Returns:
-        list: A list of existing Instagram profile links.
+        list: A list of existing twitter profile links.
 
     Example:
-        >>> find_instagram_profile(["nickname1", "nickname2", "nickname3"])
-        ['https://www.instagram.com/nickname1/', 'https://www.instagram.com/nickname2/']
+        >>> find_twitter_profile(["nickname1", "nickname2", "nickname3"])
+        ['https://www.twitter.com/nickname1/', 'https://www.twitter.com/nickname2/']
     """
-    logger.info("Searching for IG profile")
+    logger.info("Searching for Twitter profile")
 
     # Keep this list update
     rebound_sites = [
-        "https://www.picnob.com/fr/profile/",
-        "https://imginn.com/",
-        "https://storiesig.me/info?username=",
-        "https://instastories.watch/info?username=",
-        "https://dumpoir.com/v/",
-        "https://picuki.com/profile/",
-        "https://greatfon.com/v/"
+        "https://www.sotwe.com/"
     ]
 
     existing_profile_list = []
@@ -94,11 +88,11 @@ def find_instagram_profile(nicknameList):
         for rebound_site in rebound_sites:
             try:
                 logger.info("Searching {}", nickname)
-                igLink = create_instagram_link(rebound_site, nickname)
-                logger.info(igLink)
+                twLink = create_twitter_link(rebound_site, nickname)
+                logger.info(twLink)
 
-                if is_instagram_profile(igLink):
-                    var = "https://www.instagram.com/" + nickname + "/"
+                if is_twitter_profile(twLink):
+                    var = "https://www.twitter.com/" + nickname
                     existing_profile_list.append(var)
                     logger.info("Found! {}", var)
                 break
