@@ -23,7 +23,7 @@ def calculate_number_activate_networks(instagram, facebook, twitter, linkedin):
         activated_networks = sum([instagram, facebook, twitter, linkedin])
         return activated_networks
     
-def create_surface_crawl_url(browser, instagram, facebook, twitter, linkedin, name, nickname_mode = False):
+def create_surface_crawl_url(browser, instagram, facebook, twitter, linkedin, url_q, nickname_mode = False):
     """
     Generate a Browser search URL for surface crawling based on provided parameters.
     
@@ -37,11 +37,8 @@ def create_surface_crawl_url(browser, instagram, facebook, twitter, linkedin, na
     Returns:
         list : A list of the generated Google search URL for Google and Duckduckgo.
     """
-    if nickname_mode:
-        url = browser.research_urls + name
-    else:
-        # Base URL with the provided first and last name
-        url = browser.research_urls + "%22" + name + "%22"
+    url = browser.research_urls + url_q
+
     
     # Calculate the limit of activated networks
     limit = calculate_number_activate_networks(instagram, facebook, twitter, linkedin)
