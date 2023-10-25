@@ -1,6 +1,7 @@
 from src.generator.possible_pseudonyms_generation import generate_possible_pseudonyms
 from src.surface_crawl.surface_crawl import surface_crawl
 from src.scrapers.pseudo_finder_instagram import find_instagram_profile
+from src.scrapers.pseudo_finder_twitter import find_twitter_profile
 from loguru import logger
 import sys
 from src.utils.export_nickname import export_nicknames_csv
@@ -36,7 +37,7 @@ def sort_crawl_result(crawl_results):
             crawl_set["linkedin"].append(url)
     return crawl_set
 
-def add_possible_profile(instagram_profiles):
+def add_facebook_possible_profile(instagram_profiles):
     """
     Adds possible Facebook profiles based on the given Instagram profiles.
 
@@ -47,13 +48,33 @@ def add_possible_profile(instagram_profiles):
         list: A list of possible Facebook profile URLs.
 
     Example:
-        >>> add_possible_profile(["https://www.instagram.com/user1/", "https://www.instagram.com/user2/"])
+        >>> add_facebook_possible_profile(["https://www.instagram.com/user1/", "https://www.instagram.com/user2/"])
         ['https://www.facebook.com/user1/', 'https://www.facebook.com/user2/']
     """
     facebook_profiles = []
     for instagram_profile in instagram_profiles:
         facebook_profiles.append(instagram_profile.replace("https://www.instagram.com/", "https://www.facebook.com/"))
     return facebook_profiles
+
+def add_twitter_profile(instagram_profiles):
+    """
+    Adds twitter profiles based on the given Instagram profiles. 
+    As we only have one site to deepcrawl, we use it with selected urls that have the best chances.
+
+    Args:
+        instagram_profiles (list): A list of Instagram profile URLs.
+
+    Returns:
+        list: A list of Twitter profile URLs.
+
+    Example:
+        >>> add_twitter_profile(["https://www.instagram.com/user1/", "https://www.instagram.com/user2/"])
+        ['https://www.facebook.com/user1/', 'https://www.facebook.com/user2/']
+    """
+    twitter_profiles_nicknames = []
+    for instagram_profile in instagram_profiles:
+        twitter_profiles_nicknames.append(instagram_profile.replace("https://www.instagram.com/", ""))
+    return find_twitter_profile(twitter_profiles_nicknames)
 
 def create_social_networks_dict(instagram_checkbox, facebook_checkbox, twitter_checkbox, linkedin_checkbox):
     """
@@ -109,10 +130,8 @@ def start_profile_research(instagram_checkbox, facebook_checkbox, twitter_checkb
     """
     social_networks_dict = create_social_networks_dict(instagram_checkbox, facebook_checkbox, twitter_checkbox, linkedin_checkbox)
 
-    name = firstname + " " + lastname
-
     logger.info("Starting Surface Crawling")
-    crawl_list = surface_crawl(instagram_checkbox, facebook_checkbox, twitter_checkbox, linkedin_checkbox, name, firstname, lastname, nickname)
+    crawl_list = surface_crawl(instagram_checkbox, facebook_checkbox, twitter_checkbox, linkedin_checkbox, firstname, lastname, nickname)
 
     generated_nicknames = generate_possible_pseudonyms(firstname, lastname, date, nickname, limit, birthday_on, nickname_only)
 
@@ -127,11 +146,10 @@ def start_profile_research(instagram_checkbox, facebook_checkbox, twitter_checkb
             advanced_profile_set["instagram"] = instagram_profiles
 
         if facebook_checkbox:
-            advanced_profile_set["facebook"] = add_possible_profile(instagram_profiles)
+            advanced_profile_set["facebook"] = add_facebook_possible_profile(instagram_profiles)
 
         if twitter_checkbox:
-            advanced_profile_set["twitter"] = []
-            # TODO
+            advanced_profile_set["twitter"] = add_twitter_profile(instagram_profiles)
 
         if linkedin_checkbox:
             advanced_profile_set["linkedin"] = []

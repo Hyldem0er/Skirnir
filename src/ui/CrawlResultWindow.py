@@ -1,9 +1,13 @@
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
-import os
+import os, sys
 import webbrowser
 import pyperclip
+from loguru import logger
+
+logger.add(sys.stdout, colorize=True, format="<green>{time}</green> <level>{message}</level>")
+
 
 def check_social_networks(item, social_networks):
     return any(sn in item for sn in social_networks)
@@ -144,7 +148,7 @@ class CrawlResultWindow(QWidget):
     def keyPressEvent(self, event):
         super().keyPressEvent(event)
         if event.key() == Qt.Key_C and (event.modifiers() & Qt.ControlModifier):
-            print("Crl C")
+            logger.info("Ctrl + C")
             selected_items = self.crawl_list_widget.selectedItems()
 
             urls = ""

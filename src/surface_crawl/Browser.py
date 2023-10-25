@@ -54,7 +54,7 @@ class Browser:
         """
         return self.research_urls
 
-    def perform_surface_crawl(self, instagram, facebook, twitter, linkedin, name, firstname, lastname, nickname):
+    def perform_surface_crawl(self, instagram, facebook, twitter, linkedin, firstname, lastname, nickname):
         """
         Performs a surface crawl on specified platforms using the browser.
 
@@ -63,7 +63,6 @@ class Browser:
             facebook (bool): Flag indicating whether to perform a surface crawl on Facebook.
             twitter (bool): Flag indicating whether to perform a surface crawl on Twitter.
             linkedin (bool): Flag indicating whether to perform a surface crawl on LinkedIn.
-            name (str): The name to use for the surface crawl.
             nickname (str): The nickname use for the surface crawl
 
         Returns:
@@ -79,12 +78,17 @@ class Browser:
         """
         
         if self.name == "google":
-            research_url = create_surface_crawl_url(self, instagram, facebook, twitter, linkedin, name)
+            custom_url = "%22" + firstname + "+" + lastname + "%22"
+            research_url = create_surface_crawl_url(self, instagram, facebook, twitter, linkedin, custom_url)
             result_list = search_google(research_url)
             logger.debug("Google crawling result : {}", result_list)
             return result_list
         
         if self.name == "nickname":
+            if nickname == "":
+                nickname = "%22" + lastname + "+" + firstname+ "%22"
+            else:
+                nickname = "(%22" + nickname + "%22+OR+%22" + lastname + "+" + firstname + "%22)" # ("nickname" OR "lastname firstname")
             research_url = create_surface_crawl_url(self, instagram, facebook, twitter, linkedin, nickname)
             result_list = search_google(research_url)
             logger.debug("Nickname crawling result : {}", result_list)
@@ -93,7 +97,9 @@ class Browser:
         if self.name == "nicknames":
             # Nicknames
             matching_nicknames_list = match_nicknames(firstname)
-            nickname_query = create_query_matching_nicknames(lastname, matching_nicknames_list)
+            if matching_nicknames_list == []:
+                return []
+            nickname_query = create_query_matching_nicknames(firstname, lastname, matching_nicknames_list)
             research_url = create_surface_crawl_url(self, instagram, facebook, twitter, linkedin, nickname_query, nickname_mode=True)
             
             logger.debug("Google crawling result for nicknames that match to {} : {}", firstname, research_url)
@@ -101,6 +107,7 @@ class Browser:
             return result_list
 
         if self.name == "duckduckgo":
+            name = firstname + " " + lastname
             research_queries = create_surface_crawl_query(instagram, facebook, twitter, linkedin, name)
             result_list = []
             for query in research_queries:
@@ -110,7 +117,8 @@ class Browser:
 
         if self.name == "bing":
             result_list = []
-            research_urls = create_surface_crawl_multiple_url(self, instagram, facebook, twitter, linkedin, name)
+            custom_url = "%22" + firstname + "+" + lastname + "%22"
+            research_urls = create_surface_crawl_multiple_url(self, instagram, facebook, twitter, linkedin, custom_url)
             for research_url in research_urls:
                 result_list.extend(search_google(research_url))
             logger.debug("Bing crawling result : {}",result_list)

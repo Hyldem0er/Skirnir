@@ -23,7 +23,7 @@ def match_nicknames(firstname):
                 matching_nicknames.append(row['nickname'])
     return matching_nicknames
 
-def create_query_matching_nicknames(lastname, matching_nicknames_list):
+def create_query_matching_nicknames(firstname, lastname, matching_nicknames_list):
     """
     Creates a query string based on matching nicknames and a last name.
     
