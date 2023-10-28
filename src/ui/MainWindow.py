@@ -11,7 +11,7 @@ from src.ui.Loading import Loading
 from src.utils.login import open_social_network_login_page
 from loguru import logger
 from src.surface_crawl.match_nicknames import list_nicknames
-from src.relevance.sort_by_relevance import sort_by_relevance, print_score
+from src.relevance.sort_by_relevance import sort_by_relevance
 import copy
 
 logger.add(sys.stdout, colorize=True, format="<green>{time}</green> <level>{message}</level>")
@@ -261,10 +261,15 @@ class MainWindow(QDialog):
 
         self.AdvancedSettingsLayout.addWidget(self.exportCSV)
 
-    # create form method
     def createForm(self):
-        reg_ex_firstname = QRegExp("[A-Za-z][A-Za-z]+(([\ \' \-]){1}[A-Za-z]+)")
-        reg_ex_lastname = QRegExp("[A-Za-z][A-Za-z]+(([\ \' \-]){1}[A-Za-z]+)*")
+        # Regular expression pattern for first name with accented letters
+        pattern_firstname = "[A-Za-zÀ-ÖØ-öø-ÿ]+((['\\-\\s])[A-Za-zÀ-ÖØ-öø-ÿ]+)"
+        # Regular expression pattern for last name with accented letters
+        pattern_lastname = "[A-Za-zÀ-ÖØ-öø-ÿ]+((['\\-\\s])[A-Za-zÀ-ÖØ-öø-ÿ]+)*"
+
+        # Create QRegExp objects with the patterns
+        reg_ex_firstname = QRegExp(pattern_firstname)
+        reg_ex_lastname = QRegExp(pattern_lastname)
 
         # creating a group box
         self.formGroupBox = QGroupBox("Search Form :")

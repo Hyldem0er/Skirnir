@@ -151,7 +151,7 @@ def create_surface_crawl_query(instagram, facebook, twitter, linkedin, name):
             'facebook': 'site:facebook.com',
             'instagram': 'site:instagram.com',
             'twitter': 'site:twitter.com',
-            'linkedin': 'site:linkedin.com'
+            'linkedin': 'inurl:linkedin.com/in/'
         }
 
         # Iterate through each social media site and add it to the URL if needed
@@ -212,7 +212,6 @@ def search_duckduckgo(query, sleep_interval=1):
         with DDGS() as ddgs:
             for r in ddgs.text(query, region='wt-wt', safesearch='off'):
                 links.append(r['href'])
-
         sleep(sleep_interval)
         return list(set(links))
     except Exception as e:

@@ -24,10 +24,10 @@ def extract_profile_url(url):
     Returns:
         str or None: The extracted profile URL, or None if not a correct profile url.
     """
-    social_media_sites = ["www.instagram.com", "m.facebook.com", "www.facebook.com", "twitter.com", "fr.linkedin.com"]
+    social_media_sites = ["instagram.com", "facebook.com", "twitter.com", "linkedin.com", "x.com"]
     for site in social_media_sites:
         url = requests.utils.unquote(url)
-        if re.match("^https://" + site + "/[a-zA-Z]", url):
+        if re.match("^https://" + "[a-zA-Z.]+" + site + "/[A-Za-zÀ-ÖØ-öø-ÿ]", url):
             if "profile.php" in url: # Facebook profile with id
                 return url
             else:
@@ -67,7 +67,7 @@ def surface_crawl(instagram, facebook, twitter, linkedin, firstname, lastname, n
             if tmp[len(tmp) - 1] != '/':
                 tmp += '/'
             if "linkedin.com/in/" in tmp and not is_similar(tmp, lastname): # Eliminate wrong linkedIn profile
-                # print(tmp)
+                print(tmp)
                 continue
             profile_urls.append(format_url(tmp))
     
