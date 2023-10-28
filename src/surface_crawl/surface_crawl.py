@@ -67,7 +67,7 @@ def surface_crawl(instagram, facebook, twitter, linkedin, firstname, lastname, n
             if tmp[len(tmp) - 1] != '/':
                 tmp += '/'
             if "linkedin.com/in/" in tmp and not is_similar(tmp, lastname): # Eliminate wrong linkedIn profile
-                print(tmp)
+                # print(tmp)
                 continue
             profile_urls.append(format_url(tmp))
     
