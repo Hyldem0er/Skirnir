@@ -45,7 +45,7 @@ class CrawlResultWindow(QWidget):
         
         self.add_crawl_list_widget()
 
-        self.open_in_web_browser_button = QPushButton("Open on Web Browser ")
+        self.open_in_web_browser_button = QPushButton("Open on Web Browser (urls selected: 0)")
 
         mainLayout.addWidget(self.crawl_list_group)
         mainLayout.addWidget(self.open_in_web_browser_button)
@@ -55,6 +55,9 @@ class CrawlResultWindow(QWidget):
         # Connect the functions with the appropriate button
         self.search_bar.textChanged.connect(self.search)
         self.open_in_web_browser_button.clicked.connect(self.open_in_web_browser)
+
+        # Connect the itemSelectionChanged signal to a custom slot
+        self.crawl_list_widget.itemSelectionChanged.connect(self.handleSelectionChanged)
 
 
     def add_crawl_list_widget(self):
@@ -166,3 +169,10 @@ class CrawlResultWindow(QWidget):
 
             # event = QEvent(QEvent.Clipboard)
             # QApplication.sendEvent(clipboard, event)
+
+    def handleSelectionChanged(self):
+        selected_items = self.crawl_list_widget.selectedItems()
+        if selected_items:
+            num_selected_items = len(selected_items)
+            text = f"Open on Web Browser (urls selected: {num_selected_items})"
+            self.open_in_web_browser_button.setText(text)
