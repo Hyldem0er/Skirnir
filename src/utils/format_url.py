@@ -12,4 +12,4 @@ def format_url(url):
         >>> format_url("https://www.example.com//fr/page")
         'https://www.example.com//www/page'
     """
-    return url.replace("//fr", "//www").replace("//m", "//www")
+    return url.replace("//fr", "//www").replace("//m.", "//www.")

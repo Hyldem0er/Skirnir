@@ -27,7 +27,7 @@ def extract_profile_url(url):
     social_media_sites = ["instagram.com", "facebook.com", "twitter.com", "linkedin.com", "x.com"]
     for site in social_media_sites:
         url = requests.utils.unquote(url)
-        if re.match("^https://" + "[a-zA-Z.]+" + site + "/[A-Za-zÀ-ÖØ-öø-ÿ]", url):
+        if re.match("^https://.*" + site + "/[A-Za-zÀ-ÖØ-öø-ÿ]", url):
             if "profile.php" in url: # Facebook profile with id
                 return url
             else:
