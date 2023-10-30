@@ -176,3 +176,6 @@ class CrawlResultWindow(QWidget):
             num_selected_items = len(selected_items)
             text = f"Open on Web Browser (urls selected: {num_selected_items})"
             self.open_in_web_browser_button.setText(text)
+        else:
+            text = f"Open on Web Browser (urls selected: 0)"
+            self.open_in_web_browser_button.setText(text)

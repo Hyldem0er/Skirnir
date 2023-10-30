@@ -147,3 +147,6 @@ class DeepResultWindow(QWidget):
             num_selected_items = len(selected_items)
             text = f"Open on Web Browser (urls selected: {num_selected_items})"
             selected_tab.open_in_web_browser_button.setText(text)
+        else:
+            text = f"Open on Web Browser (urls selected: 0)"
+            selected_tab.open_in_web_browser_button.setText(text)
