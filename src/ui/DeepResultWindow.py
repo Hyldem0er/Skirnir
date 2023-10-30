@@ -83,7 +83,7 @@ class DeepResultWindow(QWidget):
         self.color_deduced_results(tab, social_network)
 
         tab.search_bar = QLineEdit()
-        tab.open_in_web_browser_button = QPushButton("Open on Web Browser ")
+        tab.open_in_web_browser_button = QPushButton("Open on Web Browser (urls selected: 0)")
 
         # Connect the functions with the appropriate button
         tab.search_bar.textChanged.connect(lambda : self.search(tab))
@@ -95,7 +95,8 @@ class DeepResultWindow(QWidget):
         tab.layout.addWidget(tab.open_in_web_browser_button)
 
         tab.setLayout(tab.layout)
-
+        # Connect the itemSelectionChanged signal to a custom slot
+        tab.list_widget.itemSelectionChanged.connect(self.handleSelectionChanged)
 
     def color_deduced_results(self, tab, social_network):
         if social_network != "facebook":
@@ -138,3 +139,14 @@ class DeepResultWindow(QWidget):
                 for url in selected_items:
                     urls += url.text() + "\n"
                 pyperclip.copy(urls)
+    
+    def handleSelectionChanged(self):
+        selected_tab = self.tabs.currentWidget()
+        selected_items = selected_tab.list_widget.selectedItems()
+        if selected_items:
+            num_selected_items = len(selected_items)
+            text = f"Open on Web Browser (urls selected: {num_selected_items})"
+            selected_tab.open_in_web_browser_button.setText(text)
+        else:
+            text = f"Open on Web Browser (urls selected: 0)"
+            selected_tab.open_in_web_browser_button.setText(text)

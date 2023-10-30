@@ -12,7 +12,7 @@ def is_not_noise_url(url):
             and "/hashtag/" not in url and "/p/" not in url and "/public/" not in url and "/search/" not in url
             and "/filter/" not in url  and "/jobs/" not in url and "/explore/" not in url and "/pages/" not in url
             and "/reel/" not in url  and "/review/" not in url and "/legacy/" not in url and "/notes/" not in url
-            and "/tv/" not in url)
+            and "/tv/" not in url and "google" not in url and "translate" not in url)
 
 def extract_profile_url(url):
     """
@@ -24,10 +24,10 @@ def extract_profile_url(url):
     Returns:
         str or None: The extracted profile URL, or None if not a correct profile url.
     """
-    social_media_sites = ["www.instagram.com", "m.facebook.com", "www.facebook.com", "twitter.com", "fr.linkedin.com"]
+    social_media_sites = ["instagram.com", "facebook.com", "twitter.com", "linkedin.com", "x.com"]
     for site in social_media_sites:
         url = requests.utils.unquote(url)
-        if re.match("^https://" + site + "/[a-zA-Z]", url):
+        if re.match("^https://.*" + site + "/[A-Za-zÀ-ÖØ-öø-ÿ]", url):
             if "profile.php" in url: # Facebook profile with id
                 return url
             else:
