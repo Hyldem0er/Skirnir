@@ -36,7 +36,8 @@ def generate_possible_pseudonyms(firstname, lastname, birthday, nickname, limit=
         ['Jean.Pierre-1970', 'Pierre.Jean-1970', 'Jean-Pierre_1970', 'Pierre_Jean_1970', 'JP-1970', '1970-JP', 'JP.1970', '1970.JP'...]
     """
     pseudonyms = []
-    dates_combinations = get_possible_date_combination_with_delimiters(birthday, delimiters)
+    if birthday_on:
+        dates_combinations = get_possible_date_combination_with_delimiters(birthday, delimiters)
 
     if not nickname_only:
         firstname_variations = get_possible_name_variations(firstname, delimiters)

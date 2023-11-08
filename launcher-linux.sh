@@ -20,4 +20,4 @@ fi
 make all
 
 echo "#!/bin/bash
-make run" > launcher.sh
+make run" > launcher-linux.sh
