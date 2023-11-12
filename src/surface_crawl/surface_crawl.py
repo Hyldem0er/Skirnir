@@ -53,7 +53,7 @@ def surface_crawl(instagram, facebook, twitter, linkedin, firstname, lastname, n
     """
     urls = []
     browsers = [Browser("google", "https://www.google.com/search?client=firefox-b-d&q="), Browser("nickname", "https://www.google.com/search?client=firefox-b-d&q="),
-                Browser("nicknames", "https://www.google.com/search?client=firefox-b-d&q="), Browser("duckduckgo")] # Browser("bing", "https://www.bing.com/search?q=")
+                Browser("nicknames", "https://www.google.com/search?client=firefox-b-d&q="), Browser("duckduckgo")]#, Browser("bing", "https://www.bing.com/search?q=")]
     # browsers = [Browser("duckduckgo")] #  Browser("bing", "https://www.bing.com/search?q=")
     
     # Name
