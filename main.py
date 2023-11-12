@@ -58,8 +58,12 @@ def main():
         window.show()
         sys.exit(app.exec())
     else:
-        print( args.birthday != "")
-        print(args.birthday)
+        if args.all:
+            args.instagram = True
+            args.facebook = True
+            args.x = True
+            args.linkedin = True
+        
         crawl_list, advanced_profile_set, social_networks_dict = start_profile_research(args.instagram, args.facebook, args.x, args.linkedin, 
                                                                                         args.firstname, args.lastname, args.birthday, args.nickname, 
                                                                                         args.birthday != "", args.nickname_only, args.pseudo_size,
