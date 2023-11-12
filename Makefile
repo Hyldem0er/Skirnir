@@ -28,7 +28,7 @@ install:
 
 # Run the main.py script
 run:
-	$(PYTHON) main.py
+	$(PYTHON) main.py --ui
 
 # Delete the virtual environment
 clean:

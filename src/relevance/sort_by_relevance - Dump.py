@@ -104,7 +104,12 @@ def composed_name_test_in_url(name, url):
 def similarity_score(url, firstname, lastname, nickname, list_nickname):
     if url == "":
         return 0
-    
+    if "linkedin" in url:
+        url = url.split("/")[4]
+    else:
+        url = url.split("/")[3]
+
+
     firstname_in_url = True if firstname in url else False
     first_char_firstname_in_url = True if first_char(firstname) in url else False
     lastname_in_url = True if lastname in url else False
@@ -135,7 +140,7 @@ def similarity_score(url, firstname, lastname, nickname, list_nickname):
         return 70
     if firstname_in_url and rem_vowel_lastname_in_url:
         return 60
-    if nickname in url:
+    if nickname in url and not nickname == "":
         return 55
     if firstname_in_url and first_char_lastname_in_url:
         return 50
@@ -159,9 +164,9 @@ def sort_by_relevance(iterable, firstname, lastname, nickname, list_nickname):
     return sorted(iterable, key=lambda url: similarity_score(unidecode(url.lower()), firstname.lower(), lastname.lower(), nickname.lower(), list_nickname), reverse=True)
 
 
-# print_score(myset, "jean pierre", "dubois", "john", [])
+print_score(myset, "Jean", "Deriaux", "", [])
 
 
-res = sort_by_relevance(myset, "jean pierre", "dubois", "john", [])
-for url in res:
-    print(url)
+# res = sort_by_relevance(myset, "Jean", "Deriaux", "", [])
+# for url in res:
+#     print(url)

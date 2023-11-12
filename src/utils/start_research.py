@@ -120,6 +120,7 @@ def start_profile_research(instagram_checkbox, facebook_checkbox, twitter_checkb
         nickname_only (bool): The state of the "Nickname Only" checkbox.
         limit (int): The limit for generating possible pseudonyms.
         deepcrawl_is_checked (bool): The state of the "Crawl" checkbox.
+        nickname_export (bool): Export the generated nicknames in CSV
 
     Returns:
         tuple: A tuple containing the crawl list, advanced profile set, and social networks dictionary.

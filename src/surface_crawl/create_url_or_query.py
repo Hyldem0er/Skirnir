@@ -91,7 +91,7 @@ def create_surface_crawl_multiple_url(browser, instagram, facebook, twitter, lin
     urls = []
 
     # Base URL with the provided first and last name
-    url = browser.research_urls + "%22" + name + "%22"
+    url = browser.research_urls + name
 
     # Calculate the limit of activated networks
     limit = calculate_number_activate_networks(instagram, facebook, twitter, linkedin)
