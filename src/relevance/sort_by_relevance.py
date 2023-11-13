@@ -1,7 +1,7 @@
 from src.utils.name import *
 from unidecode import unidecode
 from src.generator.nickname_generation import get_nicknames_variations_with_delimiters
-
+from Levenshtein import jaro_winkler as jar
 
 def composed_name_test_in_url(name, url):
     delimiters = ['-', '_', '.', '']
@@ -10,7 +10,6 @@ def composed_name_test_in_url(name, url):
         if n in url:
             return True
     return False
-
 def similarity_score(url, firstname, lastname, nickname, list_nickname):
     if url == "":
         return 0
@@ -66,9 +65,28 @@ def similarity_score(url, firstname, lastname, nickname, list_nickname):
         return 5
     return 0
 
-def print_score(set, firstname, lastname, nickname, list_nickname):
-    for url in set:
-        print(url," :" , similarity_score(unidecode(url.lower()), firstname.lower(), lastname.lower(), nickname.lower(), list_nickname))
+def similarity_score_nickname_only(url, nickname):
+    if url == "":
+        return 0
+    if "linkedin" in url:
+        url = url.split("/")[4]
+    else:
+        url = url.split("/")[3]
+    score = jar(url, nickname) * 100
+    if score <= 75  and nickname in url:
+        return 75
+    return score
 
-def sort_by_relevance(iterable, firstname, lastname, nickname, list_nickname):
-    return sorted(iterable, key=lambda url: similarity_score(unidecode(url.lower()), firstname.lower(), lastname.lower(), nickname.lower(), list_nickname), reverse=True)
+
+def print_score(set, firstname, lastname, nickname, list_nickname, nickname_only=False):
+    for url in set:
+        if nickname_only:
+            print(url," :" , similarity_score_nickname_only(unidecode(url.lower()), nickname.lower()))
+        else:
+            print(url," :" , similarity_score(unidecode(url.lower()), firstname.lower(), lastname.lower(), nickname.lower(), list_nickname))
+
+def sort_by_relevance(iterable, firstname, lastname, nickname, list_nickname, nickname_only=False):
+    if nickname_only:
+        return sorted(iterable, key=lambda url: similarity_score_nickname_only(unidecode(url.lower()), nickname.lower()), reverse=True)
+    else:
+        return sorted(iterable, key=lambda url: similarity_score(unidecode(url.lower()), firstname.lower(), lastname.lower(), nickname.lower(), list_nickname), reverse=True)

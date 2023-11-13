@@ -2,6 +2,7 @@
 from unidecode import unidecode
 # from src.generator.nickname_generation import get_nicknames_variations_with_delimiters
 import os
+from Levenshtein import jaro_winkler as jar
 
 database_path = os.path.abspath(os.path.join(os.path.dirname(__file__), './', 'database.txt'))
 
@@ -156,17 +157,36 @@ def similarity_score(url, firstname, lastname, nickname, list_nickname):
         return 5
     return 0
 
-def print_score(set, firstname, lastname, nickname, list_nickname):
+def similarity_score_nickname_only(url, nickname):
+    if url == "":
+        return 0
+    if "linkedin" in url:
+        url = url.split("/")[4]
+    else:
+        url = url.split("/")[3]
+    score = jar(url, nickname) * 100
+    if score <= 75  and nickname in url:
+        return 75
+    return score
+
+
+def print_score(set, firstname, lastname, nickname, list_nickname, nickname_only=False):
     for url in set:
-        print(url," :" , similarity_score(unidecode(url.lower()), firstname.lower(), lastname.lower(), nickname.lower(), list_nickname))
+        if nickname_only:
+            print(url," :" , similarity_score_nickname_only(unidecode(url.lower()), nickname.lower()))
+        else:
+            print(url," :" , similarity_score(unidecode(url.lower()), firstname.lower(), lastname.lower(), nickname.lower(), list_nickname))
 
-def sort_by_relevance(iterable, firstname, lastname, nickname, list_nickname):
-    return sorted(iterable, key=lambda url: similarity_score(unidecode(url.lower()), firstname.lower(), lastname.lower(), nickname.lower(), list_nickname), reverse=True)
+def sort_by_relevance(iterable, firstname, lastname, nickname, list_nickname, nickname_only=False):
+    if nickname_only:
+        return sorted(iterable, key=lambda url: similarity_score_nickname_only(unidecode(url.lower()), nickname.lower()), reverse=True)
+    else:
+        return sorted(iterable, key=lambda url: similarity_score(unidecode(url.lower()), firstname.lower(), lastname.lower(), nickname.lower(), list_nickname), reverse=True)
 
 
-print_score(myset, "Jean", "Deriaux", "", [])
+# print_score(myset, "Jean", "Deriaux", "djo", [], True)
 
 
-# res = sort_by_relevance(myset, "Jean", "Deriaux", "", [])
-# for url in res:
-#     print(url)
+res = sort_by_relevance(myset, "Jean", "Deriaux", "le vieux rat 88", [], True)
+for url in res:
+    print(url)
