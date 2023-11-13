@@ -298,7 +298,7 @@ class MainWindow(QDialog):
 
         # Date Checkbox
         self.show_date_checkbox = QCheckBox()
-        self.show_date_checkbox.setChecked(True)
+        self.show_date_checkbox.setChecked(False)
         self.show_date_checkbox.stateChanged.connect(self.toggleDateVisibility)
 
         # creating a form layout
@@ -314,6 +314,8 @@ class MainWindow(QDialog):
 
         # setting layout
         self.formGroupBox.setLayout(layout)
+        self.formGroupBox.layout().labelForField(self.date).hide()
+        self.date.hide()
 
     # # when button is pressed this method is being called
     # def set_progress(self, value):
