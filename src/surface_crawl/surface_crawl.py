@@ -12,7 +12,13 @@ def is_not_noise_url(url):
             and "/hashtag/" not in url and "/p/" not in url and "/public/" not in url and "/search/" not in url
             and "/filter/" not in url  and "/jobs/" not in url and "/explore/" not in url and "/pages/" not in url
             and "/reel/" not in url  and "/review/" not in url and "/legacy/" not in url and "/notes/" not in url
-            and "/tv/" not in url and "google" not in url and "translate" not in url)
+            and "/tv/" not in url and "google" not in url and "translate" not in url and "/about-us/" not in url 
+            and "/marketing-solutions/" not in url and "/help/" not in url and "/live/" not in url and "/login/" not in url 
+            and "/using-x/" not in url and "/docs/" not in url and "/forms/" not in url and "/login.php/" not in url 
+            and "facebook.com/reg/" not in url and "/getting-started/" not in url and "/marketplace/" not in url 
+            and "/features/" not in url and "/about/" not in url and "/linkedin-news/" not in url and "/blog/" not in url 
+            and "/grow/" not in url and "/who-we-are/" not in url and "/content/" not in url and "/web/" not in url and "linkedIn.com/home/"
+)
 
 def extract_profile_url(url):
     """
