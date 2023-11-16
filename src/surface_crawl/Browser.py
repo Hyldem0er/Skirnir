@@ -78,6 +78,8 @@ class Browser:
         """
         
         if self.name == "google":
+            if lastname == "" or firstname == "":
+                return []
             custom_url = "%22" + firstname + "+" + lastname + "%22"
             research_url = create_surface_crawl_url(self, instagram, facebook, twitter, linkedin, custom_url)
             result_list = search_google(research_url)
@@ -87,14 +89,18 @@ class Browser:
         if self.name == "nickname":
             if nickname == "":
                 nickname = "%22" + lastname + "+" + firstname+ "%22"
-            else:
+            elif lastname != "" and firstname != "":
                 nickname = "(%22" + nickname + "%22+OR+%22" + lastname + "+" + firstname + "%22)" # ("nickname" OR "lastname firstname")
+            else:
+                nickname = "%22" + nickname + "%22"
             research_url = create_surface_crawl_url(self, instagram, facebook, twitter, linkedin, nickname)
             result_list = search_google(research_url)
             logger.debug("Nickname crawling result : {}", result_list)
             return result_list
         
         if self.name == "nicknames":
+            if nickname == "":
+                return []
             # Nicknames
             matching_nicknames_list = match_nicknames(firstname)
             if matching_nicknames_list == []:
@@ -107,6 +113,8 @@ class Browser:
             return result_list
 
         if self.name == "duckduckgo":
+            if lastname == "" or firstname == "":
+                return []
             name = firstname + " " + lastname
             research_queries = create_surface_crawl_query(instagram, facebook, twitter, linkedin, name)
             result_list = []
@@ -116,6 +124,8 @@ class Browser:
             return result_list
 
         if self.name == "bing":
+            if lastname == "" or firstname == "":
+                return []
             result_list = []
             custom_url = "%22" + firstname + "+" + lastname + "%22"
             research_urls = create_surface_crawl_multiple_url(self, instagram, facebook, twitter, linkedin, custom_url)
