@@ -1,5 +1,5 @@
 import requests, sys
-from .user_agents import get_useragent
+from .user_agents import get_useragent_mobile
 from .proxies import get_proxy
 from loguru import logger
 
@@ -38,7 +38,7 @@ def get(url, timeout=5, header=None):
     # url += "&hl=" + lang 
     # print("url: " + url)
 
-    headers = {"User-Agent": get_useragent()}
+    headers = {"User-Agent": get_useragent_mobile()}
     if header:
         headers.update(header)
 
