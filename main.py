@@ -39,8 +39,7 @@ def main():
 
 
     args = parser.parse_args()
-    
-    print(args)
+
 
     # Update the logger configuration based on the log level specified
     

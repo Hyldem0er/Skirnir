@@ -2,23 +2,23 @@
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
+import os, time, sys
+from loguru import logger
+from src.ui.WorkerThread import WorkerThread
+from src.utils.start_research import sort_crawl_result
+from src.relevance.sort_by_relevance import sort_by_relevance
 from src.ui.CrawlResultWindow import CrawlResultWindow
 from src.ui.DeepResultWindow import DeepResultWindow
-from src.ui.ProgressThread import ProgressThread
-import os, time, sys
-from src.utils.start_research import start_profile_research, sort_crawl_result
-from src.ui.Loading import Loading
-from src.utils.login import open_social_network_login_page
-from loguru import logger
-from src.surface_crawl.match_nicknames import list_nicknames
-from src.relevance.sort_by_relevance import sort_by_relevance
 import copy
+import os, time, sys
+from src.surface_crawl.match_nicknames import list_nicknames
+list_of_nickname = list_nicknames()
+
+scriptDir = os.path.dirname(os.path.realpath(__file__))
+gifFile = (scriptDir + os.path.sep + 'loading.gif')
 
 logger.add(sys.stdout, colorize=True, format="<green>{time}</green> <level>{message}</level>")
 
-list_of_nickname = list_nicknames()
-
-# creating a class
 # that inherits the QDialog class
 class MainWindow(QDialog):
  
@@ -31,7 +31,6 @@ class MainWindow(QDialog):
         self.width = 500
         self.height = 400
         self.progressBarThread = None
-        self.p = Loading()
         self.number_of_start = 0
         self.initUI()
 
@@ -61,6 +60,8 @@ class MainWindow(QDialog):
         self.buttonBox = QDialogButtonBox(QDialogButtonBox.Ok | QDialogButtonBox.Cancel)
 
         # adding action when form is accepted
+        # adding action when form is accepted
+        
         self.buttonBox.accepted.connect(self.start_checking_profile)
 
         # adding action when form is rejected
@@ -74,6 +75,17 @@ class MainWindow(QDialog):
 
         # adding limit size of generated nicknames
         mainLayout.addWidget(self.AdvancedSettings) 
+
+        # Add a loading gif
+        self.label = QLabel()
+        mainLayout.addWidget(self.label)
+
+        self.movie = QMovie(gifFile)
+        self.label.setMovie(self.movie)
+        self.label.setAlignment(Qt.AlignCenter)
+        self.movie.start()
+        self.label.hide()
+
 
         # # adding progress bar
         # mainLayout.addWidget(self.progress)
@@ -321,13 +333,6 @@ class MainWindow(QDialog):
     # def set_progress(self, value):
     #     self.progress.setValue(value)
 
-    
-    def start_loading_bar_thread(self, size):
-        self.progressBarThread = ProgressThread(size)
-        self.progressBarThread.reportProgress.connect(self.set_progress)
-        # self.progressBarThread.calculationFinished.connect(self.calculationFinished)
-        self.progressBarThread.start()
-
     def gray(self):
         if not self.show_deepcrawl_checkbox.isChecked():
             self.slider_container.setStyleSheet("color:grey;")
@@ -355,21 +360,9 @@ class MainWindow(QDialog):
     def setLimit(self, value):
         self.limit.setText(str(value))
 
-    # call nickname generation function
-    def start_checking_profile(self):
-        self.number_of_start += 1
-        if self.number_of_start == 1: # Open social network login page only on first launch
-            open_social_network_login_page(self.show_instagram_checkbox.isChecked(), self.show_facebook_checkbox.isChecked(),
-                self.show_twitter_checkbox.isChecked(), self.show_linkedin_checkbox.isChecked())
-        self.showLoadingBar = True
-        logger.info("Start Crawling")
-        
-        crawl_list, advanced_profile_set, social_networks_dict = start_profile_research(self.show_instagram_checkbox.isChecked(), self.show_facebook_checkbox.isChecked(),
-                                    self.show_twitter_checkbox.isChecked(), self.show_linkedin_checkbox.isChecked(),
-                                    self.Firstname.text(), self.Lastname.text(), self.date.text(), self.nickname.text(),
-                                    self.show_date_checkbox.isChecked(), self.nickname_only.isChecked(), int(self.limit.text()), self.show_deepcrawl_checkbox.isChecked(),
-                                    self.show_exportCSV_checkbox.isChecked())
-
+    def on_worker_finished(self, result):
+        self.label.hide()
+        crawl_list, advanced_profile_set, social_networks_dict = result
 
         if self.show_deepcrawl_checkbox.isChecked():
             crawl_set = sort_crawl_result(crawl_list)
@@ -386,6 +379,15 @@ class MainWindow(QDialog):
         else:
             crawl_list = sort_by_relevance(set(crawl_list), self.Firstname.text(), self.Lastname.text(),  self.nickname.text(), list_of_nickname, self.nickname_only.isChecked())
             self.w = CrawlResultWindow(crawl_list, social_networks_dict)
-
-      
         self.w.show()
+    
+    # call nickname generation function
+    def start_checking_profile(self):
+        self.label.show()
+        self.worker_thread = WorkerThread(self.show_instagram_checkbox.isChecked(), self.show_facebook_checkbox.isChecked(),
+                                    self.show_twitter_checkbox.isChecked(), self.show_linkedin_checkbox.isChecked(),
+                                    self.Firstname.text(), self.Lastname.text(), self.date.text(), self.nickname.text(),
+                                    self.show_date_checkbox.isChecked(), self.nickname_only.isChecked(), int(self.limit.text()), self.show_deepcrawl_checkbox.isChecked(),
+                                    self.show_exportCSV_checkbox.isChecked(), self)
+        self.worker_thread.finished.connect(self.on_worker_finished)
+        self.worker_thread.start()

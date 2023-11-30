@@ -1,6 +1,7 @@
 from src.utils.name import *
 from src.utils.combination import generate_string_combinations
 
+
 def get_possible_simple_name_variations(name):
     """
     Get possible variations of a simple name.
