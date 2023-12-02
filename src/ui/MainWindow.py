@@ -30,7 +30,6 @@ class MainWindow(QDialog):
         self.top = 100
         self.width = 500
         self.height = 400
-        self.progressBarThread = None
         self.number_of_start = 0
         self.initUI()
 
@@ -46,9 +45,6 @@ class MainWindow(QDialog):
         # setting geometry to the window
         self.setGeometry(self.left, self.top, self.width, self.height)
 
-        # # Progress
-        # self.progress = QProgressBar(self)
-        # self.progress.setMaximum(100)
 
         # calling the method that create the form
         self.createForm()
@@ -85,10 +81,6 @@ class MainWindow(QDialog):
         self.label.setAlignment(Qt.AlignCenter)
         self.movie.start()
         self.label.hide()
-
-
-        # # adding progress bar
-        # mainLayout.addWidget(self.progress)
 
         # adding button box to the layout
         mainLayout.addWidget(self.buttonBox)
@@ -329,10 +321,6 @@ class MainWindow(QDialog):
         self.formGroupBox.layout().labelForField(self.date).hide()
         self.date.hide()
 
-    # # when button is pressed this method is being called
-    # def set_progress(self, value):
-    #     self.progress.setValue(value)
-
     def gray(self):
         if not self.show_deepcrawl_checkbox.isChecked():
             self.slider_container.setStyleSheet("color:grey;")
@@ -362,6 +350,7 @@ class MainWindow(QDialog):
 
     def on_worker_finished(self, result):
         self.label.hide()
+        self.adjustSize()
         crawl_list, advanced_profile_set, social_networks_dict = result
 
         if self.show_deepcrawl_checkbox.isChecked():

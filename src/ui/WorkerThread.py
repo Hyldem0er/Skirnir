@@ -38,5 +38,4 @@ class WorkerThread(QThread):
                                     self.show_date_checkbox, self.nickname_only, int(self.limit), self.show_deepcrawl_checkbox,
                                     self.show_exportCSV_checkbox)
 
-
         self.finished.emit((crawl_list, advanced_profile_set, social_networks_dict))
