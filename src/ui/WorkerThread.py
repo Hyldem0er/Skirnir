@@ -6,13 +6,14 @@ class WorkerThread(QThread):
     finished = pyqtSignal(object)
 
     def __init__(self, show_instagram_checkbox=False, show_facebook_checkbox=False, show_twitter_checkbox=False, show_linkedin_checkbox=False,
-                 Firstname=None, Lastname=None, date=None, nickname=None, show_date_checkbox=False, nickname_only=False,
+                 show_tiktok_checkbox = False, Firstname=None, Lastname=None, date=None, nickname=None, show_date_checkbox=False, nickname_only=False,
                  limit=None, show_deepcrawl_checkbox=False, show_exportCSV_checkbox=False, keyword="", w=None):
         super(WorkerThread, self).__init__()
         self.show_instagram_checkbox = show_instagram_checkbox
         self.show_facebook_checkbox = show_facebook_checkbox
         self.show_twitter_checkbox = show_twitter_checkbox
         self.show_linkedin_checkbox = show_linkedin_checkbox
+        self.show_tiktok_checkox = show_tiktok_checkbox
         self.Firstname= Firstname
         self.Lastname = Lastname
         self.date = date
@@ -31,10 +32,10 @@ class WorkerThread(QThread):
         self.number_of_start += 1
         if self.number_of_start == 1: # Open social network login page only on first launch
             open_social_network_login_page(self.show_instagram_checkbox, self.show_facebook_checkbox,
-                self.show_twitter_checkbox, self.show_linkedin_checkbox)
+                self.show_twitter_checkbox, self.show_linkedin_checkbox, self.show_tiktok_checkox)
 
         crawl_list, advanced_profile_set, social_networks_dict = start_profile_research(self.show_instagram_checkbox, self.show_facebook_checkbox,
-                                    self.show_twitter_checkbox, self.show_linkedin_checkbox,
+                                    self.show_twitter_checkbox, self.show_linkedin_checkbox, self.show_tiktok_checkox, 
                                     self.Firstname, self.Lastname, self.date, self.nickname,
                                     self.show_date_checkbox, self.nickname_only, int(self.limit), self.show_deepcrawl_checkbox,
                                     self.show_exportCSV_checkbox, self.keyword)

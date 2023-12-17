@@ -55,7 +55,7 @@ class Browser:
         """
         return self.research_urls
 
-    def perform_surface_crawl(self, instagram, facebook, twitter, linkedin, firstname, lastname, nickname, keyword):
+    def perform_surface_crawl(self, instagram, facebook, twitter, linkedin, tiktok, firstname, lastname, nickname, keyword):
         """
         Performs a surface crawl on specified platforms using the browser.
 
@@ -82,7 +82,7 @@ class Browser:
             if lastname == "" or firstname == "":
                 return []
             custom_url = "%22" + firstname + "+" + lastname + "%22"
-            research_url = create_surface_crawl_url(self, instagram, facebook, twitter, linkedin, custom_url)
+            research_url = create_surface_crawl_url(self, instagram, facebook, twitter, linkedin, tiktok, custom_url)
             result_list = search_google(research_url)
             logger.debug("Google crawling result : {}", result_list)
             return result_list
@@ -94,7 +94,7 @@ class Browser:
                 nickname = "(%22" + nickname + "%22+OR+%22" + lastname + "+" + firstname + "%22)" # ("nickname" OR "lastname firstname")
             else:
                 nickname = "%22" + nickname + "%22"
-            research_url = create_surface_crawl_url(self, instagram, facebook, twitter, linkedin, nickname)
+            research_url = create_surface_crawl_url(self, instagram, facebook, twitter, linkedin, tiktok,  nickname)
             result_list = search_google(research_url)
             logger.debug("Nickname crawling result : {}", result_list)
             return result_list
@@ -107,7 +107,7 @@ class Browser:
             if matching_nicknames_list == []:
                 return []
             nickname_query = create_query_matching_nicknames(firstname, lastname, matching_nicknames_list)
-            research_url = create_surface_crawl_url(self, instagram, facebook, twitter, linkedin, nickname_query, nickname_mode=True)
+            research_url = create_surface_crawl_url(self, instagram, facebook, twitter, linkedin, tiktok, nickname_query, nickname_mode=True)
             
             logger.debug("Google crawling result for nicknames that match to {} : {}", firstname, research_url)
             result_list = search_google(research_url)
@@ -128,7 +128,7 @@ class Browser:
             if lastname == "" or firstname == "" or keyword == "":
                 return []
             custom_url = "%22" + firstname + "+" + lastname + "%22" + "+" + urllib.parse.quote_plus(keyword)
-            research_url = create_surface_crawl_url(self, instagram, facebook, twitter, linkedin, custom_url, nickname_mode=True)
+            research_url = create_surface_crawl_url(self, instagram, facebook, twitter, linkedin, tiktok, custom_url, nickname_mode=True)
             result_list = search_google(research_url)
             logger.debug("Keyword crawling result : {}", result_list)
             return result_list
@@ -138,7 +138,7 @@ class Browser:
                 return []
             result_list = []
             custom_url = "%22" + firstname + "+" + lastname + "%22"
-            research_urls = create_surface_crawl_multiple_url(self, instagram, facebook, twitter, linkedin, custom_url)
+            research_urls = create_surface_crawl_multiple_url(self, instagram, facebook, twitter, linkedin, tiktok, custom_url)
             for research_url in research_urls:
                 result_list.extend(search_google(research_url))
             logger.debug("Bing crawling result : {}",result_list)

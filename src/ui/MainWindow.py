@@ -190,6 +190,10 @@ class MainWindow(QDialog):
         self.show_linkedin_checkbox = QCheckBox()
         self.show_linkedin_checkbox.setChecked(True)
 
+        # TikTok Checkbox
+        self.show_tiktok_checkbox = QCheckBox()
+        self.show_tiktok_checkbox.setChecked(True)
+
         checkboxlayout = QVBoxLayout()
         checkboxlayout.setSpacing(0)  # Adjust the spacing between elements
         checkboxlayout.setContentsMargins(0, 0, 0, 0)  # Set margins to zero
@@ -232,10 +236,20 @@ class MainWindow(QDialog):
         linkedincontainer = QWidget()
         linkedincontainer.setLayout(linkedinLayout)
 
+        tiktokLayout = QHBoxLayout()
+        tiktokLayout.setSpacing(0)  # Adjust the spacing between elements
+        tiktokLayout.setContentsMargins(0, 10, 0, 0)  # Set margins to zero
+        tiktokLayout.setAlignment(Qt.AlignmentFlag.AlignLeft)
+        tiktokLayout.addWidget(self.show_tiktok_checkbox)
+        tiktokLayout.addWidget(QLabel("TikTok"))
+        tiktokcontainer = QWidget()
+        tiktokcontainer.setLayout(tiktokLayout)
+
         checkboxlayout.addWidget(instacontainer)
         checkboxlayout.addWidget(fbcontainer)
         checkboxlayout.addWidget(twittercontainer)
         checkboxlayout.addWidget(linkedincontainer)
+        checkboxlayout.addWidget(tiktokcontainer)
         checkboxcontainer.setLayout(checkboxlayout)
 
         formlayout.setVerticalSpacing(15)
@@ -366,6 +380,7 @@ class MainWindow(QDialog):
             advanced_profile_set['facebook'] = sort_by_relevance(advanced_profile_set['facebook'], self.Firstname.text(), self.Lastname.text(),  self.nickname.text(), list_of_nickname, self.nickname_only.isChecked())
             advanced_profile_set['twitter'] = sort_by_relevance(advanced_profile_set['twitter'], self.Firstname.text(), self.Lastname.text(),  self.nickname.text(), list_of_nickname, self.nickname_only.isChecked())
             advanced_profile_set['linkedin'] = sort_by_relevance(advanced_profile_set['linkedin'], self.Firstname.text(), self.Lastname.text(),  self.nickname.text(), list_of_nickname, self.nickname_only.isChecked())
+            advanced_profile_set['tiktok'] = sort_by_relevance(advanced_profile_set['tiktok'], self.Firstname.text(), self.Lastname.text(),  self.nickname.text(), list_of_nickname, self.nickname_only.isChecked())
             
             self.w = DeepResultWindow(advanced_profile_set, social_networks_dict, backup_facebook)
         else:
@@ -377,7 +392,7 @@ class MainWindow(QDialog):
     def start_checking_profile(self):
         self.label.show()
         self.worker_thread = WorkerThread(self.show_instagram_checkbox.isChecked(), self.show_facebook_checkbox.isChecked(),
-                                    self.show_twitter_checkbox.isChecked(), self.show_linkedin_checkbox.isChecked(),
+                                    self.show_twitter_checkbox.isChecked(), self.show_linkedin_checkbox.isChecked(), self.show_tiktok_checkbox.isChecked(),
                                     self.Firstname.text(), self.Lastname.text(), self.date.text(), self.nickname.text(),
                                     self.show_date_checkbox.isChecked(), self.nickname_only.isChecked(), int(self.limit.text()), self.show_deepcrawl_checkbox.isChecked(),
                                     self.show_exportCSV_checkbox.isChecked(), self.keyword.text(), self)
