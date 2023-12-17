@@ -298,7 +298,9 @@ class MainWindow(QDialog):
         self.nickname_only.setChecked(False)
         self.nickname_only.stateChanged.connect(self.toggleNamesVisibility)
         self.nickname = QLineEdit()
-        
+
+        # Keyword
+        self.keyword = QLineEdit()
 
         # Date Checkbox
         self.show_date_checkbox = QCheckBox()
@@ -315,6 +317,7 @@ class MainWindow(QDialog):
         layout.addRow(QLabel("Birthday: "), self.date)
         layout.addRow(QLabel("Search only the pseudo: "), self.nickname_only)
         layout.addRow(QLabel("Pseudo: "), self.nickname)
+        layout.addRow(QLabel("Keyword: "), self.keyword)
 
         # setting layout
         self.formGroupBox.setLayout(layout)
@@ -377,6 +380,6 @@ class MainWindow(QDialog):
                                     self.show_twitter_checkbox.isChecked(), self.show_linkedin_checkbox.isChecked(),
                                     self.Firstname.text(), self.Lastname.text(), self.date.text(), self.nickname.text(),
                                     self.show_date_checkbox.isChecked(), self.nickname_only.isChecked(), int(self.limit.text()), self.show_deepcrawl_checkbox.isChecked(),
-                                    self.show_exportCSV_checkbox.isChecked(), self)
+                                    self.show_exportCSV_checkbox.isChecked(), self.keyword.text(), self)
         self.worker_thread.finished.connect(self.on_worker_finished)
         self.worker_thread.start()

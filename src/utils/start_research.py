@@ -103,7 +103,7 @@ def create_social_networks_dict(instagram_checkbox, facebook_checkbox, twitter_c
 
 def start_profile_research(instagram_checkbox, facebook_checkbox, twitter_checkbox, linkedin_checkbox,
                            firstname, lastname, date, nickname, birthday_on, nickname_only, limit, 
-                           deepcrawl_is_checked, nickname_export):
+                           deepcrawl_is_checked, nickname_export, keyword):
     """
     Starts the profile research process based on the provided parameters.
 
@@ -132,7 +132,7 @@ def start_profile_research(instagram_checkbox, facebook_checkbox, twitter_checkb
     social_networks_dict = create_social_networks_dict(instagram_checkbox, facebook_checkbox, twitter_checkbox, linkedin_checkbox)
 
     logger.info("Starting Surface Crawling")
-    crawl_list = surface_crawl(instagram_checkbox, facebook_checkbox, twitter_checkbox, linkedin_checkbox, firstname, lastname, nickname)
+    crawl_list = surface_crawl(instagram_checkbox, facebook_checkbox, twitter_checkbox, linkedin_checkbox, firstname, lastname, nickname, keyword)
 
     generated_nicknames = generate_possible_pseudonyms(firstname, lastname, date, nickname, limit, birthday_on, nickname_only)
 

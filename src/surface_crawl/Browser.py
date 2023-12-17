@@ -2,6 +2,7 @@ from src.surface_crawl.create_url_or_query import *
 import sys
 from loguru import logger
 from src.surface_crawl.match_nicknames import match_nicknames, create_query_matching_nicknames
+import urllib.parse
 
 logger.add(sys.stdout, colorize=True, format="<green>{time}</green> <level>{message}</level>")
 
@@ -54,7 +55,7 @@ class Browser:
         """
         return self.research_urls
 
-    def perform_surface_crawl(self, instagram, facebook, twitter, linkedin, firstname, lastname, nickname):
+    def perform_surface_crawl(self, instagram, facebook, twitter, linkedin, firstname, lastname, nickname, keyword):
         """
         Performs a surface crawl on specified platforms using the browser.
 
@@ -122,6 +123,15 @@ class Browser:
         #         result_list.extend(search_duckduckgo(query))
         #     logger.debug("Duckduckgo crawling result : {}", result_list)
         #     return result_list
+
+        if self.name == "keyword":
+            if lastname == "" or firstname == "" or keyword == "":
+                return []
+            custom_url = "%22" + firstname + "+" + lastname + "%22" + "+" + urllib.parse.quote_plus(keyword)
+            research_url = create_surface_crawl_url(self, instagram, facebook, twitter, linkedin, custom_url, nickname_mode=True)
+            result_list = search_google(research_url)
+            logger.debug("Keyword crawling result : {}", result_list)
+            return result_list
 
         if self.name == "bing":
             if lastname == "" or firstname == "":
