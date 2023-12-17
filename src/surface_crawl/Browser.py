@@ -112,16 +112,16 @@ class Browser:
             result_list = search_google(research_url)
             return result_list
 
-        if self.name == "duckduckgo":
-            if lastname == "" or firstname == "":
-                return []
-            name = firstname + " " + lastname
-            research_queries = create_surface_crawl_query(instagram, facebook, twitter, linkedin, name)
-            result_list = []
-            for query in research_queries:
-                result_list.extend(search_duckduckgo(query))
-            logger.debug("Duckduckgo crawling result : {}", result_list)
-            return result_list
+        # if self.name == "duckduckgo":
+        #     if lastname == "" or firstname == "":
+        #         return []
+        #     name = firstname + " " + lastname
+        #     research_queries = create_surface_crawl_query(instagram, facebook, twitter, linkedin, name)
+        #     result_list = []
+        #     for query in research_queries:
+        #         result_list.extend(search_duckduckgo(query))
+        #     logger.debug("Duckduckgo crawling result : {}", result_list)
+        #     return result_list
 
         if self.name == "bing":
             if lastname == "" or firstname == "":
