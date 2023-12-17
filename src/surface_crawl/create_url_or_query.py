@@ -1,7 +1,7 @@
 from duckduckgo_search import DDGS
 from bs4 import BeautifulSoup
 from time import sleep
-from src.request_helper.request_handling import get
+from src.request_helper.request_handling import get, get_html
 import sys
 from loguru import logger
 
@@ -74,7 +74,7 @@ def create_surface_crawl_url(browser, instagram, facebook, twitter, linkedin, ur
     
     return url
 
-def create_surface_crawl_multiple_url(browser, instagram, facebook, twitter, linkedin, name):
+def create_surface_crawl_multiple_url(browser, instagram, facebook, twitter, linkedin, url_q):
     """
     Generate a Browser search URL list for surface crawling based on provided parameters.
     
@@ -91,7 +91,7 @@ def create_surface_crawl_multiple_url(browser, instagram, facebook, twitter, lin
     urls = []
 
     # Base URL with the provided first and last name
-    url = browser.research_urls + name
+    url = browser.research_urls + url_q
 
     # Calculate the limit of activated networks
     limit = calculate_number_activate_networks(instagram, facebook, twitter, linkedin)
@@ -191,8 +191,42 @@ def search_google(research_url, sleep_interval=5):
     except Exception as e:
         logger.exception(e)
         return []
+    
+def search_duckduckgo(research_url, sleep_interval=5):
+    """
+    Performs a Google search and retrieves the links from the search results.
 
-def search_duckduckgo(query, sleep_interval=1):
+    Args:
+        research_url (str): The URL to perform the Google search.
+        sleep_interval (float, optional): The sleep interval in seconds between requests. Defaults to 1.
+
+    Returns:
+        list: A list of unique links extracted from the search results.
+
+    Example:
+        >>> search_google("https://www.google.com/search?q=example")
+        ['https://www.example.com', 'https://www.example2.com']
+    """
+    try:
+        resp = get_html(research_url)
+        data = resp.html.render()
+
+        print("HTML:")
+        print(data)
+        # print(resp)
+        # links = resp.html.absolute_links
+        # print(links)
+        links = []
+        for result in resp.html.find('.links_deep'):
+            link = result.find('.result_extras_url', first=True).text
+            print({link})
+            links.append(link)
+        return links
+    except Exception as e:
+        logger.exception(e)
+        return []
+
+def search_duckduckgo_ddgs(query, sleep_interval=1):
     """
     Performs a DuckDuckGo search and retrieves the links from the search results.
 

@@ -99,7 +99,7 @@ class Browser:
             return result_list
         
         if self.name == "nicknames":
-            if nickname == "":
+            if firstname == "": # FIXME avec firstname
                 return []
             # Nicknames
             matching_nicknames_list = match_nicknames(firstname)
@@ -112,15 +112,26 @@ class Browser:
             result_list = search_google(research_url)
             return result_list
 
+        # if self.name == "duckduckgo":
+        #     if lastname == "" or firstname == "":
+        #         return []
+        #     name = firstname + " " + lastname
+        #     research_queries = create_surface_crawl_query(instagram, facebook, twitter, linkedin, name)
+        #     result_list = []
+        #     for query in research_queries:
+        #         result_list.extend(search_duckduckgo(query))
+        #     logger.debug("Duckduckgo crawling result : {}", result_list)
+        #     return result_list
+
         if self.name == "duckduckgo":
             if lastname == "" or firstname == "":
                 return []
-            name = firstname + " " + lastname
-            research_queries = create_surface_crawl_query(instagram, facebook, twitter, linkedin, name)
+            custom_url = "%22" + firstname + "+" + lastname + "%22"
+            research_urls = create_surface_crawl_multiple_url(self, instagram, facebook, twitter, linkedin, custom_url)
             result_list = []
-            for query in research_queries:
-                result_list.extend(search_duckduckgo(query))
-            logger.debug("Duckduckgo crawling result : {}", result_list)
+            for research_url in research_urls:
+                result_list.extend(search_duckduckgo(research_url))
+            logger.debug("DuckDuckGo crawling result : {}", result_list)
             return result_list
 
         if self.name == "bing":
