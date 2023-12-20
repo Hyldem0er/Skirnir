@@ -8,16 +8,16 @@ logger.add(sys.stdout, colorize=True, format="<green>{time}</green> <level>{mess
 
 def create_tiktok_link(rebound_site, nickname):
     """
-    Create an Instagram profile link based on the given nickname.
+    Create an TikTok profile link based on the given nickname.
 
     Args:
-        nickname (str): The Instagram nickname.
+        nickname (str): The TikTok nickname.
 
     Returns:
-        str: The Instagram profile link.
+        str: The TikTok profile link.
 
     Example:
-        >>> create_instagram_link("jean_pierre")
+        >>> create_TikTok_link("jean_pierre")
         'https://www.picnob.com/fr/profile/jean_pierre/'
     """
     return rebound_site + "@" + nickname + '/'
@@ -27,19 +27,19 @@ import requests
 
 def is_tiktok_profile(link):
     """
-    Checks if the provided link corresponds to an existing Instagram profile.
+    Checks if the provided link corresponds to an existing TikTok profile.
 
     Args:
         link (str): The link to check.
 
     Returns:
-        bool: True if the link corresponds to an existing Instagram profile, False otherwise.
+        bool: True if the link corresponds to an existing TikTok profile, False otherwise.
 
     Raises:
         Exception: If an unexpected error occurs during the request.
 
     Example:
-        >>> is_instagram_profile("https://www.instagram.com/example_profile/")
+        >>> is_TikTok_profile("https://www.TikTok.com/example_profile/")
         True
     """
     header = {
@@ -61,17 +61,17 @@ def is_tiktok_profile(link):
 
 def find_tiktok_profile(nicknameList):
     """
-    Searches for Instagram profiles corresponding to the provided nicknames.
+    Searches for TikTok profiles corresponding to the provided nicknames.
 
     Args:
         nicknameList (list): A list of nicknames to search for.
 
     Returns:
-        list: A list of existing Instagram profile links.
+        list: A list of existing TikTok profile links.
 
     Example:
-        >>> find_instagram_profile(["nickname1", "nickname2", "nickname3"])
-        ['https://www.instagram.com/nickname1/', 'https://www.instagram.com/nickname2/']
+        >>> find_TikTok_profile(["nickname1", "nickname2", "nickname3"])
+        ['https://www.TikTok.com/nickname1/', 'https://www.TikTok.com/nickname2/']
     """
     logger.info("Searching for TikTok profile")
 
