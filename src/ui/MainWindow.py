@@ -374,7 +374,8 @@ class MainWindow(QDialog):
             crawl_set = sort_crawl_result(crawl_list)
             backup_facebook = copy.deepcopy(advanced_profile_set["facebook"])
             for platform in crawl_set:
-                advanced_profile_set[platform].extend(crawl_set[platform])
+                if crawl_set[platform]:
+                    advanced_profile_set[platform].extend(crawl_set[platform])
 
             advanced_profile_set['instagram'] = sort_by_relevance(advanced_profile_set['instagram'], self.Firstname.text(), self.Lastname.text(),  self.nickname.text(), list_of_nickname, self.nickname_only.isChecked())
             advanced_profile_set['facebook'] = sort_by_relevance(advanced_profile_set['facebook'], self.Firstname.text(), self.Lastname.text(),  self.nickname.text(), list_of_nickname, self.nickname_only.isChecked())

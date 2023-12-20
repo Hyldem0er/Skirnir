@@ -47,7 +47,7 @@ def is_tiktok_profile(link):
         'Accept-Language': 'en-US,en;q=0.5'
     }
     try:
-        response = get(link, header=header, timeout=1.0)
+        response = get(link, header=header, timeout=20.0)
         if response.status_code == 200:
             return True
         return False
@@ -92,7 +92,7 @@ def find_tiktok_profile(nicknameList):
                 logger.info(igLink)
 
                 if is_tiktok_profile(igLink):
-                    var = "https://www.tiktok.com/@" + nickname + "/"
+                    var = "https://www.tiktok.com/@" + nickname
                     existing_profile_list.append(var)
                     logger.info("Found! {}", var)
                 break

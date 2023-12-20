@@ -2,7 +2,7 @@ from src.generator.possible_pseudonyms_generation import generate_possible_pseud
 from src.surface_crawl.surface_crawl import surface_crawl
 from src.scrapers.pseudo_finder_instagram import find_instagram_profile
 from src.scrapers.pseudo_finder_twitter import find_twitter_profile
-from scrapers.pseudo_finder_tiktok import find_tiktok_profile
+from src.scrapers.pseudo_finder_tiktok import find_tiktok_profile
 from loguru import logger
 import sys
 from src.utils.export_nickname import export_nicknames_csv
