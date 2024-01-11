@@ -42,7 +42,7 @@ def extract_profile_url(url):
                     return url.split('?')[0]
     return None
 
-def surface_crawl(instagram, facebook, twitter, linkedin, tiktok, firstname, lastname, nickname, keyword):
+def surface_crawl(instagram, facebook, twitter, linkedin, tiktok, firstname, lastname, nickname, keyword, proxy):
     """
     Performs surface crawling based on the provided parameters.
 
@@ -54,6 +54,7 @@ def surface_crawl(instagram, facebook, twitter, linkedin, tiktok, firstname, las
         firstname (str): First name for the search query.
         lastname (str): Last name for the search query.
         keyword (str): The keyword to crawl
+        proxy (Proxy): Proxy
 
     Returns:
         list: A list of profile URLs found during surface crawling
@@ -65,7 +66,7 @@ def surface_crawl(instagram, facebook, twitter, linkedin, tiktok, firstname, las
     
     # Name
     for browser in browsers:
-        temp = browser.perform_surface_crawl(instagram, facebook, twitter, linkedin, tiktok, firstname, lastname, nickname, keyword)
+        temp = browser.perform_surface_crawl(instagram, facebook, twitter, linkedin, tiktok, firstname, lastname, nickname, keyword, proxy)
         urls.extend(temp)
 
     profile_urls = []

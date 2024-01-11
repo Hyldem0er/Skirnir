@@ -7,7 +7,7 @@ class WorkerThread(QThread):
 
     def __init__(self, show_instagram_checkbox=False, show_facebook_checkbox=False, show_twitter_checkbox=False, show_linkedin_checkbox=False,
                  show_tiktok_checkbox = False, Firstname=None, Lastname=None, date=None, nickname=None, show_date_checkbox=False, nickname_only=False,
-                 limit=None, show_deepcrawl_checkbox=False, show_exportCSV_checkbox=False, keyword="", w=None):
+                 limit=None, show_deepcrawl_checkbox=False, show_exportCSV_checkbox=False, keyword="", proxyfile_path="", w=None):
         super(WorkerThread, self).__init__()
         self.show_instagram_checkbox = show_instagram_checkbox
         self.show_facebook_checkbox = show_facebook_checkbox
@@ -24,6 +24,7 @@ class WorkerThread(QThread):
         self.show_deepcrawl_checkbox = show_deepcrawl_checkbox 
         self.show_exportCSV_checkbox = show_exportCSV_checkbox
         self.keyword = keyword
+        self.proxyfile_path = proxyfile_path
         self.w = None
 
     def run(self):
@@ -38,6 +39,6 @@ class WorkerThread(QThread):
                                     self.show_twitter_checkbox, self.show_linkedin_checkbox, self.show_tiktok_checkox, 
                                     self.Firstname, self.Lastname, self.date, self.nickname,
                                     self.show_date_checkbox, self.nickname_only, int(self.limit), self.show_deepcrawl_checkbox,
-                                    self.show_exportCSV_checkbox, self.keyword)
+                                    self.show_exportCSV_checkbox, self.keyword, self.proxyfile_path)
 
         self.finished.emit((crawl_list, advanced_profile_set, social_networks_dict))

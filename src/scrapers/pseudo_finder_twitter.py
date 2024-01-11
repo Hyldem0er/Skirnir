@@ -25,7 +25,7 @@ def create_twitter_link(rebound_site, nickname):
 # Setting user-agent to emulate human connection, request to picnob, return True if status code = 200
 import requests
 
-def is_twitter_profile(link):
+def is_twitter_profile(link, proxy):
     """
     Checks if the provided link corresponds to an existing twitter profile.
 
@@ -47,7 +47,7 @@ def is_twitter_profile(link):
         'Accept-Language': 'en-US,en;q=0.5'
     }
     try:
-        response = get(link, header=header, timeout=1.0)
+        response = get(link, proxy, header=header, timeout=1.0)
         if response.status_code == 200:
             return True
         return False
@@ -59,7 +59,7 @@ def is_twitter_profile(link):
         raise Exception(e)
 
 
-def find_twitter_profile(nicknameList):
+def find_twitter_profile(nicknameList, proxy):
     """
     Searches for twitter profiles corresponding to the provided nicknames.
 
@@ -91,7 +91,7 @@ def find_twitter_profile(nicknameList):
                 twLink = create_twitter_link(rebound_site, nickname)
                 logger.info(twLink)
 
-                if is_twitter_profile(twLink):
+                if is_twitter_profile(twLink, proxy):
                     var = "https://www.twitter.com/" + nickname
                     existing_profile_list.append(var)
                     logger.info("Found! {}", var)

@@ -88,6 +88,9 @@ class MainWindow(QDialog):
         # setting main layout
         self.setLayout(mainLayout)
 
+        # Activate drag/drop
+        self.setAcceptDrops(True)
+
 
     # Date can be invisible
     def toggleDateVisibility(self, state):
@@ -119,6 +122,7 @@ class MainWindow(QDialog):
         self.createCheckBoxForm()
         self.createSliderHorizontalLayout()
         self.createExportButton()
+        self.createImportProxyFileButton()
 
         self.AdvancedSettings.setLayout(self.AdvancedSettingsLayout)
 
@@ -279,6 +283,23 @@ class MainWindow(QDialog):
 
         self.AdvancedSettingsLayout.addWidget(self.exportCSV)
 
+    def createImportProxyFileButton(self):
+
+        self.proxyfile_path = ""
+
+        export_layout = QHBoxLayout()
+        export_layout.addWidget(QLabel("Import you custom private/public proxy list : "))
+
+        # Create a button
+        self.import_button = QPushButton('Import File', self)
+        self.import_button.clicked.connect(self.show_file_dialog)
+        
+        export_layout.addWidget(self.import_button)
+
+        self.proxy= QWidget()
+        self.proxy.setLayout(export_layout)
+        self.AdvancedSettingsLayout.addWidget(self.proxy)
+
     def createForm(self):
         # Regular expression pattern for first name with accented letters
         pattern_firstname = "[A-Za-zÀ-ÖØ-öø-ÿ]+((['\\-\\s])[A-Za-zÀ-ÖØ-öø-ÿ]+)"
@@ -360,7 +381,34 @@ class MainWindow(QDialog):
             self.exportCSV.setStyleSheet("color:white;")
             self.show_exportCSV_checkbox.setDisabled(False)
 
+    def show_file_dialog(self):
+        options = QFileDialog.Options()
+        options |= QFileDialog.DontUseNativeDialog
+        file_name, _ = QFileDialog.getOpenFileName(self, "Select File to Import", "", "All Files (*);;Text Files (*.txt)", options=options)
 
+        if file_name:
+            logger.info(f"Selected file: {file_name}")
+            self.import_button.setText(file_name.split('/')[-1])
+            self.proxyfile_path = file_name
+
+    def dragEnterEvent(self, event):
+        if event.mimeData().hasUrls():
+            event.acceptProposedAction()
+            self.import_button.setText('Drop here to import')
+            self.setStyleSheet("background-color: #343A48;")
+
+    def dropEvent(self, event):
+        files = [url.toLocalFile() for url in event.mimeData().urls()]
+        if files:
+            first_file = files[0]
+            logger.info(f"Files dropped: {first_file}")
+            self.import_button.setText(first_file.split('/')[-1])
+            self.proxyfile_path = first_file
+        self.setStyleSheet("")
+    
+    def dragLeaveEvent(self, event):
+        self.import_button.setText('Import File')
+        self.setStyleSheet("")  # Reset window style to default
 
     def setLimit(self, value):
         self.limit.setText(str(value))
@@ -391,11 +439,12 @@ class MainWindow(QDialog):
     
     # call nickname generation function
     def start_checking_profile(self):
+        print(self.proxyfile_path)
         self.label.show()
         self.worker_thread = WorkerThread(self.show_instagram_checkbox.isChecked(), self.show_facebook_checkbox.isChecked(),
                                     self.show_twitter_checkbox.isChecked(), self.show_linkedin_checkbox.isChecked(), self.show_tiktok_checkbox.isChecked(),
                                     self.Firstname.text(), self.Lastname.text(), self.date.text(), self.nickname.text(),
                                     self.show_date_checkbox.isChecked(), self.nickname_only.isChecked(), int(self.limit.text()), self.show_deepcrawl_checkbox.isChecked(),
-                                    self.show_exportCSV_checkbox.isChecked(), self.keyword.text(), self)
+                                    self.show_exportCSV_checkbox.isChecked(), self.keyword.text(), self.proxyfile_path, self)
         self.worker_thread.finished.connect(self.on_worker_finished)
         self.worker_thread.start()

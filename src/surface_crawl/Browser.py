@@ -55,10 +55,9 @@ class Browser:
         """
         return self.research_urls
 
-    def perform_surface_crawl(self, instagram, facebook, twitter, linkedin, tiktok, firstname, lastname, nickname, keyword):
+    def perform_surface_crawl(self, instagram, facebook, twitter, linkedin, tiktok, firstname, lastname, nickname, keyword, proxy):
         """
         Performs a surface crawl on specified platforms using the browser.
-
         Args:
             instagram (bool): Flag indicating whether to perform a surface crawl on Instagram.
             facebook (bool): Flag indicating whether to perform a surface crawl on Facebook.
@@ -83,7 +82,7 @@ class Browser:
                 return []
             custom_url = "%22" + firstname + "+" + lastname + "%22"
             research_url = create_surface_crawl_url(self, instagram, facebook, twitter, linkedin, tiktok, custom_url)
-            result_list = search_google(research_url)
+            result_list = search_google(research_url, proxy)
             logger.debug("Google crawling result : {}", result_list)
             return result_list
         
@@ -95,7 +94,7 @@ class Browser:
             else:
                 nickname = "%22" + nickname + "%22"
             research_url = create_surface_crawl_url(self, instagram, facebook, twitter, linkedin, tiktok,  nickname)
-            result_list = search_google(research_url)
+            result_list = search_google(research_url, proxy)
             logger.debug("Nickname crawling result : {}", result_list)
             return result_list
         
@@ -110,7 +109,7 @@ class Browser:
             research_url = create_surface_crawl_url(self, instagram, facebook, twitter, linkedin, tiktok, nickname_query, nickname_mode=True)
             
             logger.debug("Google crawling result for nicknames that match to {} : {}", firstname, research_url)
-            result_list = search_google(research_url)
+            result_list = search_google(research_url, proxy)
             return result_list
 
         # if self.name == "duckduckgo":
@@ -129,7 +128,7 @@ class Browser:
                 return []
             custom_url = "%22" + firstname + "+" + lastname + "%22" + "+" + urllib.parse.quote_plus(keyword)
             research_url = create_surface_crawl_url(self, instagram, facebook, twitter, linkedin, tiktok, custom_url, nickname_mode=True)
-            result_list = search_google(research_url)
+            result_list = search_google(research_url, proxy)
             logger.debug("Keyword crawling result : {}", result_list)
             return result_list
 
@@ -140,7 +139,7 @@ class Browser:
             custom_url = "%22" + firstname + "+" + lastname + "%22"
             research_urls = create_surface_crawl_multiple_url(self, instagram, facebook, twitter, linkedin, tiktok, custom_url)
             for research_url in research_urls:
-                result_list.extend(search_google(research_url))
+                result_list.extend(search_google(research_url, proxy))
             logger.debug("Bing crawling result : {}",result_list)
             return result_list
 

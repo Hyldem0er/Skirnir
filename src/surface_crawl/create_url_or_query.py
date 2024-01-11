@@ -167,7 +167,7 @@ def create_surface_crawl_query(instagram, facebook, twitter, linkedin, tiktok, n
 
         return queries
 
-def search_google(research_url, sleep_interval=5):
+def search_google(research_url, proxy, sleep_interval=5):
     """
     Performs a Google search and retrieves the links from the search results.
 
@@ -183,7 +183,7 @@ def search_google(research_url, sleep_interval=5):
         ['https://www.example.com', 'https://www.example2.com']
     """
     try:
-        resp = get(research_url)
+        resp = get(research_url, proxy)
         links = []
         soup = BeautifulSoup(resp.content, "html.parser")
         for link in soup.findAll('a'):

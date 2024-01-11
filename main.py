@@ -36,6 +36,7 @@ def main():
     parser.add_argument("--nickname_only", "-no", action='store_true', help="Make a crawl only for nickname")
     parser.add_argument("--keyword", "-k", action='store', default="", type=str, help="Add this keyword to a crawl")
     parser.add_argument("--export_nickname", "-csv", action='store_true', help="Export the generated nicknames in CSV")
+    parser.add_argument("--proxyfile", action="store", default="", type=str, help="Filepath for custom public/private proxy list import")
     parser.add_argument("--log", choices=["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"], default="CRITICAL", help="Set the log level with the given choices")
     parser.add_argument("--ui", action="store_true", help="Launch the UI mode")
 
@@ -69,7 +70,7 @@ def main():
         crawl_list, advanced_profile_set, social_networks_dict = start_profile_research(args.instagram, args.facebook, args.x, args.linkedin,args.tiktok,
                                                                                         args.firstname, args.lastname, args.birthday, args.nickname, 
                                                                                         args.birthday != "", args.nickname_only, args.pseudo_size,
-                                                                                        args.deepcrawl, args.export_nickname, args.keyword)
+                                                                                        args.deepcrawl, args.export_nickname, args.keyword, args.proxyfile)
         if args.deepcrawl:
             print(advanced_profile_set)
         else:

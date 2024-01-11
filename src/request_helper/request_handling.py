@@ -1,13 +1,13 @@
 import requests, sys
 from .user_agents import get_useragent_mobile
-from .proxies import get_proxy
+from .Proxy import Proxy
 from loguru import logger
 
 logger.add(sys.stdout, colorize=True, format="<green>{time}</green> <level>{message}</level>")
 
 import requests
 
-def get(url, timeout=5, header=None):
+def get(url, proxy = None, timeout=5, header=None):
     """
     Sends an HTTP GET request to the specified URL.
 
@@ -28,25 +28,34 @@ def get(url, timeout=5, header=None):
     """
 
     logger.info(url)
-
-    # proxies_dict = {
-    #     "https": get_proxy(),
-    #     "http": get_proxy()
-    # }
     
-    # url += "&start=" + str(start)
-    # url += "&hl=" + lang 
-    # print("url: " + url)
+    # proxies = {'http': 'http://user:pass@10.10.1.10:3128/'}
+    proxies_dict = {}
+
+    if proxy:
+        selected_proxy = proxy.get_proxy()
+        if proxy.is_private_proxy():
+            proxies_dict = {
+                "https": "https://" + selected_proxy["Username"] + ":" + selected_proxy["Password"] + "@" + selected_proxy["IP Address"] + ":" + selected_proxy["Port"] + "/",
+                "http":  "http://" + selected_proxy["Username"] + ":" + selected_proxy["Password"] + "@" + selected_proxy["IP Address"] + ":" + selected_proxy["Port"] + "/"
+            }
+        else:
+            proxies_dict = {
+                "https": selected_proxy["IP Address"] + ":" + selected_proxy["Port"],
+                "http": selected_proxy["IP Address"] + ":" + selected_proxy["Port"]
+            }
 
     headers = {"User-Agent": get_useragent_mobile()}
     if header:
         headers.update(header)
 
+    print(proxies_dict)
+
     resp = requests.get(
         url=url,
         headers=headers,
         timeout=timeout,
-        # proxies=proxies_dict
+        proxies=proxies_dict
     )
     resp.raise_for_status()
     logger.info(resp.status_code)
