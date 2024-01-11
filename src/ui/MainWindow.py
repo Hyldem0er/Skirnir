@@ -176,7 +176,6 @@ class MainWindow(QDialog):
         self.show_deepcrawl_checkbox = QCheckBox()
         self.show_deepcrawl_checkbox.setChecked(False)
         self.show_deepcrawl_checkbox.stateChanged.connect(self.gray)
-        
 
         # Instagram Checkbox
         self.show_instagram_checkbox = QCheckBox()
@@ -259,7 +258,7 @@ class MainWindow(QDialog):
         formlayout.setVerticalSpacing(15)
         
         formlayout.addRow(checkboxcontainer)
-        formlayout.addRow(QLabel("Deep Crawl"), self.show_deepcrawl_checkbox)
+        formlayout.addRow(QLabel("Deep Crawl*", toolTip="Tries generated nicknames on selected social networks"), self.show_deepcrawl_checkbox)
 
         self.AdvancedSettingsLayout.addLayout(formlayout)
         
@@ -351,8 +350,8 @@ class MainWindow(QDialog):
         layout.addRow(QLabel("Toggle Birthday: "), self.show_date_checkbox)
         layout.addRow(QLabel("Birthday: "), self.date)
         layout.addRow(QLabel("Search only the pseudo: "), self.nickname_only)
-        layout.addRow(QLabel("Pseudo: "), self.nickname)
-        layout.addRow(QLabel("Keyword: "), self.keyword)
+        layout.addRow(QLabel(("Pseudo* : "), toolTip="Adds an additional search if a pseudo is known"), self.nickname)
+        layout.addRow(QLabel(("Keyword* : "), toolTip="Adds a keyword or a boolean query to complete the first and last name search"), self.keyword)
 
         # setting layout
         self.formGroupBox.setLayout(layout)
