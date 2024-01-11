@@ -7,7 +7,7 @@ from loguru import logger
 
 logger.add(sys.stdout, colorize=True, format="<green>{time}</green> <level>{message}</level>")
 
-def calculate_number_activate_networks(instagram, facebook, twitter, linkedin):
+def calculate_number_activate_networks(instagram, facebook, twitter, linkedin, tiktok):
         """
         Calculate the number of activated social media networks based on the provided parameters.
 
@@ -20,10 +20,10 @@ def calculate_number_activate_networks(instagram, facebook, twitter, linkedin):
         Returns:
             int: The number of activated social media networks.
         """
-        activated_networks = sum([instagram, facebook, twitter, linkedin])
+        activated_networks = sum([instagram, facebook, twitter, linkedin, tiktok])
         return activated_networks
     
-def create_surface_crawl_url(browser, instagram, facebook, twitter, linkedin, url_q, nickname_mode = False):
+def create_surface_crawl_url(browser, instagram, facebook, twitter, linkedin, tiktok, url_q, nickname_mode = False):
     """
     Generate a Browser search URL for surface crawling based on provided parameters.
     
@@ -41,7 +41,7 @@ def create_surface_crawl_url(browser, instagram, facebook, twitter, linkedin, ur
 
     
     # Calculate the limit of activated networks
-    limit = calculate_number_activate_networks(instagram, facebook, twitter, linkedin)
+    limit = calculate_number_activate_networks(instagram, facebook, twitter, linkedin, tiktok)
 
     # Variable to keep track of remaining OR conditions
     or_limit = limit
@@ -51,7 +51,8 @@ def create_surface_crawl_url(browser, instagram, facebook, twitter, linkedin, ur
         'facebook': 'site%3Afacebook.com',
         'instagram': 'site%3Ainstagram.com',
         'twitter': 'site%3Atwitter.com',
-        'linkedin': 'site%3Alinkedin.com'
+        'linkedin': 'site%3Alinkedin.com',
+        'tiktok': 'site%3Atiktok.com'
     }
 
     # Iterate through each social media site and add it to the URL if needed
@@ -66,7 +67,7 @@ def create_surface_crawl_url(browser, instagram, facebook, twitter, linkedin, ur
 
     if not nickname_mode:
         # Remove noise posts, photos, and videos
-        url += "+-inurl%3A%2Fposts%2F+-inurl%3A%2Fphotos%2F+-inurl%3A%2Fvideos%2F+-inurl%3A%2Fstory%2F+-inurl%3A%2Fmedia%2F+-inurl%3A%2Fgroups%2F+-inurl%3A%2Fstatus%2F+-inurl%3A%2Fdir%2F+-inurl%3A%2Fpulse%2F+-inurl%3A%2Fcompany%2F+-inurl%3A%2Fevents%2F+-inurl%3A%2Fhashtag%2F+-inurl%3A%2Fp%2F+-inurl%3A%2Fpublic%2F+-inurl%3A%2Fsearch%2F+-inurl%3A%2Fjobs%2F+-inurl%3A%2Fpages%2F+-inurl%3A%2Fexplore%2F+-inurl%3A.php&filter=0"
+        url += "+-inurl%3A%2Fposts%2F+-inurl%3A%2Fphotos%2F+-inurl%3A%2Fvideos%2F+-inurl%3A%2Fstory%2F+-inurl%3A%2Fmedia%2F+-inurl%3A%2Fgroups%2F+-inurl%3A%2Fstatus%2F+-inurl%3A%2Fdir%2F+-inurl%3A%2Fpulse%2F+-inurl%3A%2Fcompany%2F+-inurl%3A%2Fevents%2F+-inurl%3A%2Fhashtag%2F+-inurl%3A%2Fp%2F+-inurl%3A%2Fpublic%2F+-inurl%3A%2Fsearch%2F+-inurl%3A%2Fjobs%2F+-inurl%3A%2Fpages%2F+-inurl%3A%2Fdiscover%2F+-inurl%3A.php&filter=0"
 
     if browser.name == "google" and not nickname_mode:
         # Add the 'num' parameter based on the limit of activated networks
@@ -74,7 +75,7 @@ def create_surface_crawl_url(browser, instagram, facebook, twitter, linkedin, ur
     
     return url
 
-def create_surface_crawl_multiple_url(browser, instagram, facebook, twitter, linkedin, name):
+def create_surface_crawl_multiple_url(browser, instagram, facebook, twitter, linkedin, tiktok, name):
     """
     Generate a Browser search URL list for surface crawling based on provided parameters.
     
@@ -94,7 +95,7 @@ def create_surface_crawl_multiple_url(browser, instagram, facebook, twitter, lin
     url = browser.research_urls + name
 
     # Calculate the limit of activated networks
-    limit = calculate_number_activate_networks(instagram, facebook, twitter, linkedin)
+    limit = calculate_number_activate_networks(instagram, facebook, twitter, linkedin, tiktok)
 
     # Variable to keep track of remaining OR conditions
     or_limit = limit
@@ -105,7 +106,8 @@ def create_surface_crawl_multiple_url(browser, instagram, facebook, twitter, lin
         'facebook': 'site%3Afacebook.com',
         'instagram': 'site%3Ainstagram.com',
         'twitter': 'site%3Atwitter.com',
-        'linkedin': 'site%3Alinkedin.com'
+        'linkedin': 'site%3Alinkedin.com',
+        'tiktok': 'site%3Atiktok.com'
     }
 
     # Iterate through each social media site and add it to the URL if needed
@@ -120,7 +122,7 @@ def create_surface_crawl_multiple_url(browser, instagram, facebook, twitter, lin
     return urls
 
 
-def create_surface_crawl_query(instagram, facebook, twitter, linkedin, name):
+def create_surface_crawl_query(instagram, facebook, twitter, linkedin, tiktok, name):
         """
         Generate a Google search query for surface crawling based on provided parameters.
         
@@ -141,17 +143,18 @@ def create_surface_crawl_query(instagram, facebook, twitter, linkedin, name):
         query = "\"" + name + "\""
         
         # Calculate the limit of activated networks
-        limit = calculate_number_activate_networks(instagram, facebook, twitter, linkedin)
+        limit = calculate_number_activate_networks(instagram, facebook, twitter, linkedin, tiktok)
 
         # Variable to keep track of remaining OR conditions
         or_limit = limit
 
         # Dictionary of social media sites and their corresponding search parameters
         social_media_sites = {
-            'facebook': 'site:facebook.com',
-            'instagram': 'site:instagram.com',
-            'twitter': 'site:twitter.com',
-            'linkedin': 'inurl:linkedin.com/in/'
+            'facebook': 'site%3Afacebook.com',
+            'instagram': 'site%3Ainstagram.com',
+            'twitter': 'site%3Atwitter.com',
+            'linkedin': 'inurl:linkedin.com/in/',
+            'tiktok': 'site%3Atiktok.com'
         }
 
         # Iterate through each social media site and add it to the URL if needed
@@ -164,7 +167,7 @@ def create_surface_crawl_query(instagram, facebook, twitter, linkedin, name):
 
         return queries
 
-def search_google(research_url, sleep_interval=5):
+def search_google(research_url, proxy, sleep_interval=5):
     """
     Performs a Google search and retrieves the links from the search results.
 
@@ -180,7 +183,7 @@ def search_google(research_url, sleep_interval=5):
         ['https://www.example.com', 'https://www.example2.com']
     """
     try:
-        resp = get(research_url)
+        resp = get(research_url, proxy)
         links = []
         soup = BeautifulSoup(resp.content, "html.parser")
         for link in soup.findAll('a'):

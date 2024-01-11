@@ -2,23 +2,23 @@
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
+import os, time, sys
+from loguru import logger
+from src.ui.WorkerThread import WorkerThread
+from src.utils.start_research import sort_crawl_result
+from src.relevance.sort_by_relevance import sort_by_relevance
 from src.ui.CrawlResultWindow import CrawlResultWindow
 from src.ui.DeepResultWindow import DeepResultWindow
-from src.ui.ProgressThread import ProgressThread
-import os, time, sys
-from src.utils.start_research import start_profile_research, sort_crawl_result
-from src.ui.Loading import Loading
-from src.utils.login import open_social_network_login_page
-from loguru import logger
-from src.surface_crawl.match_nicknames import list_nicknames
-from src.relevance.sort_by_relevance import sort_by_relevance
 import copy
+import os, time, sys
+from src.surface_crawl.match_nicknames import list_nicknames
+list_of_nickname = list_nicknames()
+
+scriptDir = os.path.dirname(os.path.realpath(__file__))
+gifFile = (scriptDir + os.path.sep + 'loading.gif')
 
 logger.add(sys.stdout, colorize=True, format="<green>{time}</green> <level>{message}</level>")
 
-list_of_nickname = list_nicknames()
-
-# creating a class
 # that inherits the QDialog class
 class MainWindow(QDialog):
  
@@ -30,8 +30,6 @@ class MainWindow(QDialog):
         self.top = 100
         self.width = 500
         self.height = 400
-        self.progressBarThread = None
-        self.p = Loading()
         self.number_of_start = 0
         self.initUI()
 
@@ -47,9 +45,6 @@ class MainWindow(QDialog):
         # setting geometry to the window
         self.setGeometry(self.left, self.top, self.width, self.height)
 
-        # # Progress
-        # self.progress = QProgressBar(self)
-        # self.progress.setMaximum(100)
 
         # calling the method that create the form
         self.createForm()
@@ -61,6 +56,8 @@ class MainWindow(QDialog):
         self.buttonBox = QDialogButtonBox(QDialogButtonBox.Ok | QDialogButtonBox.Cancel)
 
         # adding action when form is accepted
+        # adding action when form is accepted
+        
         self.buttonBox.accepted.connect(self.start_checking_profile)
 
         # adding action when form is rejected
@@ -75,14 +72,24 @@ class MainWindow(QDialog):
         # adding limit size of generated nicknames
         mainLayout.addWidget(self.AdvancedSettings) 
 
-        # # adding progress bar
-        # mainLayout.addWidget(self.progress)
+        # Add a loading gif
+        self.label = QLabel()
+        mainLayout.addWidget(self.label)
+
+        self.movie = QMovie(gifFile)
+        self.label.setMovie(self.movie)
+        self.label.setAlignment(Qt.AlignCenter)
+        self.movie.start()
+        self.label.hide()
 
         # adding button box to the layout
         mainLayout.addWidget(self.buttonBox)
 
         # setting main layout
         self.setLayout(mainLayout)
+
+        # Activate drag/drop
+        self.setAcceptDrops(True)
 
 
     # Date can be invisible
@@ -115,6 +122,7 @@ class MainWindow(QDialog):
         self.createCheckBoxForm()
         self.createSliderHorizontalLayout()
         self.createExportButton()
+        self.createImportProxyFileButton()
 
         self.AdvancedSettings.setLayout(self.AdvancedSettingsLayout)
 
@@ -186,6 +194,10 @@ class MainWindow(QDialog):
         self.show_linkedin_checkbox = QCheckBox()
         self.show_linkedin_checkbox.setChecked(True)
 
+        # TikTok Checkbox
+        self.show_tiktok_checkbox = QCheckBox()
+        self.show_tiktok_checkbox.setChecked(True)
+
         checkboxlayout = QVBoxLayout()
         checkboxlayout.setSpacing(0)  # Adjust the spacing between elements
         checkboxlayout.setContentsMargins(0, 0, 0, 0)  # Set margins to zero
@@ -228,10 +240,20 @@ class MainWindow(QDialog):
         linkedincontainer = QWidget()
         linkedincontainer.setLayout(linkedinLayout)
 
+        tiktokLayout = QHBoxLayout()
+        tiktokLayout.setSpacing(0)  # Adjust the spacing between elements
+        tiktokLayout.setContentsMargins(0, 10, 0, 0)  # Set margins to zero
+        tiktokLayout.setAlignment(Qt.AlignmentFlag.AlignLeft)
+        tiktokLayout.addWidget(self.show_tiktok_checkbox)
+        tiktokLayout.addWidget(QLabel("TikTok"))
+        tiktokcontainer = QWidget()
+        tiktokcontainer.setLayout(tiktokLayout)
+
         checkboxlayout.addWidget(instacontainer)
         checkboxlayout.addWidget(fbcontainer)
         checkboxlayout.addWidget(twittercontainer)
         checkboxlayout.addWidget(linkedincontainer)
+        checkboxlayout.addWidget(tiktokcontainer)
         checkboxcontainer.setLayout(checkboxlayout)
 
         formlayout.setVerticalSpacing(15)
@@ -260,6 +282,23 @@ class MainWindow(QDialog):
 
 
         self.AdvancedSettingsLayout.addWidget(self.exportCSV)
+
+    def createImportProxyFileButton(self):
+
+        self.proxyfile_path = ""
+
+        export_layout = QHBoxLayout()
+        export_layout.addWidget(QLabel("Import you custom private/public proxy list : "))
+
+        # Create a button
+        self.import_button = QPushButton('Import File', self)
+        self.import_button.clicked.connect(self.show_file_dialog)
+        
+        export_layout.addWidget(self.import_button)
+
+        self.proxy= QWidget()
+        self.proxy.setLayout(export_layout)
+        self.AdvancedSettingsLayout.addWidget(self.proxy)
 
     def createForm(self):
         # Regular expression pattern for first name with accented letters
@@ -294,7 +333,9 @@ class MainWindow(QDialog):
         self.nickname_only.setChecked(False)
         self.nickname_only.stateChanged.connect(self.toggleNamesVisibility)
         self.nickname = QLineEdit()
-        
+
+        # Keyword
+        self.keyword = QLineEdit()
 
         # Date Checkbox
         self.show_date_checkbox = QCheckBox()
@@ -311,22 +352,12 @@ class MainWindow(QDialog):
         layout.addRow(QLabel("Birthday: "), self.date)
         layout.addRow(QLabel("Search only the pseudo: "), self.nickname_only)
         layout.addRow(QLabel("Pseudo: "), self.nickname)
+        layout.addRow(QLabel("Keyword: "), self.keyword)
 
         # setting layout
         self.formGroupBox.setLayout(layout)
         self.formGroupBox.layout().labelForField(self.date).hide()
         self.date.hide()
-
-    # # when button is pressed this method is being called
-    # def set_progress(self, value):
-    #     self.progress.setValue(value)
-
-    
-    def start_loading_bar_thread(self, size):
-        self.progressBarThread = ProgressThread(size)
-        self.progressBarThread.reportProgress.connect(self.set_progress)
-        # self.progressBarThread.calculationFinished.connect(self.calculationFinished)
-        self.progressBarThread.start()
 
     def gray(self):
         if not self.show_deepcrawl_checkbox.isChecked():
@@ -350,42 +381,70 @@ class MainWindow(QDialog):
             self.exportCSV.setStyleSheet("color:white;")
             self.show_exportCSV_checkbox.setDisabled(False)
 
+    def show_file_dialog(self):
+        options = QFileDialog.Options()
+        options |= QFileDialog.DontUseNativeDialog
+        file_name, _ = QFileDialog.getOpenFileName(self, "Select File to Import", "", "All Files (*);;Text Files (*.txt)", options=options)
 
+        if file_name:
+            logger.info(f"Selected file: {file_name}")
+            self.import_button.setText(file_name.split('/')[-1])
+            self.proxyfile_path = file_name
+
+    def dragEnterEvent(self, event):
+        if event.mimeData().hasUrls():
+            event.acceptProposedAction()
+            self.import_button.setText('Drop here to import')
+            self.setStyleSheet("background-color: #343A48;")
+
+    def dropEvent(self, event):
+        files = [url.toLocalFile() for url in event.mimeData().urls()]
+        if files:
+            first_file = files[0]
+            logger.info(f"Files dropped: {first_file}")
+            self.import_button.setText(first_file.split('/')[-1])
+            self.proxyfile_path = first_file
+        self.setStyleSheet("")
+    
+    def dragLeaveEvent(self, event):
+        self.import_button.setText('Import File')
+        self.setStyleSheet("")  # Reset window style to default
 
     def setLimit(self, value):
         self.limit.setText(str(value))
 
-    # call nickname generation function
-    def start_checking_profile(self):
-        self.number_of_start += 1
-        if self.number_of_start == 1: # Open social network login page only on first launch
-            open_social_network_login_page(self.show_instagram_checkbox.isChecked(), self.show_facebook_checkbox.isChecked(),
-                self.show_twitter_checkbox.isChecked(), self.show_linkedin_checkbox.isChecked())
-        self.showLoadingBar = True
-        logger.info("Start Crawling")
-        
-        crawl_list, advanced_profile_set, social_networks_dict = start_profile_research(self.show_instagram_checkbox.isChecked(), self.show_facebook_checkbox.isChecked(),
-                                    self.show_twitter_checkbox.isChecked(), self.show_linkedin_checkbox.isChecked(),
-                                    self.Firstname.text(), self.Lastname.text(), self.date.text(), self.nickname.text(),
-                                    self.show_date_checkbox.isChecked(), self.nickname_only.isChecked(), int(self.limit.text()), self.show_deepcrawl_checkbox.isChecked(),
-                                    self.show_exportCSV_checkbox.isChecked())
-
+    def on_worker_finished(self, result):
+        self.label.hide()
+        self.adjustSize()
+        crawl_list, advanced_profile_set, social_networks_dict = result
 
         if self.show_deepcrawl_checkbox.isChecked():
             crawl_set = sort_crawl_result(crawl_list)
             backup_facebook = copy.deepcopy(advanced_profile_set["facebook"])
             for platform in crawl_set:
-                advanced_profile_set[platform].extend(crawl_set[platform])
+                if crawl_set[platform]:
+                    advanced_profile_set[platform].extend(crawl_set[platform])
 
             advanced_profile_set['instagram'] = sort_by_relevance(advanced_profile_set['instagram'], self.Firstname.text(), self.Lastname.text(),  self.nickname.text(), list_of_nickname, self.nickname_only.isChecked())
             advanced_profile_set['facebook'] = sort_by_relevance(advanced_profile_set['facebook'], self.Firstname.text(), self.Lastname.text(),  self.nickname.text(), list_of_nickname, self.nickname_only.isChecked())
             advanced_profile_set['twitter'] = sort_by_relevance(advanced_profile_set['twitter'], self.Firstname.text(), self.Lastname.text(),  self.nickname.text(), list_of_nickname, self.nickname_only.isChecked())
             advanced_profile_set['linkedin'] = sort_by_relevance(advanced_profile_set['linkedin'], self.Firstname.text(), self.Lastname.text(),  self.nickname.text(), list_of_nickname, self.nickname_only.isChecked())
+            advanced_profile_set['tiktok'] = sort_by_relevance(advanced_profile_set['tiktok'], self.Firstname.text(), self.Lastname.text(),  self.nickname.text(), list_of_nickname, self.nickname_only.isChecked())
             
             self.w = DeepResultWindow(advanced_profile_set, social_networks_dict, backup_facebook)
         else:
             crawl_list = sort_by_relevance(set(crawl_list), self.Firstname.text(), self.Lastname.text(),  self.nickname.text(), list_of_nickname, self.nickname_only.isChecked())
             self.w = CrawlResultWindow(crawl_list, social_networks_dict)
-
-      
         self.w.show()
+    
+    # call nickname generation function
+    def start_checking_profile(self):
+        print(self.proxyfile_path)
+        self.label.show()
+        self.worker_thread = WorkerThread(self.show_instagram_checkbox.isChecked(), self.show_facebook_checkbox.isChecked(),
+                                    self.show_twitter_checkbox.isChecked(), self.show_linkedin_checkbox.isChecked(), self.show_tiktok_checkbox.isChecked(),
+                                    self.Firstname.text(), self.Lastname.text(), self.date.text(), self.nickname.text(),
+                                    self.show_date_checkbox.isChecked(), self.nickname_only.isChecked(), int(self.limit.text()), self.show_deepcrawl_checkbox.isChecked(),
+                                    self.show_exportCSV_checkbox.isChecked(), self.keyword.text(), self.proxyfile_path, self)
+        self.worker_thread.finished.connect(self.on_worker_finished)
+        self.worker_thread.start()

@@ -25,7 +25,7 @@ def create_instagram_link(rebound_site, nickname):
 # Setting user-agent to emulate human connection, request to picnob, return True if status code = 200
 import requests
 
-def is_instagram_profile(link):
+def is_instagram_profile(link, proxy):
     """
     Checks if the provided link corresponds to an existing Instagram profile.
 
@@ -47,7 +47,7 @@ def is_instagram_profile(link):
         'Accept-Language': 'en-US,en;q=0.5'
     }
     try:
-        response = get(link, header=header, timeout=1.0)
+        response = get(link, proxy, header=header, timeout=1.0)
         if response.status_code == 200:
             return True
         return False
@@ -59,7 +59,7 @@ def is_instagram_profile(link):
         raise Exception(e)
 
 
-def find_instagram_profile(nicknameList):
+def find_instagram_profile(nicknameList, proxy):
     """
     Searches for Instagram profiles corresponding to the provided nicknames.
 
@@ -97,7 +97,7 @@ def find_instagram_profile(nicknameList):
                 igLink = create_instagram_link(rebound_site, nickname)
                 logger.info(igLink)
 
-                if is_instagram_profile(igLink):
+                if is_instagram_profile(igLink, proxy):
                     var = "https://www.instagram.com/" + nickname + "/"
                     existing_profile_list.append(var)
                     logger.info("Found! {}", var)

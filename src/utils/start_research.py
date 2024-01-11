@@ -2,9 +2,11 @@ from src.generator.possible_pseudonyms_generation import generate_possible_pseud
 from src.surface_crawl.surface_crawl import surface_crawl
 from src.scrapers.pseudo_finder_instagram import find_instagram_profile
 from src.scrapers.pseudo_finder_twitter import find_twitter_profile
+from src.scrapers.pseudo_finder_tiktok import find_tiktok_profile
 from loguru import logger
 import sys
 from src.utils.export_nickname import export_nicknames_csv
+from src.request_helper.Proxy import Proxy
 
 logger.add(sys.stdout, colorize=True, format="<green>{time}</green> <level>{message}</level>")
 
@@ -25,6 +27,7 @@ def sort_crawl_result(crawl_results):
     crawl_set["facebook"] = []
     crawl_set["twitter"] = []
     crawl_set["linkedin"] = []
+    crawl_set["tiktok"] = []
     
     for url in crawl_results:
         if "instagram" in url:
@@ -35,6 +38,8 @@ def sort_crawl_result(crawl_results):
             crawl_set["twitter"].append(url)
         if "linkedin" in url:
             crawl_set["linkedin"].append(url)
+        if "tiktok" in url:
+            crawl_set["tiktok"].append(url)
     return crawl_set
 
 def add_facebook_possible_profile(instagram_profiles):
@@ -74,9 +79,29 @@ def add_twitter_profile(instagram_profiles):
     twitter_profiles_nicknames = []
     for instagram_profile in instagram_profiles:
         twitter_profiles_nicknames.append(instagram_profile.replace("https://www.instagram.com/", ""))
-    return find_twitter_profile(twitter_profiles_nicknames)
+    return
 
-def create_social_networks_dict(instagram_checkbox, facebook_checkbox, twitter_checkbox, linkedin_checkbox):
+def add_tiktok_profile(instagram_profiles):
+    """
+    Adds twitter profiles based on the given Instagram profiles. 
+    As we only have one site to deepcrawl, we use it with selected urls that have the best chances.
+
+    Args:
+        instagram_profiles (list): A list of Instagram profile URLs.
+
+    Returns:
+        list: A list of Twitter profile URLs.
+
+    Example:
+        >>> add_twitter_profile(["https://www.instagram.com/user1/", "https://www.instagram.com/user2/"])
+        ['https://www.facebook.com/user1/', 'https://www.facebook.com/user2/']
+    """
+    tiktok_profiles_nicknames = []
+    for instagram_profile in instagram_profiles:
+        tiktok_profiles_nicknames.append(instagram_profile.replace("https://www.instagram.com/", ""))
+    return find_tiktok_profile(tiktok_profiles_nicknames)
+
+def create_social_networks_dict(instagram_checkbox, facebook_checkbox, twitter_checkbox, linkedin_checkbox, tiktok_checkbox):
     """
     Creates a dictionary representing the selected social network checkboxes.
 
@@ -97,13 +122,14 @@ def create_social_networks_dict(instagram_checkbox, facebook_checkbox, twitter_c
         "instagram": instagram_checkbox,
         "facebook": facebook_checkbox,
         "twitter": twitter_checkbox,
-        "linkedin": linkedin_checkbox
+        "linkedin": linkedin_checkbox,
+        "tiktok": tiktok_checkbox,
     }
 
 
-def start_profile_research(instagram_checkbox, facebook_checkbox, twitter_checkbox, linkedin_checkbox,
+def start_profile_research(instagram_checkbox, facebook_checkbox, twitter_checkbox, linkedin_checkbox, tiktok_checkbox,
                            firstname, lastname, date, nickname, birthday_on, nickname_only, limit, 
-                           deepcrawl_is_checked, nickname_export):
+                           deepcrawl_is_checked, nickname_export, keyword, proxyfile_path):
     """
     Starts the profile research process based on the provided parameters.
 
@@ -129,10 +155,14 @@ def start_profile_research(instagram_checkbox, facebook_checkbox, twitter_checkb
         >>> start_profile_research(True, False, True, False, "John", "Doe", "2023-06-28", "johndoe", "No", False, 10, True)
         (['https://www.example.com', 'https://www.example2.com'], {'instagram': ['https://www.instagram.com/user1/']}, {'instagram': True, 'facebook': False, 'twitter': True, 'linkedin': False})
     """
-    social_networks_dict = create_social_networks_dict(instagram_checkbox, facebook_checkbox, twitter_checkbox, linkedin_checkbox)
+    proxy = None
+    if proxyfile_path != '':
+        proxy = Proxy(proxyfile_path)
+
+    social_networks_dict = create_social_networks_dict(instagram_checkbox, facebook_checkbox, twitter_checkbox, linkedin_checkbox, tiktok_checkbox)
 
     logger.info("Starting Surface Crawling")
-    crawl_list = surface_crawl(instagram_checkbox, facebook_checkbox, twitter_checkbox, linkedin_checkbox, firstname, lastname, nickname)
+    crawl_list = surface_crawl(instagram_checkbox, facebook_checkbox, twitter_checkbox, linkedin_checkbox, tiktok_checkbox, firstname, lastname, nickname, keyword, proxy)
 
     generated_nicknames = generate_possible_pseudonyms(firstname, lastname, date, nickname, limit, birthday_on, nickname_only)
 
@@ -140,20 +170,30 @@ def start_profile_research(instagram_checkbox, facebook_checkbox, twitter_checkb
         export_nicknames_csv(generated_nicknames)
 
     advanced_profile_set = {}
+    advanced_profile_set["instagram"] = []
+    advanced_profile_set["facebook"] = []
+    advanced_profile_set["twitter"] = []
+    advanced_profile_set["linkedin"] = []
+    advanced_profile_set["tiktok"] = []
+
 
     if deepcrawl_is_checked:
-        instagram_profiles = find_instagram_profile(generated_nicknames)
+        instagram_profiles = find_instagram_profile(generated_nicknames, proxy)
         if instagram_checkbox:
             advanced_profile_set["instagram"] = instagram_profiles
 
         if facebook_checkbox:
-            advanced_profile_set["facebook"] = add_facebook_possible_profile(instagram_profiles)
+            advanced_profile_set["facebook"] = add_facebook_possible_profile(instagram_profiles, proxy)
 
         if twitter_checkbox:
-            advanced_profile_set["twitter"] = add_twitter_profile(instagram_profiles)
+            advanced_profile_set["twitter"] = add_twitter_profile(instagram_profiles, proxy)
 
         if linkedin_checkbox:
             advanced_profile_set["linkedin"] = []
             # TODO
 
+        if tiktok_checkbox:
+            advanced_profile_set["tiktok"] = add_tiktok_profile(instagram_profiles, proxy)
+
     return crawl_list, advanced_profile_set, social_networks_dict
+

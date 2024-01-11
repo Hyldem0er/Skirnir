@@ -26,6 +26,7 @@ class DeepResultWindow(QWidget):
         self.show_facebook_tab = social_networks_dict["facebook"]
         self.show_twitter_tab = social_networks_dict["twitter"]
         self.show_linkedin_tab = social_networks_dict["linkedin"]
+        self.show_tiktok_tab = social_networks_dict["tiktok"]
         self.backup_facebook = backup_facebook
 
         self.initUI()
@@ -55,6 +56,7 @@ class DeepResultWindow(QWidget):
         self.facebook_tab = QWidget()
         self.twitter_tab = QWidget()
         self.linkedin_tab = QWidget()
+        self.tiktok_tab = QWidget()
 
         if self.show_instagram_tab:
             self.tabs.addTab(self.instagram_tab, "Instagram")
@@ -71,6 +73,10 @@ class DeepResultWindow(QWidget):
         if self.show_linkedin_tab: 
             self.tabs.addTab(self.linkedin_tab, "LinkedIn")
             self.add_social_networks_list_widget(self.linkedin_tab, "linkedin")
+            
+        if self.show_tiktok_tab: 
+            self.tabs.addTab(self.tiktok_tab, "TikTok")
+            self.add_social_networks_list_widget(self.tiktok_tab, "tiktok")
 
     def add_social_networks_list_widget(self, tab, social_network):
         tab.layout = QVBoxLayout()  

@@ -29,6 +29,7 @@ class CrawlResultWindow(QWidget):
         self.show_facebook_filter = social_networks_dict["facebook"]
         self.show_twitter_filter = social_networks_dict["twitter"]
         self.show_linkedin_filter = social_networks_dict["linkedin"]
+        self.show_tiktok_filter = social_networks_dict["tiktok"]
         self.setWindowFlags(Qt.WindowStaysOnTopHint)
         self.initUI()
        
@@ -78,6 +79,9 @@ class CrawlResultWindow(QWidget):
         self.show_linkedin_result = QCheckBox("LinkedIn")
         self.show_linkedin_result.setChecked(True)
         
+        self.show_tiktok_result = QCheckBox("Tiktok")
+        self.show_tiktok_result.setChecked(True)
+        
         # Create a QListWidget
         self.crawl_list_widget = QListWidget()
         self.crawl_list_widget.setSelectionMode(3)
@@ -106,6 +110,10 @@ class CrawlResultWindow(QWidget):
             checkbox_layout.addWidget(self.show_linkedin_result)
             self.show_linkedin_result.clicked.connect(self.search)
 
+        if self.show_tiktok_filter:
+            checkbox_layout.addWidget(self.show_tiktok_result)
+            self.show_tiktok_result.clicked.connect(self.search)
+
 
         # Add the QHBoxLayout to a container widget (QGroupBox) before adding it to the QVBoxLayout to avoid strange bugs 
         container = QWidget()
@@ -127,6 +135,7 @@ class CrawlResultWindow(QWidget):
         if self.show_facebook_result.isChecked() and self.show_facebook_filter: social_networks.append("facebook")
         if self.show_twitter_result.isChecked() and self.show_twitter_filter: social_networks.append("twitter")
         if self.show_linkedin_result.isChecked() and self.show_linkedin_filter: social_networks.append("linkedin")
+        if self.show_tiktok_result.isChecked() and self.show_tiktok_filter: social_networks.append("tiktok")
 
         if search_term:
             for index in range(self.crawl_list_widget.count()):
