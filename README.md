@@ -9,6 +9,8 @@
 
 Welcome to Skirnir, a sophisticated Open Source Intelligence (OSINT) tool designed to empower your online presence discovery. In the digital era, maintaining awareness of your footprint across popular social networks is crucial. Skirnir is specialized in scraping platforms like Instagram, Facebook, Twitter, and LinkedIn to uncover any trace of your online identity or lost accounts.
 
+[Advanced Wiki](https://hyldem0er.gitbook.io/skirnir/)
+
 ### Key Features
 
 - **Surface crawl:** Utilize various combinations of firstname, diminutives, nicknames and last names to crawl Duckduckgo and Google.
