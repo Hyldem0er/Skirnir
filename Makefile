@@ -11,6 +11,7 @@ ifeq ($(DETECTED_OS),Windows)
     ACTIVATE = .\env\Scripts\activate
 else
     PYTHON = python3
+    VENV_PYTHON_BIN= ./env/bin/python
     ACTIVATE = . env/bin/activate
 endif
 
@@ -24,11 +25,11 @@ activate:
 
 # Install required modules
 install:
-	pip install -r requirements.txt
+	$(VENV_PYTHON_BIN) -m pip install -r requirements.txt
 
 # Run the main.py script
 run:
-	$(PYTHON) main.py --ui
+	$(VENV_PYTHON_BIN) main.py --ui
 
 # Delete the virtual environment
 clean:
