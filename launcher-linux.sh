@@ -27,7 +27,6 @@ is_debian() {
 install_app_dependencies() {
 ## install pip packages
     sudo apt -y install python3 \
-        make \
         python3.11-venv \
         python3-pip \
 
@@ -42,9 +41,14 @@ install_app_dependencies() {
 
 install_app_dependencies
 
-## create python virtualenv
+## Create python virtualenv
 python3 -m venv env
-## install pip packages (use python exec path in the virtualenv)
+
+## Activate the environnement
+source env/bin/activate
+
+## Install pip packages (use python exec path in the virtualenv)
 ${VENV_PYTHON_PATH} -m pip install -r requirements.txt
-## start main programm
+
+## Start main programm
 ${VENV_PYTHON_PATH} main.py --ui
