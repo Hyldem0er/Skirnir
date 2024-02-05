@@ -52,8 +52,9 @@ To launch the program, navigate to the project directory and :
 
 **Linux** : 
 run the following command in a terminal:
+
 ```shell
-sh launcher-linux.sh
+chmod +x launcher-linux.sh & sh launcher-linux.sh
 ```
 
 **Windows** : 
