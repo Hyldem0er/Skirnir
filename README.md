@@ -26,9 +26,6 @@ Welcome to Skirnir, a sophisticated Open Source Intelligence (OSINT) tool design
 - [Interface](#interface)
 - [License](#licence)
 
-
-#
-
 # Usage
 
 <a id="installation"></a>
@@ -39,6 +36,7 @@ To install the required dependencies, navigate to the project directory and :
 **Linux** : 
 run the following command in a terminal:
 ```shell
+chmod +x launcher-linux.sh
 sh launcher-linux.sh
 ```
 
