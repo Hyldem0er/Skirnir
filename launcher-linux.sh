@@ -45,7 +45,7 @@ install_app_dependencies
 python3 -m venv env
 
 ## Activate the environnement
-source env/bin/activate
+. env/bin/activate
 
 ## Install pip packages (use python exec path in the virtualenv)
 ${VENV_PYTHON_PATH} -m pip install -r requirements.txt
