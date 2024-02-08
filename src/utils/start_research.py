@@ -61,7 +61,7 @@ def add_facebook_possible_profile(instagram_profiles):
         facebook_profiles.append(instagram_profile.replace("https://www.instagram.com/", "https://www.facebook.com/"))
     return facebook_profiles
 
-def add_twitter_profile(instagram_profiles):
+def add_twitter_profile(instagram_profiles, proxy):
     """
     Adds twitter profiles based on the given Instagram profiles. 
     As we only have one site to deepcrawl, we use it with selected urls that have the best chances.
@@ -79,9 +79,9 @@ def add_twitter_profile(instagram_profiles):
     twitter_profiles_nicknames = []
     for instagram_profile in instagram_profiles:
         twitter_profiles_nicknames.append(instagram_profile.replace("https://www.instagram.com/", ""))
-    return
+    return find_twitter_profile(twitter_profiles_nicknames, proxy)
 
-def add_tiktok_profile(instagram_profiles):
+def add_tiktok_profile(instagram_profiles, proxy):
     """
     Adds twitter profiles based on the given Instagram profiles. 
     As we only have one site to deepcrawl, we use it with selected urls that have the best chances.
@@ -99,7 +99,7 @@ def add_tiktok_profile(instagram_profiles):
     tiktok_profiles_nicknames = []
     for instagram_profile in instagram_profiles:
         tiktok_profiles_nicknames.append(instagram_profile.replace("https://www.instagram.com/", ""))
-    return find_tiktok_profile(tiktok_profiles_nicknames)
+    return find_tiktok_profile(tiktok_profiles_nicknames, proxy)
 
 def create_social_networks_dict(instagram_checkbox, facebook_checkbox, twitter_checkbox, linkedin_checkbox, tiktok_checkbox):
     """
@@ -183,7 +183,7 @@ def start_profile_research(instagram_checkbox, facebook_checkbox, twitter_checkb
             advanced_profile_set["instagram"] = instagram_profiles
 
         if facebook_checkbox:
-            advanced_profile_set["facebook"] = add_facebook_possible_profile(instagram_profiles, proxy)
+            advanced_profile_set["facebook"] = add_facebook_possible_profile(instagram_profiles)
 
         if twitter_checkbox:
             advanced_profile_set["twitter"] = add_twitter_profile(instagram_profiles, proxy)
