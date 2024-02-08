@@ -24,7 +24,9 @@ if %errorLevel% EQU 0 (
     rem Download Python installer
     :: You can download the Python installer manually and include it in your script
     :: or use a tool like curl if it's available on your system
-    echo Please download Python installer manually and rerun this script.
+    wget -O python-installer.exe https://www.python.org/ftp/python/3.11.5/python-3.11.5-amd64.exe
+    python-installer.exe /quiet InstallAllUsers=1 PrependPath=1
+    del python-installer.exe
     pause
     exit /b 1
 )
