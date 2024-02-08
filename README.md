@@ -9,9 +9,11 @@
 
 Welcome to Skirnir, a sophisticated Open Source Intelligence (OSINT) tool designed to empower your online presence discovery. In the digital era, maintaining awareness of your footprint across popular social networks is crucial. Skirnir is specialized in scraping platforms like Instagram, Facebook, Twitter, and LinkedIn to uncover any trace of your online identity or lost accounts.
 
+[Advanced Wiki](https://hyldem0er.gitbook.io/skirnir/)
+
 ### Key Features
 
-- **Surface crawl:** Utilize various combinations of your name, last name, birthdate, and pseudonym for a thorough exploration.
+- **Surface crawl:** Utilize various combinations of firstname, diminutives, nicknames and last names to crawl Duckduckgo and Google.
 - **Deepcrawl:** Perform in-depth searches to reveal private or deleted profiles using thousands of generated nicknames.
 - **Customizable Settings:** Customize your search with advanced options, including deepcrawl preferences, network selection and length of nicknames generated.
 - **Intuitive Interface:** Skirnir's user-friendly interface simplifies the process of refining and filtering search results.
@@ -24,9 +26,6 @@ Welcome to Skirnir, a sophisticated Open Source Intelligence (OSINT) tool design
 - [Interface](#interface)
 - [License](#licence)
 
-
-#
-
 # Usage
 
 <a id="installation"></a>
@@ -37,6 +36,7 @@ To install the required dependencies, navigate to the project directory and :
 **Linux** : 
 run the following command in a terminal:
 ```shell
+chmod +x launcher-linux.sh
 sh launcher-linux.sh
 ```
 
