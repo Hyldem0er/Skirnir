@@ -21,10 +21,10 @@ def main():
                                      description="")
     
     # Add a --log argument to specify the log level (default is INFO)
-    parser.add_argument("--firstname", "-f", action='store', default="", type=str, help="The firstname used for crawl")
-    parser.add_argument("--lastname", "-l", action='store', default="", type=str, help="The lastname used for the crawl")
+    parser.add_argument("--firstname", "-f", action='store', default="", type=str, help="The firstname")
+    parser.add_argument("--lastname", "-l", action='store', default="", type=str, help="The lastname")
     parser.add_argument("--birthday", "-b", action='store', default="", type=str, help='Format DD-MM-YYYY')
-    parser.add_argument("--nickname", "-n", action='store', default="", type=str, help="The nickname used for the crawl")
+    parser.add_argument("--nickname", "-n", action='store', default="", type=str, help="The nickname")
     parser.add_argument("--instagram", "-ig", action='store_true', help="Enable crawl on Instagram")
     parser.add_argument("--facebook", "-fb", action='store_true', help="Enable crawl on Facebook")
     parser.add_argument("--x", "-x", action='store_true', help="Enable crawl on X (Twitter)")
@@ -34,7 +34,7 @@ def main():
     parser.add_argument("--deepcrawl", "-", action='store_true', help="Enable deepcrawl")
     parser.add_argument("--pseudo_size", "-ps", action='store', default=9, type=int, help="The limit of size for generating possible pseudonyms (deepcrawl)")
     parser.add_argument("--nickname_only", "-no", action='store_true', help="Make a crawl only for nickname")
-    parser.add_argument("--keyword", "-k", action='store', default="", type=str, help="Add this keyword to a crawl")
+    parser.add_argument("--keyword", "-k", action='store', default="", type=str, help="Add this keyword or a query to a crawl")
     parser.add_argument("--export_nickname", "-csv", action='store_true', help="Export the generated nicknames in CSV")
     parser.add_argument("--proxyfile", action="store", default="", type=str, help="Filepath for custom public/private proxy list import")
     parser.add_argument("--log", choices=["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"], default="CRITICAL", help="Set the log level with the given choices")
@@ -66,7 +66,6 @@ def main():
             args.x = True
             args.linkedin = True
             args.tiktok = True
-        
         crawl_list, advanced_profile_set, social_networks_dict = start_profile_research(args.instagram, args.facebook, args.x, args.linkedin,args.tiktok,
                                                                                         args.firstname, args.lastname, args.birthday, args.nickname, 
                                                                                         args.birthday != "", args.nickname_only, args.pseudo_size,

@@ -24,7 +24,7 @@ if %errorLevel% EQU 0 (
     rem Download Python installer
     :: You can download the Python installer manually and include it in your script
     :: or use a tool like curl if it's available on your system
-    wget -O python-installer.exe https://www.python.org/ftp/python/3.11.5/python-3.11.5-amd64.exe
+    curl -O python-installer.exe https://www.python.org/ftp/python/3.11.5/python-3.11.5-amd64.exe
     python-installer.exe /quiet InstallAllUsers=1 PrependPath=1
     del python-installer.exe
     pause
@@ -32,10 +32,13 @@ if %errorLevel% EQU 0 (
 )
 
 :: Create python virtualenv
-%VENV_PYTHON_PATH% -m venv env
+python -m venv env
 
 :: Activate the environment
 call .\env\Scripts\activate
+
+:: Set the python path variable
+set VENV_PYTHON_PATH=".\env\Scripts\python.exe"
 
 :: Install pip packages (use python exec path in the virtualenv)
 %VENV_PYTHON_PATH% -m pip install -r requirements.txt
