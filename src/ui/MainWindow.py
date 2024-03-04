@@ -12,7 +12,7 @@ from src.ui.DeepResultWindow import DeepResultWindow
 import copy
 import os, time, sys
 from src.surface_crawl.match_nicknames import list_nicknames
-list_of_nickname = list_nicknames()
+list_of_nicknames = list_nicknames()
 
 scriptDir = os.path.dirname(os.path.realpath(__file__))
 gifFile = (scriptDir + os.path.sep + 'loading.gif')
@@ -69,7 +69,7 @@ class MainWindow(QDialog):
         # adding form group box to the layout
         mainLayout.addWidget(self.formGroupBox)
 
-        # adding limit size of generated nicknames
+        # adding limit size of generated aliass
         mainLayout.addWidget(self.AdvancedSettings) 
 
         # Add a loading gif
@@ -102,13 +102,13 @@ class MainWindow(QDialog):
         else:
             self.formGroupBox.layout().labelForField(self.date).hide()
 
-     # Hide names if the research is only on pseudo
+     # Hide names if the research is only on alias
     def toggleNamesVisibility(self, state):
-        nickname_only = state == Qt.Checked
-        self.Firstname.setVisible(not nickname_only)
-        self.Lastname.setVisible(not nickname_only)
+        alias_only = state == Qt.Checked
+        self.Firstname.setVisible(not alias_only)
+        self.Lastname.setVisible(not alias_only)
 
-        if not nickname_only:
+        if not alias_only:
             self.formGroupBox.layout().labelForField(self.Firstname).show()
             self.formGroupBox.layout().labelForField(self.Lastname).show()
         else:
@@ -129,7 +129,7 @@ class MainWindow(QDialog):
     def createSliderHorizontalLayout(self):
         self.Sliderlayout = QHBoxLayout()
         # Slider value
-        self.limitLabel = QLabel("Limit the size of generated nicknames :")
+        self.limitLabel = QLabel("Limit the size of generated aliass :")
 
 
         # Slide Bar
@@ -258,7 +258,7 @@ class MainWindow(QDialog):
         formlayout.setVerticalSpacing(15)
         
         formlayout.addRow(checkboxcontainer)
-        formlayout.addRow(QLabel("Deep Crawl*", toolTip="Tries generated nicknames on selected social networks"), self.show_deepcrawl_checkbox)
+        formlayout.addRow(QLabel("Deep Crawl*", toolTip="Tries generated aliass on selected social networks"), self.show_deepcrawl_checkbox)
 
         self.AdvancedSettingsLayout.addLayout(formlayout)
         
@@ -327,11 +327,11 @@ class MainWindow(QDialog):
         d = QDate(2020, 6, 10)
         self.date.setDate(d)
 
-        # Nickname
-        self.nickname_only = QCheckBox()
-        self.nickname_only.setChecked(False)
-        self.nickname_only.stateChanged.connect(self.toggleNamesVisibility)
-        self.nickname = QLineEdit()
+        # Alias
+        self.alias_only = QCheckBox()
+        self.alias_only.setChecked(False)
+        self.alias_only.stateChanged.connect(self.toggleNamesVisibility)
+        self.alias = QLineEdit()
 
         # Keyword
         self.keyword = QLineEdit()
@@ -343,14 +343,14 @@ class MainWindow(QDialog):
 
         # creating a form layout
         layout = QFormLayout()
- 
+
         # adding rows for inputs
         layout.addRow(QLabel("Firstname: "), self.Firstname)
         layout.addRow(QLabel("Lastname: "), self.Lastname)
         layout.addRow(QLabel("Toggle Birthday: "), self.show_date_checkbox)
         layout.addRow(QLabel("Birthday: "), self.date)
-        layout.addRow(QLabel("Search only the pseudo: "), self.nickname_only)
-        layout.addRow(QLabel(("Pseudo* : "), toolTip="Adds an additional search if a pseudo is known"), self.nickname)
+        layout.addRow(QLabel("Search only the alias: "), self.alias_only)
+        layout.addRow(QLabel(("Alias* : "), toolTip="Adds an additional search if an alias is known"), self.alias)
         layout.addRow(QLabel(("Keyword* : "), toolTip="Adds a keyword or a boolean query to complete the first and last name search"), self.keyword)
 
         # setting layout
@@ -424,26 +424,26 @@ class MainWindow(QDialog):
                 if crawl_set[platform]:
                     advanced_profile_set[platform].extend(crawl_set[platform])
 
-            advanced_profile_set['instagram'] = sort_by_relevance(advanced_profile_set['instagram'], self.Firstname.text(), self.Lastname.text(),  self.nickname.text(), list_of_nickname, self.nickname_only.isChecked())
-            advanced_profile_set['facebook'] = sort_by_relevance(advanced_profile_set['facebook'], self.Firstname.text(), self.Lastname.text(),  self.nickname.text(), list_of_nickname, self.nickname_only.isChecked())
-            advanced_profile_set['twitter'] = sort_by_relevance(advanced_profile_set['twitter'], self.Firstname.text(), self.Lastname.text(),  self.nickname.text(), list_of_nickname, self.nickname_only.isChecked())
-            advanced_profile_set['linkedin'] = sort_by_relevance(advanced_profile_set['linkedin'], self.Firstname.text(), self.Lastname.text(),  self.nickname.text(), list_of_nickname, self.nickname_only.isChecked())
-            advanced_profile_set['tiktok'] = sort_by_relevance(advanced_profile_set['tiktok'], self.Firstname.text(), self.Lastname.text(),  self.nickname.text(), list_of_nickname, self.nickname_only.isChecked())
+            advanced_profile_set['instagram'] = sort_by_relevance(advanced_profile_set['instagram'], self.Firstname.text(), self.Lastname.text(),  self.alias.text(), list_of_nicknames, self.alias_only.isChecked())
+            advanced_profile_set['facebook'] = sort_by_relevance(advanced_profile_set['facebook'], self.Firstname.text(), self.Lastname.text(),  self.alias.text(), list_of_nicknames, self.alias_only.isChecked())
+            advanced_profile_set['twitter'] = sort_by_relevance(advanced_profile_set['twitter'], self.Firstname.text(), self.Lastname.text(),  self.alias.text(), list_of_nicknames, self.alias_only.isChecked())
+            advanced_profile_set['linkedin'] = sort_by_relevance(advanced_profile_set['linkedin'], self.Firstname.text(), self.Lastname.text(),  self.alias.text(), list_of_nicknames, self.alias_only.isChecked())
+            advanced_profile_set['tiktok'] = sort_by_relevance(advanced_profile_set['tiktok'], self.Firstname.text(), self.Lastname.text(),  self.alias.text(), list_of_nicknames, self.alias_only.isChecked())
             
             self.w = DeepResultWindow(advanced_profile_set, social_networks_dict, backup_facebook)
         else:
-            crawl_list = sort_by_relevance(set(crawl_list), self.Firstname.text(), self.Lastname.text(),  self.nickname.text(), list_of_nickname, self.nickname_only.isChecked())
+            crawl_list = sort_by_relevance(set(crawl_list), self.Firstname.text(), self.Lastname.text(),  self.alias.text(), list_of_nicknames, self.alias_only.isChecked())
             self.w = CrawlResultWindow(crawl_list, social_networks_dict)
         self.w.show()
     
-    # call nickname generation function
+    # call alias generation function
     def start_checking_profile(self):
         print(self.proxyfile_path)
         self.label.show()
         self.worker_thread = WorkerThread(self.show_instagram_checkbox.isChecked(), self.show_facebook_checkbox.isChecked(),
                                     self.show_twitter_checkbox.isChecked(), self.show_linkedin_checkbox.isChecked(), self.show_tiktok_checkbox.isChecked(),
-                                    self.Firstname.text(), self.Lastname.text(), self.date.text(), self.nickname.text(),
-                                    self.show_date_checkbox.isChecked(), self.nickname_only.isChecked(), int(self.limit.text()), self.show_deepcrawl_checkbox.isChecked(),
+                                    self.Firstname.text(), self.Lastname.text(), self.date.text(), self.alias.text(),
+                                    self.show_date_checkbox.isChecked(), self.alias_only.isChecked(), int(self.limit.text()), self.show_deepcrawl_checkbox.isChecked(),
                                     self.show_exportCSV_checkbox.isChecked(), self.keyword.text(), self.proxyfile_path, self)
         self.worker_thread.finished.connect(self.on_worker_finished)
         self.worker_thread.start()

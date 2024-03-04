@@ -128,7 +128,7 @@ def create_social_networks_dict(instagram_checkbox, facebook_checkbox, twitter_c
 
 
 def start_profile_research(instagram_checkbox, facebook_checkbox, twitter_checkbox, linkedin_checkbox, tiktok_checkbox,
-                           firstname, lastname, date, nickname, birthday_on, nickname_only, limit, 
+                           firstname, lastname, date, alias, birthday_on, alias_only, limit, 
                            deepcrawl_is_checked, nickname_export, keyword, proxyfile_path):
     """
     Starts the profile research process based on the provided parameters.
@@ -141,9 +141,9 @@ def start_profile_research(instagram_checkbox, facebook_checkbox, twitter_checkb
         firstname (str): The firstname.
         lastname (str): The lastname.
         date (str): The date.
-        nickname (str): The nickname.
+        alias (str): The alias.
         birthday_on (str): The birthday option.
-        nickname_only (bool): The state of the "Nickname Only" checkbox.
+        alias_only (bool): The state of the "alias Only" checkbox.
         limit (int): The limit for generating possible pseudonyms.
         deepcrawl_is_checked (bool): The state of the "Crawl" checkbox.
         nickname_export (bool): Export the generated nicknames in CSV
@@ -162,9 +162,9 @@ def start_profile_research(instagram_checkbox, facebook_checkbox, twitter_checkb
     social_networks_dict = create_social_networks_dict(instagram_checkbox, facebook_checkbox, twitter_checkbox, linkedin_checkbox, tiktok_checkbox)
 
     logger.info("Starting Surface Crawling")
-    crawl_list = surface_crawl(instagram_checkbox, facebook_checkbox, twitter_checkbox, linkedin_checkbox, tiktok_checkbox, firstname, lastname, nickname, keyword, proxy)
+    crawl_list = surface_crawl(instagram_checkbox, facebook_checkbox, twitter_checkbox, linkedin_checkbox, tiktok_checkbox, firstname, lastname, alias, keyword, proxy)
 
-    generated_nicknames = generate_possible_pseudonyms(firstname, lastname, date, nickname, limit, birthday_on, nickname_only)
+    generated_nicknames = generate_possible_pseudonyms(firstname, lastname, date, alias, limit, birthday_on, alias_only)
 
     if nickname_export:
         export_nicknames_csv(generated_nicknames)

@@ -69,8 +69,8 @@ Double click on launcher-win.bat.
     - **Firstname** : Enter your first name (no accented letters). If your first name is composed of multiple parts, you can separate them with a "-" or a space.
     - **Lastname** : Enter your last name (still no accented letters).
     - **Toggle Birthday** : By default, this option is enabled. You can disable it to decrease the number of generated nicknames.
-    - **Search only the pseudo** : Enabling this option will reduce search time by focusing only on the provided pseudo.
-    - **Pseudo** : Enter your desired pseudo. If you want to try different combinations with delimiters such as "-", "_", or ".", you can include spaces between parts of the pseudo.
+    - **Search only the alias** : Enabling this option will reduce search time by focusing only on the provided aliass.
+    - **Alias** : Enter your desired alias. If you want to try different combinations with delimiters such as "-", "_", or ".", you can include spaces between parts of the alias.
 
 - **Advanced settings**
     
