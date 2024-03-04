@@ -10,7 +10,7 @@ def start_with_delimeters(name):
     return name[0] in ['-', '_', '.']
 
 
-def generate_possible_pseudonyms(firstname, lastname, birthday, nickname, limit=15, birthday_on=False, nickname_only = False):
+def generate_possible_pseudonyms(firstname, lastname, birthday, alias, limit=15, birthday_on=False, alias_only = False):
     """
     Generate all possible pseudonyms based on the given inputs.
 
@@ -21,7 +21,7 @@ def generate_possible_pseudonyms(firstname, lastname, birthday, nickname, limit=
 
         birthday (str): The birthday.
 
-        nickname (str): The nickname.
+        alias (str): The alias.
 
         limit (int, optional): The character limit for pseudonyms. Defaults to 13.
 
@@ -39,7 +39,7 @@ def generate_possible_pseudonyms(firstname, lastname, birthday, nickname, limit=
     if birthday_on:
         dates_combinations = get_possible_date_combination_with_delimiters(birthday, delimiters)
 
-    if not nickname_only:
+    if not alias_only:
         firstname_variations = get_possible_name_variations(firstname, delimiters)
         lastname_variations = get_possible_name_variations(lastname, delimiters)
         lastname_variations_with_delimiters = generate_string_combinations(delimiters, lastname_variations)
@@ -70,7 +70,7 @@ def generate_possible_pseudonyms(firstname, lastname, birthday, nickname, limit=
                         pseudonyms.append(pseudonym)
                         pseudonyms.append(inversed_pseudonym)
 
-    nicknames = get_nicknames_variations_with_delimiters(nickname, delimiters)
+    nicknames = get_nicknames_variations_with_delimiters(alias, delimiters)
 
     if nicknames != ['']:
         for n in nicknames:

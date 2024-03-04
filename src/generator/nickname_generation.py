@@ -1,13 +1,13 @@
-def get_nicknames_variations_with_delimiters(nickname, delimiters):
+def get_nicknames_variations_with_delimiters(alias, delimiters):
     """
-    Generate all variations of a nickname with different delimiters.
+    Generate all variations of a alias with different delimiters.
 
     Args:
-        nickname (str): The input nickname.
+        alias (str): The input alias.
         delimiters (list): A list of delimiters used to generate variations.
 
     Returns:
-        list: A list of nickname variations.
+        list: A list of alias variations.
 
 Example:
     >>> get_nicknames_variations_with_delimiters("cassos du 76", [".", "-", "_"])
@@ -16,10 +16,10 @@ Example:
 
 
     delimiters.append(" ")
-    nicknames_variation = [nickname]
+    nicknames_variation = [alias]
     for d in delimiters:
-        if d in nickname and d != '':
+        if d in alias and d != '':
             for deli in delimiters:
                 if d != deli:
-                    nicknames_variation.append(nickname.replace(d, deli))
+                    nicknames_variation.append(alias.replace(d, deli))
     return nicknames_variation

@@ -10,7 +10,8 @@ def composed_name_test_in_url(name, url):
         if n in url:
             return True
     return False
-def similarity_score(url, firstname, lastname, nickname, list_nickname):
+
+def similarity_score(url, firstname, lastname, alias, list_nickname):
     if url == "":
         return 0
     if "linkedin" in url:
@@ -49,7 +50,7 @@ def similarity_score(url, firstname, lastname, nickname, list_nickname):
         return 70
     if firstname_in_url and rem_vowel_lastname_in_url:
         return 60
-    if nickname in url and not nickname == "":
+    if alias in url and not alias == "":
         return 55
     if firstname_in_url and first_char_lastname_in_url:
         return 50
@@ -65,28 +66,28 @@ def similarity_score(url, firstname, lastname, nickname, list_nickname):
         return 5
     return 0
 
-def similarity_score_nickname_only(url, nickname):
+def similarity_score_nickname_only(url, alias):
     if url == "":
         return 0
     if "linkedin" in url:
         url = url.split("/")[4]
     else:
         url = url.split("/")[3]
-    score = jar(url, nickname) * 100
-    if score <= 75  and nickname in url:
+    score = jar(url, alias) * 100
+    if score <= 75  and alias in url:
         return 75
     return score
 
 
-def print_score(set, firstname, lastname, nickname, list_nickname, nickname_only=False):
+def print_score(set, firstname, lastname, alias, list_nickname, alias_only=False):
     for url in set:
-        if nickname_only:
-            print(url," :" , similarity_score_nickname_only(unidecode(url.lower()), nickname.lower()))
+        if alias_only:
+            print(url," :" , similarity_score_nickname_only(unidecode(url.lower()), alias.lower()))
         else:
-            print(url," :" , similarity_score(unidecode(url.lower()), firstname.lower(), lastname.lower(), nickname.lower(), list_nickname))
+            print(url," :" , similarity_score(unidecode(url.lower()), firstname.lower(), lastname.lower(), alias.lower(), list_nickname))
 
-def sort_by_relevance(iterable, firstname, lastname, nickname, list_nickname, nickname_only=False):
-    if nickname_only:
-        return sorted(iterable, key=lambda url: similarity_score_nickname_only(unidecode(url.lower()), nickname.lower()), reverse=True)
+def sort_by_relevance(iterable, firstname, lastname, alias, list_nickname, alias_only=False):
+    if alias_only:
+        return sorted(iterable, key=lambda url: similarity_score_nickname_only(unidecode(url.lower()), alias.lower()), reverse=True)
     else:
-        return sorted(iterable, key=lambda url: similarity_score(unidecode(url.lower()), firstname.lower(), lastname.lower(), nickname.lower(), list_nickname), reverse=True)
+        return sorted(iterable, key=lambda url: similarity_score(unidecode(url.lower()), firstname.lower(), lastname.lower(), alias.lower(), list_nickname), reverse=True)

@@ -55,7 +55,7 @@ class Browser:
         """
         return self.research_urls
 
-    def perform_surface_crawl(self, instagram, facebook, twitter, linkedin, tiktok, firstname, lastname, nickname, keyword, proxy):
+    def perform_surface_crawl(self, instagram, facebook, twitter, linkedin, tiktok, firstname, lastname, alias, keyword, proxy):
         """
         Performs a surface crawl on specified platforms using the browser.
         Args:
@@ -63,7 +63,7 @@ class Browser:
             facebook (bool): Flag indicating whether to perform a surface crawl on Facebook.
             twitter (bool): Flag indicating whether to perform a surface crawl on Twitter.
             linkedin (bool): Flag indicating whether to perform a surface crawl on LinkedIn.
-            nickname (str): The nickname use for the surface crawl
+            alias (str): The alias use for the surface crawl
 
         Returns:
             list or None: A list of results from the surface crawl, or None if the browser is not supported.
@@ -86,21 +86,19 @@ class Browser:
             logger.debug("Google crawling result : {}", result_list)
             return result_list
         
-        if self.name == "nickname":
-            if nickname == "":
-                nickname = "%22" + lastname + "+" + firstname+ "%22"
+        if self.name == "alias":
+            if alias == "":
+                alias = "%22" + lastname + "+" + firstname+ "%22"
             elif lastname != "" and firstname != "":
-                nickname = "(%22" + nickname + "%22+OR+%22" + lastname + "+" + firstname + "%22)" # ("nickname" OR "lastname firstname")
+                alias = "(%22" + alias + "%22+OR+%22" + lastname + "+" + firstname + "%22)" # ("alias" OR "lastname firstname")
             else:
-                nickname = "%22" + nickname + "%22"
-            research_url = create_surface_crawl_url(self, instagram, facebook, twitter, linkedin, tiktok,  nickname)
+                alias = "%22" + alias + "%22"
+            research_url = create_surface_crawl_url(self, instagram, facebook, twitter, linkedin, tiktok,  alias)
             result_list = search_google(research_url, proxy)
-            logger.debug("Nickname crawling result : {}", result_list)
+            logger.debug("alias crawling result : {}", result_list)
             return result_list
         
         if self.name == "nicknames":
-            if nickname == "":
-                return []
             # Nicknames
             matching_nicknames_list = match_nicknames(firstname)
             if matching_nicknames_list == []:
