@@ -129,7 +129,7 @@ class MainWindow(QDialog):
     def createSliderHorizontalLayout(self):
         self.Sliderlayout = QHBoxLayout()
         # Slider value
-        self.limitLabel = QLabel("Limit the size of generated aliass :")
+        self.limitLabel = QLabel("Limit the size of generated alias :")
 
 
         # Slide Bar
