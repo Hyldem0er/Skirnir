@@ -49,8 +49,6 @@ def get(url, proxy = None, timeout=5, header=None):
     if header:
         headers.update(header)
 
-    print(proxies_dict)
-
     resp = requests.get(
         url=url,
         headers=headers,

@@ -12,7 +12,6 @@ class Proxy():
         self.__is_private_proxies = False
         self.__name = filepath.split('/')[-1]
 
-        print(filepath)
         with open(filepath, 'r') as csv_file:
             csv_reader = csv.DictReader(csv_file)
             header_row = next(csv_reader, None)
@@ -38,7 +37,6 @@ class Proxy():
             '127.0.0.1:8080'
         """
         try:
-            print(self.__proxies_dict)
             return choice(self.__proxies_dict)
         except Exception as error:
             logger.error(error)
