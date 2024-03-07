@@ -27,13 +27,13 @@ def get_useragent():
 
 def get_useragent_mobile():
     """
-    Returns a randomly chosen user agent string.
+    Returns a randomly chosen mobile user agent string.
 
     Returns:
-        str: A randomly chosen user agent string.
+        str: A randomly chosen mobile user agent string.
 
     Example:
-        >>> get_useragent()
+        >>> get_useragent_mobile()
         'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36'
     """
     return choice([

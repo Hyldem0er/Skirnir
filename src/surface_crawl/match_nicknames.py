@@ -30,6 +30,7 @@ def create_query_matching_nicknames(firstname, lastname, matching_nicknames_list
     Args:
         firstname (str): The first name to use for nickname matching.
         lastname (str): The last name to include in the query.
+        matching_nicknames_list (list): List of matching nicknames to include in the query.
         
     Returns:
         str: The constructed query string.
@@ -41,6 +42,7 @@ def create_query_matching_nicknames(firstname, lastname, matching_nicknames_list
         query += "\"{}\"{}".format(nicknames, "+OR+" if or_limit != 0 else "")
     query += ")+AND+\"{}\"".format(lastname)
     return query
+
 
 
 def list_nicknames():

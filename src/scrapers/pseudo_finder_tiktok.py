@@ -31,6 +31,7 @@ def is_tiktok_profile(link, proxy):
 
     Args:
         link (str): The link to check.
+        proxy (Proxy): The proxy object to be used for the request.
 
     Returns:
         bool: True if the link corresponds to an existing TikTok profile, False otherwise.
@@ -39,7 +40,7 @@ def is_tiktok_profile(link, proxy):
         Exception: If an unexpected error occurs during the request.
 
     Example:
-        >>> is_TikTok_profile("https://www.TikTok.com/example_profile/")
+        >>> is_tiktok_profile("https://www.TikTok.com/example_profile/", proxy)
         True
     """
     header = {
@@ -65,13 +66,14 @@ def find_tiktok_profile(nicknameList, proxy):
 
     Args:
         nicknameList (list): A list of nicknames to search for.
+        proxy (Proxy): The proxy object to be used for the request.
 
     Returns:
         list: A list of existing TikTok profile links.
 
     Example:
-        >>> find_TikTok_profile(["nickname1", "nickname2", "nickname3"])
-        ['https://www.TikTok.com/nickname1/', 'https://www.TikTok.com/nickname2/']
+        >>> find_tiktok_profile(["nickname1", "nickname2", "nickname3"], proxy)
+        ['https://www.tiktok.com/@nickname1', 'https://www.tiktok.com/@nickname2']
     """
     logger.info("Searching for TikTok profile")
 

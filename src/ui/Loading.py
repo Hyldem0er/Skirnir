@@ -7,6 +7,13 @@ scriptDir = os.path.dirname(os.path.realpath(__file__))
 gifFile = (scriptDir + os.path.sep + 'loading.gif')
 
 class Loading(QWidget):
+    """
+    A custom widget for displaying a loading animation.
+
+    Attributes:
+        label (QLabel): Label to display the animation.
+        movie (QMovie): Movie object to handle the animation.
+    """
     def __init__(self):
         super().__init__()
 

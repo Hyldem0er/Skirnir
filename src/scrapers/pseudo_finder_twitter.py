@@ -23,23 +23,23 @@ def create_twitter_link(rebound_site, nickname):
     return rebound_site + nickname + '/'
 
 # Setting user-agent to emulate human connection, request to picnob, return True if status code = 200
-import requests
 
 def is_twitter_profile(link, proxy):
     """
-    Checks if the provided link corresponds to an existing twitter profile.
+    Checks if the provided link corresponds to an existing Twitter profile.
 
     Args:
         link (str): The link to check.
+        proxy (Proxy): The proxy object to be used for the request.
 
     Returns:
-        bool: True if the link corresponds to an existing twitter profile, False otherwise.
+        bool: True if the link corresponds to an existing Twitter profile, False otherwise.
 
     Raises:
         Exception: If an unexpected error occurs during the request.
 
     Example:
-        >>> is_twitter_profile("https://www.twitter.com/example_profile/")
+        >>> is_twitter_profile("https://www.twitter.com/example_profile/", proxy)
         True
     """
     header = {
@@ -61,16 +61,17 @@ def is_twitter_profile(link, proxy):
 
 def find_twitter_profile(nicknameList, proxy):
     """
-    Searches for twitter profiles corresponding to the provided nicknames.
+    Searches for Twitter profiles corresponding to the provided nicknames.
 
     Args:
         nicknameList (list): A list of nicknames to search for.
+        proxy (Proxy): The proxy object to be used for the request.
 
     Returns:
-        list: A list of existing twitter profile links.
+        list: A list of existing Twitter profile links.
 
     Example:
-        >>> find_twitter_profile(["nickname1", "nickname2", "nickname3"])
+        >>> find_twitter_profile(["nickname1", "nickname2", "nickname3"], proxy)
         ['https://www.twitter.com/nickname1/', 'https://www.twitter.com/nickname2/']
     """
     logger.info("Searching for Twitter profile")
