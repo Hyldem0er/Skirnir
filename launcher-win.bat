@@ -3,8 +3,6 @@
 rem Parameters
 set VENV_PYTHON_PATH=".\\env\\Scripts\\python.exe"
 
-:: echo %VENV_PYTHON_PATH%
-
 rem Check if the script is running with administrator privileges
 net session >nul 2>&1
 if %errorLevel% NEQ 0 (
@@ -14,36 +12,48 @@ if %errorLevel% NEQ 0 (
     exit /b 1
 )
 
-rem Check if Python is already installed
-%VENV_PYTHON_PATH% --version > nul 2>&1
-if %errorLevel% EQU 0 (
-    echo Python is already installed.
-) else (
-    echo Python is not installed. Installing Python...
 
-    rem Download Python installer
-    :: You can download the Python installer manually and include it in your script
-    :: or use a tool like curl if it's available on your system
-    curl -O python-installer.exe https://www.python.org/ftp/python/3.11.5/python-3.11.5-amd64.exe
-    python-installer.exe /quiet InstallAllUsers=1 PrependPath=1
-    del python-installer.exe
-    pause
-    exit /b 1
+REM Check if Python is installed
+where python >nul 2>&1
+if %errorlevel% neq 0 (
+    echo Python is not installed. Installing...
+
+    REM Download Python installer
+    curl -o python-installer.exe https://www.python.org/ftp/python/3.9.2/python-3.9.2-amd64.exe
+    if not exist python-installer.exe (
+        echo Failed to download Python installer.
+        goto end
+    )
+
+    REM Install Python
+    start /wait python-installer.exe /quiet InstallAllUsers=1 PrependPath=1 Include_test=0
+    if %errorlevel% neq 0 (
+        echo Failed to install Python.
+        goto end
+    )
+
+    echo Python installed successfully.
+) else (
+    echo Python is already installed.
 )
 
-:: Create python virtualenv
+:end
+endlocal
+
+
+rem Create python virtualenv
 python -m venv env
 
-:: Activate the environment
+rem Activate the environment
 call .\env\Scripts\activate
 
-:: Set the python path variable
+rem Set the python path variable
 set VENV_PYTHON_PATH=".\env\Scripts\python.exe"
 
-:: Install pip packages (use python exec path in the virtualenv)
+rem Install pip packages (use python exec path in the virtualenv)
 %VENV_PYTHON_PATH% -m pip install -r requirements.txt
 
-:: Start main program
+rem Start main program
 %VENV_PYTHON_PATH% main.py --ui
 
 exit
