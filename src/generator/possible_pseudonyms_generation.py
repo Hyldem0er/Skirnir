@@ -27,6 +27,8 @@ def generate_possible_pseudonyms(firstname, lastname, birthday, alias, limit=15,
 
         birthday_on (bool, optional): Whether to include the birthday in pseudonyms. Defaults to False.
 
+        alias_only (bool, optional): Whether  to generate only alias variation
+
     Returns:
         list: A list of generated pseudonyms.
 

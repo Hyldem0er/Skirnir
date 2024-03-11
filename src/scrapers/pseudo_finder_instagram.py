@@ -23,7 +23,6 @@ def create_instagram_link(rebound_site, nickname):
     return rebound_site + nickname + '/'
 
 # Setting user-agent to emulate human connection, request to picnob, return True if status code = 200
-import requests
 
 def is_instagram_profile(link, proxy):
     """
@@ -65,12 +64,13 @@ def find_instagram_profile(nicknameList, proxy):
 
     Args:
         nicknameList (list): A list of nicknames to search for.
+        proxy (Proxy): The proxy object to be used for the request.
 
     Returns:
         list: A list of existing Instagram profile links.
 
     Example:
-        >>> find_instagram_profile(["nickname1", "nickname2", "nickname3"])
+        >>> find_instagram_profile(["nickname1", "nickname2", "nickname3"], proxy)
         ['https://www.instagram.com/nickname1/', 'https://www.instagram.com/nickname2/']
     """
     logger.info("Searching for IG profile")

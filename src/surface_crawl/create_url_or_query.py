@@ -8,34 +8,39 @@ from loguru import logger
 logger.add(sys.stdout, colorize=True, format="<green>{time}</green> <level>{message}</level>")
 
 def calculate_number_activate_networks(instagram, facebook, twitter, linkedin, tiktok):
-        """
-        Calculate the number of activated social media networks based on the provided parameters.
+    """
+    Calculate the number of activated social media networks based on the provided parameters.
 
-        Args:
-            instagram (bool): Whether Instagram is activated.
-            facebook (bool): Whether Facebook is activated.
-            twitter (bool): Whether Twitter is activated.
-            linkedin (bool): Whether LinkedIn is activated.
+    Args:
+        instagram (bool): Whether Instagram is activated.
+        facebook (bool): Whether Facebook is activated.
+        twitter (bool): Whether Twitter is activated.
+        linkedin (bool): Whether LinkedIn is activated.
+        tiktok (bool): Whether TikTok is activated.
 
-        Returns:
-            int: The number of activated social media networks.
-        """
-        activated_networks = sum([instagram, facebook, twitter, linkedin, tiktok])
-        return activated_networks
+    Returns:
+        int: The number of activated social media networks.
+    """
+    activated_networks = sum([instagram, facebook, twitter, linkedin, tiktok])
+    return activated_networks
+
     
 def create_surface_crawl_url(browser, instagram, facebook, twitter, linkedin, tiktok, url_q, nickname_mode = False):
     """
     Generate a Browser search URL for surface crawling based on provided parameters.
     
     Args:
+        browser (Browser): The browser object containing research URLs.
         instagram (bool): Whether Instagram should be included in the search.
         facebook (bool): Whether Facebook should be included in the search.
         twitter (bool): Whether Twitter should be included in the search.
         linkedin (bool): Whether LinkedIn should be included in the search.
-        name (str): First name + Lastname for the search query.
+        tiktok (bool): Whether TikTok should be included in the search.
+        url_q (str): Query string for the URL.
+        nickname_mode (bool, optional): Whether the search is in nickname mode. Defaults to False.
     
     Returns:
-        list : A list of the generated Google search URL for Google and Duckduckgo.
+        str : The generated search URL for Google and DuckDuckGo.
     """
     url = browser.research_urls + url_q
 
@@ -77,17 +82,19 @@ def create_surface_crawl_url(browser, instagram, facebook, twitter, linkedin, ti
 
 def create_surface_crawl_multiple_url(browser, instagram, facebook, twitter, linkedin, tiktok, name):
     """
-    Generate a Browser search URL list for surface crawling based on provided parameters.
+    Generate a list of Browser search URLs for surface crawling based on provided parameters.
     
     Args:
+        browser (Browser): The browser object containing research URLs.
         instagram (bool): Whether Instagram should be included in the search.
         facebook (bool): Whether Facebook should be included in the search.
         twitter (bool): Whether Twitter should be included in the search.
         linkedin (bool): Whether LinkedIn should be included in the search.
+        tiktok (bool): Whether TikTok should be included in the search.
         name (str): First name + Lastname for the search query.
     
     Returns:
-        str: The generated Bing search URL.
+        list: A list of generated search URLs.
     """
     urls = []
 
@@ -100,7 +107,6 @@ def create_surface_crawl_multiple_url(browser, instagram, facebook, twitter, lin
     # Variable to keep track of remaining OR conditions
     or_limit = limit
 
-
     # Dictionary of social media sites and their corresponding search parameters
     social_media_sites = {
         'facebook': 'site%3Afacebook.com',
@@ -112,7 +118,6 @@ def create_surface_crawl_multiple_url(browser, instagram, facebook, twitter, lin
 
     # Iterate through each social media site and add it to the URL if needed
     for site, search_parameter in social_media_sites.items():
-
         # Check if the social media site should be included
         if locals()[site]:
             or_limit -= 1
@@ -122,50 +127,52 @@ def create_surface_crawl_multiple_url(browser, instagram, facebook, twitter, lin
     return urls
 
 
+
 def create_surface_crawl_query(instagram, facebook, twitter, linkedin, tiktok, name):
-        """
-        Generate a Google search query for surface crawling based on provided parameters.
+    """
+    Generate a list of Google search queries for surface crawling based on provided parameters.
         
-        Args:
-            instagram (bool): Whether Instagram should be included in the search.
-            facebook (bool): Whether Facebook should be included in the search.
-            twitter (bool): Whether Twitter should be included in the search.
-            linkedin (bool): Whether LinkedIn should be included in the search.
-            name (str): First name + Lastname for the search query.
+    Args:
+        instagram (bool): Whether Instagram should be included in the search.
+        facebook (bool): Whether Facebook should be included in the search.
+        twitter (bool): Whether Twitter should be included in the search.
+        linkedin (bool): Whether LinkedIn should be included in the search.
+        tiktok (bool): Whether TikTok should be included in the search.
+        name (str): First name + Lastname for the search query.
         
-        Returns:
-            str: The generated Google search URL.
-        """
+    Returns:
+        list: A list of generated search queries.
+    """
 
-        queries = []
+    queries = []
 
-        # Base URL with the provided first and last name
-        query = "\"" + name + "\""
-        
-        # Calculate the limit of activated networks
-        limit = calculate_number_activate_networks(instagram, facebook, twitter, linkedin, tiktok)
+    # Base URL with the provided first and last name
+    query = "\"" + name + "\""
+    
+    # Calculate the limit of activated networks
+    limit = calculate_number_activate_networks(instagram, facebook, twitter, linkedin, tiktok)
 
-        # Variable to keep track of remaining OR conditions
-        or_limit = limit
+    # Variable to keep track of remaining OR conditions
+    or_limit = limit
 
-        # Dictionary of social media sites and their corresponding search parameters
-        social_media_sites = {
-            'facebook': 'site%3Afacebook.com',
-            'instagram': 'site%3Ainstagram.com',
-            'twitter': 'site%3Atwitter.com',
-            'linkedin': 'inurl:linkedin.com/in/',
-            'tiktok': 'site%3Atiktok.com'
-        }
+    # Dictionary of social media sites and their corresponding search parameters
+    social_media_sites = {
+        'facebook': 'site%3Afacebook.com',
+        'instagram': 'site%3Ainstagram.com',
+        'twitter': 'site%3Atwitter.com',
+        'linkedin': 'inurl:linkedin.com/in/',
+        'tiktok': 'site%3Atiktok.com'
+    }
 
-        # Iterate through each social media site and add it to the URL if needed
-        for site, search_parameter in social_media_sites.items():
-            # Check if the social media site should be included
-            if locals()[site]:
-                or_limit -= 1
-                temp = query + " " + search_parameter
-                queries.append(temp)
+    # Iterate through each social media site and add it to the URL if needed
+    for site, search_parameter in social_media_sites.items():
+        # Check if the social media site should be included
+        if locals()[site]:
+            or_limit -= 1
+            temp = query + " " + search_parameter
+            queries.append(temp)
 
-        return queries
+    return queries
 
 def search_google(research_url, proxy, sleep_interval=5):
     """
@@ -173,13 +180,14 @@ def search_google(research_url, proxy, sleep_interval=5):
 
     Args:
         research_url (str): The URL to perform the Google search.
-        sleep_interval (float, optional): The sleep interval in seconds between requests. Defaults to 1.
+        proxy (Proxy): The proxy object to be used for the request.
+        sleep_interval (float, optional): The sleep interval in seconds between requests. Defaults to 5.
 
     Returns:
         list: A list of unique links extracted from the search results.
 
     Example:
-        >>> search_google("https://www.google.com/search?q=example")
+        >>> search_google("https://www.google.com/search?q=example", proxy)
         ['https://www.example.com', 'https://www.example2.com']
     """
     try:

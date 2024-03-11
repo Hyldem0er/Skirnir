@@ -58,12 +58,18 @@ class Browser:
     def perform_surface_crawl(self, instagram, facebook, twitter, linkedin, tiktok, firstname, lastname, alias, keyword, proxy):
         """
         Performs a surface crawl on specified platforms using the browser.
+        
         Args:
             instagram (bool): Flag indicating whether to perform a surface crawl on Instagram.
             facebook (bool): Flag indicating whether to perform a surface crawl on Facebook.
             twitter (bool): Flag indicating whether to perform a surface crawl on Twitter.
             linkedin (bool): Flag indicating whether to perform a surface crawl on LinkedIn.
-            alias (str): The alias use for the surface crawl
+            tiktok (bool): Flag indicating whether to perform a surface crawl on TikTok.
+            firstname (str): The first name for the surface crawl.
+            lastname (str): The last name for the surface crawl.
+            alias (str): The alias used for the surface crawl.
+            keyword (str): The keyword for the surface crawl.
+            proxy (Proxy): The proxy object to be used for the request.
 
         Returns:
             list or None: A list of results from the surface crawl, or None if the browser is not supported.
@@ -73,7 +79,7 @@ class Browser:
 
         Example:
             >>> browser = Browser("google", research_url="https://www.google.com")
-            >>> browser.perform_surface_crawl(instagram=True, facebook=True, twitter=True, linkedin=True, name="JohnDoe")
+            >>> browser.perform_surface_crawl(instagram=True, facebook=True, twitter=True, linkedin=True, tiktok=True, firstname="John", lastname="Doe", alias="", keyword="", proxy=proxy)
             ['result1', 'result2', 'result3']
         """
         

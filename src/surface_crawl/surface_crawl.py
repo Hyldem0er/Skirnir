@@ -6,6 +6,15 @@ import re
 import requests
 
 def is_not_noise_url(url):
+    """
+    Checks if the given URL is not a noise URL.
+
+    Args:
+        url (str): The URL to check.
+
+    Returns:
+        bool: True if the URL is not a noise URL, False otherwise.
+    """
     return ("/directory/" not in url and "/posts/" not in url and "/photos/" not in url and "/videos/" not in url
             and "/story/" not in url and "/media/" not in url and "/groups/" not in url and "/status/" not in url
             and "/dir/" not in url and "/pulse/" not in url and "/company/" not in url and "/events/" not in url
@@ -18,7 +27,8 @@ def is_not_noise_url(url):
             and "facebook.com/reg/" not in url and "/getting-started/" not in url and "/marketplace/" not in url 
             and "/features/" not in url and "/about/" not in url and "/linkedin-news/" not in url and "/blog/" not in url 
             and "/grow/" not in url and "/who-we-are/" not in url and "/content/" not in url and "/web/" not in url and "/home/"
-            and "/feed/" not in url and "/discover/" not in url and "/tags/" not in url and "/video/" not in url)
+            and "/feed/" not in url and "/discover/" not in url and "/tags/" not in url and "/video/" not in url and "/album" not in url)
+
 
 def extract_profile_url(url):
     """
