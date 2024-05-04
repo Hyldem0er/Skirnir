@@ -1,7 +1,7 @@
 @echo off
 
 rem Parameters
-set VENV_PYTHON_PATH=".\\env\\Scripts\\python.exe"
+set VENV_PYTHON_PATH=".\env\Scripts\python.exe"
 
 rem Check if the script is running with administrator privileges
 net session >nul 2>&1
@@ -13,13 +13,13 @@ if %errorLevel% NEQ 0 (
 )
 
 
-REM Check if Python is installed
-where python >nul 2>&1
+REM Check if Python 3.11 is installed
+where python3.11 >nul 2>&1
 if %errorlevel% neq 0 (
-    echo Python is not installed. Installing...
+    echo Python 3.11 is not installed. Installing...
 
     REM Download Python installer
-    curl -o python-installer.exe https://www.python.org/ftp/python/3.9.2/python-3.9.2-amd64.exe
+    curl -o python-installer.exe https://www.python.org/ftp/python/3.11.0/python-3.11.0-amd64.exe
     if not exist python-installer.exe (
         echo Failed to download Python installer.
         goto end
@@ -32,10 +32,11 @@ if %errorlevel% neq 0 (
         goto end
     )
 
-    echo Python installed successfully.
+    echo Python 3.11 installed successfully.
 ) else (
-    echo Python is already installed.
+    echo Python 3.11 is already installed.
 )
+
 
 :end
 endlocal
