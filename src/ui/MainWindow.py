@@ -12,6 +12,10 @@ from src.ui.DeepResultWindow import DeepResultWindow
 import copy
 import os, time, sys
 from src.surface_crawl.match_nicknames import list_nicknames
+from superqt import QLabeledRangeSlider
+from src.utils.stylecss import range_style_sheet, result_style_sheet
+os.environ["USE_MAC_SLIDER_PATCH"] = "1"
+
 list_of_nicknames = list_nicknames()
 
 scriptDir = os.path.dirname(os.path.realpath(__file__))
@@ -127,43 +131,32 @@ class MainWindow(QDialog):
         self.AdvancedSettings.setLayout(self.AdvancedSettingsLayout)
 
     def createSliderHorizontalLayout(self):
-        self.Sliderlayout = QHBoxLayout()
+        self.Sliderlayout = QVBoxLayout()
         # Slider value
         self.limitLabel = QLabel("Limit the size of generated nicknames :")
-
 
         # Slide Bar
         limit = 9
 
-        self.slider = QSlider(Qt.Horizontal, self)
-        self.slider.setFocusPolicy(Qt.NoFocus)
-        self.slider.setTickPosition(QSlider.TicksBothSides)
-        self.slider.setTickInterval(1)
-        self.slider.setSingleStep(1)
-        self.slider.setRange(3, 15)
-        self.slider.setValue(limit)
-        self.slider.valueChanged[int].connect(self.setLimit)
-        self.slider.setStyleSheet(
-                             "QSlider::handle:horizontal {"
-                             "background-color: #e03d3d;"
-                             "}")
+        self.rangeSlider = QLabeledRangeSlider(Qt.Orientation.Horizontal)
+        self.rangeSlider.setValue((5, 12))
+        self.rangeSlider.setRange(2, 15)
         
         self.Sliderlayout.addWidget(self.limitLabel)
-        self.limit = QLabel(str(limit))
-        self.Sliderlayout.addWidget(self.limit)
-        self.Sliderlayout.addWidget(self.slider)
+        self.Sliderlayout.addWidget(self.rangeSlider)
        
 
         # Add the QHBoxLayout to a container widget (QGroupBox) before adding it to the QVBoxLayout to avoid strange bugs 
         self.slider_container = QWidget()
         self.slider_container.setLayout(self.Sliderlayout)
         self.AdvancedSettingsLayout.addWidget(self.slider_container)
+
         self.slider_container.setStyleSheet("color:grey;")
-        self.slider.setStyleSheet(
+        self.rangeSlider.setStyleSheet(
                             "QSlider::handle:horizontal {"
                             "background-color: grey;"
                             "}")
-        self.slider.setDisabled(True)
+        self.rangeSlider.setDisabled(True)
     
     def createCheckBoxForm(self):
         # creating a form layout
@@ -361,28 +354,24 @@ class MainWindow(QDialog):
     def gray(self):
         if not self.show_deepcrawl_checkbox.isChecked():
             self.slider_container.setStyleSheet("color:grey;")
-            self.slider.setStyleSheet(
+            self.rangeSlider.setStyleSheet(
                              "QSlider::handle:horizontal {"
                              "background-color: grey;"
                              "}")
-            self.slider.setDisabled(True)
+            self.rangeSlider.setDisabled(True)
             self.exportCSV.setStyleSheet("color:grey;")
             self.show_exportCSV_checkbox.setDisabled(True)
             self.show_exportCSV_checkbox.setCheckState(False)
 
         else:
             self.slider_container.setStyleSheet("color:white")
-            self.slider.setStyleSheet(
-                             "QSlider::handle:horizontal {"
-                             "background-color: #e03d3d;"
-                             "}")
-            self.slider.setDisabled(False)
+            self.rangeSlider.setStyleSheet(range_style_sheet)
+            self.rangeSlider.setDisabled(False)
             self.exportCSV.setStyleSheet("color:white;")
             self.show_exportCSV_checkbox.setDisabled(False)
 
     def show_file_dialog(self):
         options = QFileDialog.Options()
-        options |= QFileDialog.DontUseNativeDialog
         file_name, _ = QFileDialog.getOpenFileName(self, "Select File to Import", "", "All Files (*);;Text Files (*.txt)", options=options)
 
         if file_name:
@@ -431,9 +420,11 @@ class MainWindow(QDialog):
             advanced_profile_set['tiktok'] = sort_by_relevance(advanced_profile_set['tiktok'], self.Firstname.text(), self.Lastname.text(),  self.alias.text(), list_of_nicknames, self.alias_only.isChecked())
             
             self.w = DeepResultWindow(advanced_profile_set, social_networks_dict, backup_facebook)
+            self.w.setStyleSheet(result_style_sheet)
         else:
             crawl_list = sort_by_relevance(set(crawl_list), self.Firstname.text(), self.Lastname.text(),  self.alias.text(), list_of_nicknames, self.alias_only.isChecked())
             self.w = CrawlResultWindow(crawl_list, social_networks_dict)
+            self.w.setStyleSheet(result_style_sheet)
         self.w.show()
     
     # call alias generation function
@@ -443,7 +434,7 @@ class MainWindow(QDialog):
         self.worker_thread = WorkerThread(self.show_instagram_checkbox.isChecked(), self.show_facebook_checkbox.isChecked(),
                                     self.show_twitter_checkbox.isChecked(), self.show_linkedin_checkbox.isChecked(), self.show_tiktok_checkbox.isChecked(),
                                     self.Firstname.text(), self.Lastname.text(), self.date.text(), self.alias.text(),
-                                    self.show_date_checkbox.isChecked(), self.alias_only.isChecked(), int(self.limit.text()), self.show_deepcrawl_checkbox.isChecked(),
+                                    self.show_date_checkbox.isChecked(), self.alias_only.isChecked(), self.rangeSlider.value(), self.show_deepcrawl_checkbox.isChecked(),
                                     self.show_exportCSV_checkbox.isChecked(), self.keyword.text(), self.proxyfile_path, self)
         self.worker_thread.finished.connect(self.on_worker_finished)
         self.worker_thread.start()

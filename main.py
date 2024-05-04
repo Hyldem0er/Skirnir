@@ -32,7 +32,7 @@ def main():
     parser.add_argument("--tiktok", "-t", action='store_true', help="Enable crawl on TikTok")
     parser.add_argument("--all", "-a", action='store_true', help="Enable crawl on all social networks (enabled by default)")
     parser.add_argument("--deepcrawl", "-", action='store_true', help="Enable deepcrawl")
-    parser.add_argument("--pseudo_size", "-ps", action='store', default=9, type=int, help="The limit of size for generating possible pseudonyms (deepcrawl)")
+    parser.add_argument("--pseudo_size", "-ps", nargs=2, type=int, default=(9, 9), metavar=('start', 'end'), help="The range of sizes for generating possible pseudonyms (deepcrawl)")
     parser.add_argument("--alias_only", "-no", action='store_true', help="Make a crawl only for aliases")
     parser.add_argument("--keyword", "-k", action='store', default="", type=str, help="Add this keyword or a query to a crawl")
     parser.add_argument("--export_nickname", "-csv", action='store_true', help="Export the generated nicknames in CSV")

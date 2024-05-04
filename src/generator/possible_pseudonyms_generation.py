@@ -10,7 +10,7 @@ def start_with_delimeters(name):
     return name[0] in ['-', '_', '.']
 
 
-def generate_possible_pseudonyms(firstname, lastname, birthday, alias, limit=15, birthday_on=False, alias_only = False):
+def generate_possible_pseudonyms(firstname, lastname, birthday, alias, limit = None, birthday_on=False, alias_only = False):
     """
     Generate all possible pseudonyms based on the given inputs.
 
@@ -37,6 +37,9 @@ def generate_possible_pseudonyms(firstname, lastname, birthday, alias, limit=15,
         
         ['Jean.Pierre-1970', 'Pierre.Jean-1970', 'Jean-Pierre_1970', 'Pierre_Jean_1970', 'JP-1970', '1970-JP', 'JP.1970', '1970.JP'...]
     """
+    min = 0 if limit == None else limit[0]
+    max = 15 if limit == None else limit[1]
+
     pseudonyms = []
     if birthday_on:
         dates_combinations = get_possible_date_combination_with_delimiters(birthday, delimiters)
@@ -56,7 +59,7 @@ def generate_possible_pseudonyms(firstname, lastname, birthday, alias, limit=15,
                             inversed_pseudonym = lastname[1:] + delimiter + firstname + date
                         else:
                             inversed_pseudonym = lastname + firstname + date
-                        if len(pseudonym) <= limit:
+                        if min <= len(pseudonym) <= max:
                             pseudonyms.append(pseudonym)
                             pseudonyms.append(inversed_pseudonym)
                 else:
@@ -68,7 +71,7 @@ def generate_possible_pseudonyms(firstname, lastname, birthday, alias, limit=15,
                     else:
                         inversed_pseudonym = lastname + firstname
 
-                    if len(pseudonym) <= limit:
+                    if min <= len(pseudonym) <= max:
                         pseudonyms.append(pseudonym)
                         pseudonyms.append(inversed_pseudonym)
 
@@ -79,10 +82,10 @@ def generate_possible_pseudonyms(firstname, lastname, birthday, alias, limit=15,
             if birthday_on:
                 for date in dates_combinations:
                     elt = n + date
-                    if len(elt) <= limit:
+                    if min <= len(elt) <= max:
                         pseudonyms.append(elt)
             else:
-                if len(n) <= limit:
+                if min <= len (elt) <= max:
                     pseudonyms.append(n)
 
     return pseudonyms
