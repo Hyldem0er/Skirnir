@@ -42,7 +42,7 @@ endlocal
 
 
 rem Create python virtualenv
-python -m venv env
+py -3.11 -m venv env
 
 rem Activate the environment
 call .\env\Scripts\activate
