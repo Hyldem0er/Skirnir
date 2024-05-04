@@ -41,7 +41,7 @@ class WorkerThread(QThread):
         crawl_list, advanced_profile_set, social_networks_dict = start_profile_research(self.show_instagram_checkbox, self.show_facebook_checkbox,
                                     self.show_twitter_checkbox, self.show_linkedin_checkbox, self.show_tiktok_checkbox, 
                                     self.Firstname, self.Lastname, self.date, self.alias,
-                                    self.show_date_checkbox, self.alias_only, int(self.limit), self.show_deepcrawl_checkbox,
+                                    self.show_date_checkbox, self.alias_only, self.limit, self.show_deepcrawl_checkbox,
                                     self.show_exportCSV_checkbox, self.keyword, self.proxyfile_path)
 
         self.finished.emit((crawl_list, advanced_profile_set, social_networks_dict))

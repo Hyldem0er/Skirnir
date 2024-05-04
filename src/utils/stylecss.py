@@ -1,14 +1,28 @@
 GlobalStyleSheet = ("""
-            QWidget {
+
+            QDialog {
                 background-color: #242933;
+            }  
+            
+            QWidget {
                 color: white;
                 font-size: 14px;
+            }
+            
+            QLineEdit {
+                background-color: #242933;
+            }
+                    
+            QPushButton {
+                background-color: #242933;
             }
 
             QLabel {
                 color: white;
-            }
+                background-color: #242933;
 
+            }
+                    
             QGroupBox {
                 border: 1px solid gray;
                 border-radius: 5px;
@@ -20,12 +34,16 @@ GlobalStyleSheet = ("""
                 left: 10px;
                 padding: 0 3px 0 3px;
             }
-
+                    
+            QFormLayout::Line {
+                color: white;
+            }
+                    
             QFormLayout::Label {
                 color: white;
                 font-weight: bold;
             }
-
+                    
             QTabWidget::pane {
                 border: 1px solid #242933;
                 top:-1px; 
@@ -40,10 +58,6 @@ GlobalStyleSheet = ("""
             QTabBar::tab:selected { 
                 border-top: 3px solid #7c2929;
                 margin-bottom: -1px; 
-            }
-
-            QFormLayout::Line {
-                color: white;
             }
 
             QCheckBox {
@@ -61,23 +75,26 @@ GlobalStyleSheet = ("""
             QCheckBox::indicator:checked {
                 border-color: red;
             }
-
-            QSlider {
-                color: white;
-                height: 10px;
-            }
-
+                    
             QSlider::groove:horizontal {
-                background-color: white;
-                height: 10px;
-                border-radius: 5px;
+                background: #1e222a;
+                border-radius: 10px;
             }
 
-            QSlider::handle:horizontal {
-                background-color: #e03d3d;
-                width: 50px;
-                height: 20px;
-                border-radius: 3px;
+            QSlider::handle {
+                background:  white;
+                width: 12px;
+                height: 19.5px;
+                border-radius: 5px;
+                border: 0.5px solid #151517;
+            }
+
+            QSlider::sub-page:horizontal {
+                background: #151517;
+            }
+
+            QRangeSlider {
+                qproperty-barColor:#9797a9;
             }
 
             QScrollBar:vertical {
@@ -123,3 +140,35 @@ GlobalStyleSheet = ("""
             }
 
         """)
+
+range_style_sheet = ("""
+    QSlider::groove:horizontal {
+        background: #1e222a;
+        border-radius: 10px;
+    }
+
+    QSlider::handle {
+        background: white;
+        width: 12px;
+        height: 19.5px;
+        border-radius: 5px;
+        border: 0.5px solid #151517;
+    }
+
+    QSlider::sub-page:horizontal {
+        background: #151517;
+    }
+
+    QRangeSlider {
+        qproperty-barColor: #9797a9;
+    }
+    """)
+
+
+result_style_sheet = ("""
+  QWidget {
+                background-color: #242933;
+                color: white;
+                font-size: 14px;
+            }
+""")
