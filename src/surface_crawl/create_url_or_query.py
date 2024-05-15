@@ -157,11 +157,11 @@ def create_surface_crawl_query(instagram, facebook, twitter, linkedin, tiktok, n
 
     # Dictionary of social media sites and their corresponding search parameters
     social_media_sites = {
-        'facebook': 'site%3Afacebook.com',
-        'instagram': 'site%3Ainstagram.com',
-        'twitter': 'site%3Atwitter.com',
-        'linkedin': 'inurl:linkedin.com/in/',
-        'tiktok': 'site%3Atiktok.com'
+        'facebook': 'site:facebook.com',
+        'instagram': 'site:instagram.com',
+        'twitter': 'site:twitter.com',
+        'linkedin': 'site:linkedin.com/in/',
+        'tiktok': 'site:tiktok.com'
     }
 
     # Iterate through each social media site and add it to the URL if needed

@@ -71,7 +71,7 @@ def surface_crawl(instagram, facebook, twitter, linkedin, tiktok, firstname, las
     """
     urls = []
     browsers = [Browser("google", "https://www.google.com/search?client=firefox-b-d&q="), Browser("alias", "https://www.google.com/search?client=firefox-b-d&q="),
-                Browser("nicknames", "https://www.google.com/search?client=firefox-b-d&q="), Browser("keyword", "https://www.google.com/search?client=firefox-b-d&q=")] #, Browser("duckduckgo")]#, Browser("bing", "https://www.bing.com/search?q=")]
+                Browser("nicknames", "https://www.google.com/search?client=firefox-b-d&q="), Browser("keyword", "https://www.google.com/search?client=firefox-b-d&q=") , Browser("duckduckgo")] #, Browser("bing", "https://www.bing.com/search?q=")]
     # browsers = [Browser("duckduckgo")] #  Browser("bing", "https://www.bing.com/search?q=")
     
     # Name
