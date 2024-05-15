@@ -99,7 +99,7 @@ class Browser:
                 alias = "(%22" + alias + "%22+OR+%22" + lastname + "+" + firstname + "%22)" # ("alias" OR "lastname firstname")
             else:
                 alias = "%22" + alias + "%22"
-            research_url = create_surface_crawl_url(self, instagram, facebook, twitter, linkedin, tiktok,  alias)
+            research_url = create_surface_crawl_url(self, instagram, facebook, twitter, linkedin, tiktok, alias)
             result_list = search_google(research_url, proxy)
             logger.debug("alias crawling result : {}", result_list)
             return result_list
@@ -116,16 +116,17 @@ class Browser:
             result_list = search_google(research_url, proxy)
             return result_list
 
-        # if self.name == "duckduckgo":
-        #     if lastname == "" or firstname == "":
-        #         return []
-        #     name = firstname + " " + lastname
-        #     research_queries = create_surface_crawl_query(instagram, facebook, twitter, linkedin, name)
-        #     result_list = []
-        #     for query in research_queries:
-        #         result_list.extend(search_duckduckgo(query))
-        #     logger.debug("Duckduckgo crawling result : {}", result_list)
-        #     return result_list
+        if self.name == "duckduckgo":
+            if lastname == "" or firstname == "":
+                return []
+            name = firstname + " " + lastname
+            research_queries = create_surface_crawl_query(instagram, facebook, twitter, linkedin, tiktok, name)
+            result_list = []
+            for query in research_queries:
+                print(query)
+                result_list.extend(search_duckduckgo(query))
+            logger.debug("Duckduckgo crawling result : {}", result_list)
+            return result_list
 
         if self.name == "keyword":
             if lastname == "" or firstname == "" or keyword == "":
