@@ -59,6 +59,10 @@ GlobalStyleSheet = ("""
                 border-top: 3px solid #7c2929;
                 margin-bottom: -1px; 
             }
+                    
+            QDateEdit {
+                color: black
+            }
 
             QCheckBox {
                 color: #d5d1e5;
