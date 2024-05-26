@@ -258,7 +258,7 @@ class MainWindow(QDialog):
     def createExportButton(self):
 
         export_layout = QHBoxLayout()
-        export_layout.addWidget(QLabel("Export generated nickanmes in CSV"))
+        export_layout.addWidget(QLabel("Export generated nicknames in CSV"))
 
         # DeepCrawl Checkbox
         self.show_exportCSV_checkbox = QCheckBox()
