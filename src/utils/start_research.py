@@ -168,7 +168,8 @@ def start_profile_research(instagram_checkbox, facebook_checkbox, twitter_checkb
     logger.info("Starting Surface Crawling")
     crawl_list = surface_crawl(instagram_checkbox, facebook_checkbox, twitter_checkbox, linkedin_checkbox, tiktok_checkbox, firstname, lastname, alias, keyword, proxy)
 
-    generated_nicknames = generate_possible_pseudonyms(firstname, lastname, date, alias, limit, birthday_on, alias_only)
+    if deepcrawl_is_checked:
+        generated_nicknames = generate_possible_pseudonyms(firstname, lastname, date, alias, limit, birthday_on, alias_only)
 
     if nickname_export:
         export_nicknames_csv(generated_nicknames)
