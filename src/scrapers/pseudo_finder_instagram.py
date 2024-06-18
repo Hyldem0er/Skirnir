@@ -79,8 +79,7 @@ def find_instagram_profile(nicknameList, proxy):
     rebound_sites = [
         "https://www.picnob.com/fr/profile/",
         "https://imginn.com/",
-        "https://storiesig.me/info?username=",
-        "https://instastories.watch/info?username=",
+        "https://flufi.me/profile/",
         "https://dumpoir.com/v/",
         "https://picuki.com/profile/",
         "https://greatfon.com/v/"

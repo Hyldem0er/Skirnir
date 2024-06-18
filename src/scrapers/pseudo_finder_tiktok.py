@@ -79,7 +79,7 @@ def find_tiktok_profile(nicknameList, proxy):
 
     # Keep this list update
     rebound_sites = [
-        "https://www.tiktokstalk.com/user/"
+       # "https://www.tiktokstalk.com/user/"
     ]
 
     existing_profile_list = []
