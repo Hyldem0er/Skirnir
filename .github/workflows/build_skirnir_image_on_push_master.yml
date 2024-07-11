@@ -32,6 +32,6 @@ jobs:
     - name: Build and push Docker image
       uses: docker/build-push-action@v2
       with:
-        context: https://github.com/Hyldem0er/Skirnir-Docker-Image/tree/main/Docker/docker
+        context: https://github.com/Hyldem0er/Skirnir-Docker-Image/blob/f5d5becf6e79487388655ea72bf35aa87adea59a/Docker/docker/Skirnirfile
         push: true
         tags: ${{ secrets.DOCKERHUB_USERNAME }}/skirnir:latest
