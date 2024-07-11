@@ -34,4 +34,4 @@ jobs:
       with:
         context: https://github.com/Hyldem0er/Skirnir-Docker-Image/tree/main/Docker/docker
         push: true
-        tags: ${{ secrets.DOCKER_HUB_USERNAME }}/skirnir:latest
+        tags: ${{ secrets.DOCKERHUB_USERNAME }}/skirnir:latest
