@@ -25,6 +25,12 @@ Welcome to Skirnir, a sophisticated Open Source Intelligence (OSINT) tool design
 You can have a look at the documentation here: [Wiki](https://hyldem0er.gitbook.io/skirnir/)
 
 <a id="licence"></a>
+
+## Screenshots
+<p align="center">
+  <img src="https://github.com/Hyldem0er/Skirnir/blob/905af69f5fbe94bdadb1e706fcb4b09a988fd90e/data/skirnir.png" alt="Skirnir UI" width="500px">
+</p>
+
 ## License
 
 This project is distributed under the [GNU General Public License version 3(GNU GPLv3)](LICENSE).
