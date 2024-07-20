@@ -28,6 +28,10 @@ jobs:
 
     - name: List contents of current directory
       run: ls
+      
+    - name: Run tree command in Docker directory
+      run: tree Docker/docker
+
 
 
     - name: Set up Docker Buildx
