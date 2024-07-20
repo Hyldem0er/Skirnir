@@ -18,8 +18,9 @@ jobs:
       with:
         repository: Hyldem0er/Skirnir-Docker-Image
         path: .
-        sparse-checkout: |
-          Docker/docker
+        
+    - name: Move Docker/docker
+      run: mv Skirnir-Docker-Image/Docker/docker . && rm -rf Skirnir-Docker-Image
 
     - name: Run tree command in root directory
       run: tree .
