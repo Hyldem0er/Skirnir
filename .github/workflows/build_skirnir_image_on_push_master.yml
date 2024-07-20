@@ -30,7 +30,10 @@ jobs:
       run: ls
       
     - name: Run tree command in Docker directory
-      run: tree Docker/docker
+      run: tree Docker/
+
+    - name: Run tree command in root directory
+      run: tree .
 
 
 
