@@ -14,28 +14,17 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
-
     - name: Checkout Dockerfile repository
       uses: actions/checkout@v2
       with:
         repository: Hyldem0er/Skirnir-Docker-Image
         path: .
-        
-    - name: List contents of Docker directory
-      run: ls Docker/docker
-
-    - name: List contents of current directory
-      run: ls
-      
-    - name: Run tree command in Docker directory
-      run: tree Docker/
 
     - name: Run tree command in root directory
       run: tree .
 
-
+    - name: List files in the working directory
+      run: ls -R
 
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v1
