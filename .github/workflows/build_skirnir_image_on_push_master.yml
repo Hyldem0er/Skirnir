@@ -21,7 +21,7 @@ jobs:
       uses: actions/checkout@v2
       with:
         repository: Hyldem0er/Skirnir-Docker-Image
-        path: Docker/docker
+        path: .
         
     - name: List contents of Docker directory
       run: ls Docker/docker
