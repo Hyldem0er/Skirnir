@@ -1,5 +1,8 @@
 name: Docker Build and Push
 
+env:
+  GITHUB_ACTIONS_LOG_LEVEL: debug
+  
 on:
   workflow_dispatch:
   push:
