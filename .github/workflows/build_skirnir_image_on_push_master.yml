@@ -20,7 +20,7 @@ jobs:
         path: .
         
     - name: Move Docker/docker
-      run: mv Skirnir-Docker-Image/Docker/docker . && rm -rf Skirnir-Docker-Image
+      run: mv Docker/docker . && rm -rf Docker
 
     - name: Run tree command in root directory
       run: tree .
