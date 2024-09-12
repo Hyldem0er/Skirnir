@@ -21,16 +21,57 @@ Welcome to Skirnir, a sophisticated Open Source Intelligence (OSINT) tool design
 
 **Please remember that Skirnir is intended for educational purposes only.**
 
-## Documentation
-You can have a look at the documentation here: [Wiki](https://hyldem0er.gitbook.io/skirnir/)
-
-<a id="licence"></a>
-
 ## Screenshot
 <p align="center">
   <img src="https://github.com/Hyldem0er/Skirnir/blob/905af69f5fbe94bdadb1e706fcb4b09a988fd90e/data/skirnir.png" alt="Skirnir UI" width="500px">
 </p>
 
-## License
 
+
+## Getting Started
+
+### Create a Python Environment
+
+```bash
+python3 -m venv env
+```
+
+### Activate the Python Environment
+
+#### Linux/MacOS
+
+```bash
+source env/bin/activate
+```
+
+#### Windows
+
+```powershell
+.\env\Scripts\activate
+```
+
+### Install Requirements
+
+```bash
+pip install -r requirements.txt
+```
+
+### Launch the Skirnir Program (User Interface)
+
+#### Linux/MacOS
+
+```bash
+python3 main.py --ui
+```
+
+#### Windows
+
+```powershell
+.\env\Scripts\python.exe main.py --ui
+```
+
+## Documentation
+You can have a look at the documentation here: [Wiki](https://hyldem0er.gitbook.io/skirnir/)
+## License
+<a id="licence"></a>
 This project is distributed under the [GNU General Public License version 3(GNU GPLv3)](LICENSE).
